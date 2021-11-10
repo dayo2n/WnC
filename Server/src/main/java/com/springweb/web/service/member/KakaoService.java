@@ -1,4 +1,4 @@
-package com.springweb.web.service;
+package com.springweb.web.service.member;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

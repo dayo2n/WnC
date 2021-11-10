@@ -27,4 +27,12 @@ public class UploadFile extends BaseTimeEntity {
     private Lesson lesson;
 
 
+    protected UploadFile(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public static UploadFile createUploadFile(String filePath) {
+        return new UploadFile(filePath);
+    }
+
 }

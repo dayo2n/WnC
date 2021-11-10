@@ -1,4 +1,4 @@
-package com.springweb.web.repository;
+package com.springweb.web.repository.member;
 
 import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.domain.member.Member;

@@ -1,6 +1,5 @@
 package com.springweb.web.exception.file;
 
-import com.cnutime.cnupost.exception.BaseExceptionType;
 import com.springweb.web.exception.BaseExceptionType;
 import org.springframework.http.HttpStatus;
 
