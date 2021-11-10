@@ -13,6 +13,6 @@ import javax.persistence.Entity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "id", column = @Column(name = "PRIVATE_LESSON_ID"))
-@DiscriminatorValue("P")
+@DiscriminatorValue("PRIVATE")
 public class PrivateLesson extends Lesson{
 }
