@@ -1,0 +1,21 @@
+.login_container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto;
+    align-items: center;
+    height: 1000px;
+    margin-top: 300px;
+}
+
+#login_button{
+    width: 222px;
+}
+
+#login_username{
+    width: 222px;
+}
+
+#login_password{
+    width: 222px;
+}
