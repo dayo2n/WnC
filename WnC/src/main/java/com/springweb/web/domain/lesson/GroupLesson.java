@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "id", column = @Column(name = "GROUP_LESSON_ID"))
-@DiscriminatorValue("G")
+@DiscriminatorValue("GROUP")
 public class GroupLesson extends Lesson{
 
 
