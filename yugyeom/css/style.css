@@ -81,7 +81,7 @@ a:hover {
   margin: 20px;
 }
 
-.searchBoxComponent{
+.searchBoxComponent, #btn-createNewPost{
   height: 35px;
   border-radius: 4px;
 }
@@ -134,4 +134,10 @@ th, td{
 
 #titleCell{
   text-align: left;
+}
+
+#btn-createNewPost{
+  margin: 15px 0px;
+  float: right;
+  background-color: white;
 }
