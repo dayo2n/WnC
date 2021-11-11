@@ -31,13 +31,37 @@ $(document).ready(function () {
         onClose: function( selectedDate ) { // 종료일(endDate) datepicker가 닫힐때 
             // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정 
             $("#startDate").datepicker( "option", "maxDate", selectedDate ); 
-            } 
-        });
+        } 
+    });
+    
+    $('#lessonType').change(function(){
+        if($(this).val()==='PERSONAL'){
+            $('tbody tr').eq(2).remove();
+        }else{
+            $('tbody tr').eq(1).after('<tr><td>모집인원</td><td><input type="text" placeholder="최대인원을 입력하세요." class="writeComponent" id="maxStudentCount" maxlength=20 style="width:100%"></td></tr>');
+                    // 최대인원 수는 숫자로만 입력 가능
+            $('#maxStudentCount').on('keypress', function(){
+                if((event.keyCode<48)||(event.keyCode>57)){
+                    event.returnValue=false;
+                }
+            });
+
+        }
+    });
+
+
 });
 
-// 최대인원 수는 숫자로만 입력 가능
-$('#maxTutee').on('keypress', function(){
-    if((event.keyCode<48)||(event.keyCode>57)){
-        event.returnValue=false;
-    }
-})
+
+
+// ---------- for viewPost.html ----------
+
+$(document).ready(function () { 
+    // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
+    $("#btn-backToNoticeBoard").click(function(){
+            $(location).attr('href', "home.html");
+    });
+    $("#btn-editPost").click(function(){
+        $(location).attr('href', "postEditor.html");
+});
+});

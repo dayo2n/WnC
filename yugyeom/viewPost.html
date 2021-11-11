@@ -13,7 +13,23 @@
 
 <body>
     <header>
-
+        <div class="inner">
+            <div class="head_container">
+                <div class="left_head_items">
+                        <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                        <h1 class="logoBox">WnC Tutoring</h1>
+                    <div class="search_teacher_link logoBox">선생님 탐색</div>
+                    <div class="search_tutoring_link logoBox">게시글 탐색</div>
+                </div>
+                <div class="right_head_items">
+                    <img src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                    <img src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                    <img src="img/login.png" class="logoBox" alt="">
+                    <div class="login_button"></div>
+                    <div class="profile"></div>
+                </div>
+            </div>
+        </div>
     </header>
     <section>
         <div class="inner">
@@ -65,13 +81,14 @@
                 <tr>
                     <td colspan="4" align=right>
                         <!-- 글 수정시 작성자에게만 버튼이 보이도록 || 수정 클릭 시 비밀번호를 입력하고 확인 -->
-                        <input type="button" value="글 수정">
-                        <input type="button" value="목록으로">
+                        <input type="button" id="btn-editPost" value="글 수정">
+                        <input type="button" id="btn-backToNoticeBoard" value="목록으로">
                     </td>
                 </tr>
             </table>
         </div>
     </section>
+    <script src="js/post.js"></script>
 </body>
 
 </html>
