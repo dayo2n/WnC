@@ -8,8 +8,11 @@ import com.springweb.web.controller.dto.lesson.UpdateLessonDto;
 import com.springweb.web.domain.file.UploadFile;
 import com.springweb.web.domain.lesson.GroupLesson;
 import com.springweb.web.domain.lesson.Lesson;
+import com.springweb.web.domain.lesson.PersonalLesson;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
+import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.lesson.LessonException;
 import com.springweb.web.exception.lesson.LessonExceptionType;
 import com.springweb.web.exception.member.MemberException;
@@ -41,6 +44,7 @@ public class LessonServiceImpl implements LessonService{
     private final PasswordEncoder passwordEncoder;
     private final FileService fileService;
 
+
     @Trace
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
@@ -57,7 +61,7 @@ public class LessonServiceImpl implements LessonService{
     //TODO : 개인과외라면 생성 시 MaxStudent가 1로 설정되었는지 확인해야 함, 그룹과외라면 MaxStudent가 최소 2 이상이어야 함!
     @Trace
     @Override
-    public void create(CreateLessonDto createLessonDto) throws MemberException, LessonException, IOException {
+    public void create(CreateLessonDto createLessonDto) throws BaseException, IOException {
         Member me = memberRepository.findByUsername(getMyUsername()).orElse(null);
         //학생은 강의 등록 불가능
         if(me instanceof Student){
@@ -67,7 +71,11 @@ public class LessonServiceImpl implements LessonService{
         Lesson lesson = createLessonDto.toEntity();
 
         List<UploadFile> uploadedFiles = fileService.saveFiles(createLessonDto.getUploadFiles());//파일 서버에 저장
+
         lesson.changeUploadFiles(uploadedFiles);
+
+
+        lesson.confirmTeacher((Teacher)me);
 
         lessonRepository.save(lesson);
     }
@@ -86,8 +94,7 @@ public class LessonServiceImpl implements LessonService{
 
     @Trace
     @Override
-    @Transactional(readOnly = true)
-    public LessonDetailDto getLessonInfo(Long lessonId) throws LessonException {
+    public LessonDetailDto getLessonInfo(Long lessonId) throws BaseException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
         if(findLesson == null){
             throw new LessonException(LessonExceptionType.NOT_FOUND_LESSON);
@@ -104,7 +111,7 @@ public class LessonServiceImpl implements LessonService{
     //TODO 이거 되는지 확인해야 함, 메소드에 Lesson을 넘겼는데 영속성 컨텍스트에서 계속 관리되려나.,.?
     @Trace
     @Override
-    public void update(Long lessonId, UpdateLessonDto updateLessonDto) throws LessonException, MemberException, IOException {
+    public void update(Long lessonId, UpdateLessonDto updateLessonDto) throws BaseException, IOException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
         //== 수정할 강의가 없는경우 -> 먼가 문제;;==//
         if(findLesson == null){
@@ -114,6 +121,18 @@ public class LessonServiceImpl implements LessonService{
         //== 내 username과 강의 작성자의 username이 다르다면 예외==//
         if(!findLesson.getTeacher().getUsername().equals(getMyUsername())){
             throw new LessonException(LessonExceptionType.NO_AUTHORITY_UPDATE_LESSON);
+        }
+        //== 그룹과외 => 개인과외 불가능 ==//
+        if(findLesson instanceof GroupLesson groupLesson){
+            if(updateLessonDto.getLessonType() != LessonType.GROUP){
+                throw new LessonException(LessonExceptionType.CAN_NOT_CHANGE_LESSON_TYPE);
+            }
+        }
+        //== 개인과외 => 그룹과외 불가능 ==//
+        if(findLesson instanceof PersonalLesson personalLesson){
+            if(updateLessonDto.getLessonType() != LessonType.PERSONAL){
+                throw new LessonException(LessonExceptionType.CAN_NOT_CHANGE_LESSON_TYPE);
+            }
         }
 
 
@@ -130,29 +149,37 @@ public class LessonServiceImpl implements LessonService{
     }
 
 
-
+    /**
+     * 수강중인 학생이 한명이라도 있으면 예외
+     */
     @Trace
     @Override
-    public void delete(Long lessonId) throws LessonException, MemberException {
+    public void delete(Long lessonId, String password) throws BaseException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
 
         //== 삭제 가능여부 체크 로직 ==//
         if(findLesson == null){
             throw new LessonException(LessonExceptionType.NOT_FOUND_LESSON);
         }//== 삭제할 강의가 없는경우 -> 먼가 문제;;==//
+
         if(!findLesson.getTeacher().getUsername().equals(getMyUsername())){
             throw new LessonException(LessonExceptionType.NO_AUTHORITY_DELETE_LESSON);
         }//내 username과 강의 작성자의 username이 다르다면 예외
+
+        if(!passwordEncoder.matches(password,findLesson.getTeacher().getPassword())){
+            throw new LessonException(MemberExceptionType.PASSWORDS_DOES_NOT_MATCH);
+        }//패스워드를 잘못 입력한경우 예외
+
         if(findLesson.isCompleted()){
             throw new LessonException(LessonExceptionType.CAN_NOT_DELETE_LESSON_COMPLETED);
         }//모집완료된 강의는 삭제할 수 없음, 예외
 
-        if(findLesson instanceof GroupLesson groupLesson){ //그룹과외인 경우
+        if(findLesson instanceof GroupLesson groupLesson){
             if(groupLesson.getNowStudentCount() > 0 ){
                 throw new LessonException(LessonExceptionType.CAN_NOT_DELETE_LESSON_EXIST_STUDENT);
-            } //모집한 학생이 있는 경우 삭제 불가능
-        }
-
+            }
+        }//그룹과외인 경우 =>모집한 학생이 있는 경우 삭제 불가능
+        //== 삭제 가능여부 체크 로직 종료 ==//
 
         log.info("업로드한 파일을 삭제합니다");
         fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
@@ -163,29 +190,6 @@ public class LessonServiceImpl implements LessonService{
 
 
 
-    @Trace
-    @Override
-    public void apply(Long lessonId) {
-
-    }
-
-    @Trace
-    @Override
-    public void accept(Long lessonId) {
-
-    }
-
-    @Trace
-    @Override
-    public void cancle(Long lessonId) {
-
-    }
-
-    @Trace
-    @Override
-    public void clickRecommend(Long lessonId) {
-
-    }
 
 
 
@@ -193,8 +197,23 @@ public class LessonServiceImpl implements LessonService{
 
 
 
-    private void changeUploadFile(UpdateLessonDto updateLessonDto, Lesson findLesson) throws IOException {
+
+
+
+
+
+
+
+
+
+
+
+    //== 내부적으로 간편하게 사용하는 메소드 ==//
+
+    private void changeUploadFile(UpdateLessonDto updateLessonDto, Lesson findLesson) throws IOException, BaseException {
         if(updateLessonDto.getUploadFiles() != null || updateLessonDto.getUploadFiles().size()!=0 ||  !updateLessonDto.getUploadFiles().get(0).isEmpty()){
+            System.out.println(findLesson.getUploadFiles().size());
+            System.out.println(findLesson.getUploadFiles().size());
             fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
             log.info("업로드한 파일을 삭제했습니다");
             List<UploadFile> uploadedFiles = fileService.saveFiles(updateLessonDto.getUploadFiles());//새로 업데이트할 파일 서버에 저장
@@ -211,9 +230,14 @@ public class LessonServiceImpl implements LessonService{
             findLesson.changeTitle(updateLessonDto.getTitle());
         }
     }
+
     private void changePeriod(UpdateLessonDto updateLessonDto, GroupLesson groupLesson) {
-        if(updateLessonDto.getPeriod() != null){//TODO : 현재 시간보다 과거인지 검증로직 추가해야 함 + 값이 없을떄 null이 들어가는지 확인해야 함
-            groupLesson.changeMaxStudentCount(updateLessonDto.getMaxStudentCount());
+        if(updateLessonDto.getStartPeriod() != null || updateLessonDto.getEndPeriod() != null){//TODO : 현재 시간보다 과거인지 검증로직 추가해야 함 + 값이 없을떄 null이 들어가는지 확인해야 함
+
+            groupLesson.changePeriod(
+                    updateLessonDto.getStartPeriodToLocalDateTime(),
+                    updateLessonDto.getEndPeriodToLocalDateTime()
+            );
         }
     }
     private void changeMaxStudentCount(UpdateLessonDto updateLessonDto, GroupLesson groupLesson) {

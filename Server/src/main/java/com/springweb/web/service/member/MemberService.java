@@ -1,24 +1,27 @@
 package com.springweb.web.service.member;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.member.StudentDto;
-import com.springweb.web.controller.dto.member.TeacherDto;
-import com.springweb.web.controller.dto.member.UpdateStudentDto;
-import com.springweb.web.controller.dto.member.UpdateTeacherDto;
+import com.springweb.web.controller.dto.member.*;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.exception.BaseException;
+import com.springweb.web.exception.file.UploadFileException;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.member.MemberExceptionType;
 import com.springweb.web.repository.member.MemberRepository;
 import com.springweb.web.service.file.FileService;
+import com.springweb.web.service.member.search.TeacherSearchCond;
 import com.springweb.web.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -34,7 +37,7 @@ public class MemberService {
 
 
     @Trace
-    public void save(Member member) throws MemberException {
+    public void save(Member member, MultipartFile profileImg) throws MemberException, UploadFileException, IOException {
 
         //== 중복 아이디 체크 로직 ==//
         checkDuplicateMember(member.getUsername());
@@ -42,6 +45,11 @@ public class MemberService {
         //패스워드 인코딩 해야 함, 중요!!
         member.passwordEncode(passwordEncoder);
 
+
+        if(!profileImg.isEmpty()) {
+            String uploadedFilePath = fileService.saveFile(profileImg);//파일 서버에 저장
+            member.changeProfileImgPath(uploadedFilePath);
+        }
         //== 중복 아이디 체크 로직 종료 ==//
         memberRepository.save(member);
     }
@@ -63,21 +71,22 @@ public class MemberService {
         Member member = memberRepository.findByUsername(getMyUsername()).orElse(null);
 
         if(member instanceof Student student){
-            return new StudentDto(student);
+            return new MyInfoStudentDto(student);
         }
         else if(member instanceof  Teacher teacher){
-            return new TeacherDto(teacher);
+            return new MyInfoTeacherDto(teacher);
         }
 
         Student findMember = (Student)memberRepository.findByUsername(getMyUsername()).orElse(null);
-        return new StudentDto(findMember);
+        return new MyInfoStudentDto(findMember);
     }
 
 
 
     //TODO 이거 되는지 확인해야 함, 메소드에 student를 넘겼는데 영속성 컨텍스트에서 계속 관리되려나.,.?
+    //TODO 카카오톡 회원가입인 경우 비번 변경 불가능!
     @Trace
-    public void update(UpdateStudentDto updateStudentDto) throws MemberException, IOException {
+    public void update(UpdateStudentDto updateStudentDto) throws BaseException, IOException  {
         log.info("내 정보 수정 시작 => 학생");
         Student student = (Student)memberRepository.findByUsername(getMyUsername()).orElse(null);
 
@@ -89,7 +98,7 @@ public class MemberService {
     }
 
     @Trace
-    public void update(UpdateTeacherDto updateTeacherDto) throws MemberException, IOException {
+    public void update(UpdateTeacherDto updateTeacherDto) throws BaseException, IOException {
         log.info("내 정보 수정 시작 => 선생님");
         Teacher teacher = (Teacher)memberRepository.findByUsername(getMyUsername()).orElse(null);
 
@@ -103,26 +112,77 @@ public class MemberService {
 
 
 
-    //TODO : 회원 탈퇴시 카카오톡에서도 탈퇴되도록
     @Trace
     public void delete(String password) throws MemberException {
         log.info("회원 탈퇴 시작");
         Member findMember = memberRepository.findByUsername(getMyUsername()).orElse(null);
         checkPasswordEq(password, findMember);
 
+        fileService.deleteFile(findMember.getProfileImgPath());//원래 저장한 프사 삭제
+
+        memberRepository.delete(findMember);
+        log.info("회원 탈퇴 성공");
+    }
+
+    @Trace
+    public void kakaoDelete(Long kakaoId) throws MemberException {
+        log.info("카카오 회원 탈퇴 시작");
+        Member findMember = memberRepository.findByKakaoId(kakaoId).orElse(null);
+
+        fileService.deleteFile(findMember.getProfileImgPath());//원래 저장한 프사 삭제
+
         memberRepository.delete(findMember);
         log.info("회원 탈퇴 성공");
     }
 
 
-    private void checkPasswordEq(String password, Member findMember) throws MemberException {
-        if (!password.equals(findMember.getPassword())) {
-            throw new MemberException(MemberExceptionType.PASSWORDS_DOES_NOT_MATCH);
-        }
+
+
+    @Trace
+    @Transactional(readOnly = true)
+    public SearchTeacherDto searchTeacher(TeacherSearchCond cond, Pageable pageable) throws BaseException{
+
+        Page<Teacher> search = memberRepository.search(cond, pageable);
+
+        return new SearchTeacherDto(search);
+
+    }
+
+    @Trace
+    @Transactional(readOnly = true)
+    public SearchOneTeacherDto findTeacher(Long teacherId){
+        return new SearchOneTeacherDto((Teacher) memberRepository.findById(teacherId).orElse(null));
     }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void checkPasswordEq(String password, Member findMember) throws MemberException {
+
+        if (!passwordEncoder.matches(password,findMember.getPassword())) {//equals 하면 안된다!
+
+            throw new MemberException(MemberExceptionType.PASSWORDS_DOES_NOT_MATCH);
+        }
+    }
 
 
 
@@ -140,10 +200,9 @@ public class MemberService {
 
 
 
-
     @Trace
-    private void changeProfileImg(UpdateStudentDto updateStudentDto, Member member) throws IOException {
-        if(updateStudentDto.getProfileImg() != null){
+    private void changeProfileImg(UpdateStudentDto updateStudentDto, Member member) throws IOException, UploadFileException {
+        if(!updateStudentDto.getProfileImg().isEmpty()){
             fileService.deleteFile(member.getProfileImgPath());//원래 저장한 프사 삭제
             String saveFilePath = fileService.saveFile(updateStudentDto.getProfileImg());//새로운 프사 저장
             member.changeProfileImgPath(saveFilePath);
@@ -174,5 +233,6 @@ public class MemberService {
             teacher.changeCareer(updateTeacherDto.getCareer());
         }
     }
+
 
 }

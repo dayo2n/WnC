@@ -5,10 +5,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.springweb.web.domain.lesson.Lesson;
-import com.springweb.web.domain.lesson.QGroupLesson;
-import com.springweb.web.domain.lesson.QLesson;
+import com.springweb.web.domain.lesson.*;
 import com.springweb.web.domain.member.QTeacher;
+import com.springweb.web.service.alarm.ReadType;
+import com.springweb.web.service.lesson.LessonType;
 import com.springweb.web.service.lesson.search.LessonSearchCond;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
+import static com.springweb.web.domain.alarm.QAlarm.alarm;
 import static com.springweb.web.domain.lesson.QGroupLesson.groupLesson;
 import static com.springweb.web.domain.lesson.QLesson.lesson;
 import static com.springweb.web.domain.member.QTeacher.teacher;
@@ -39,6 +40,7 @@ public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
     }
 
 
+    //TODO :검색조건 타입 구현
     @Override
     public Page<Lesson> search(LessonSearchCond cond, Pageable pageable) {
 
@@ -48,9 +50,11 @@ public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
                         titleHasStr(cond.getTitle()),
                         teacherNameHasStr(cond.getTeacherName()),
                         contentHasStr(cond.getContent()),
-                        maxStudentCountUnder(cond.getMaxStudentCount())
+                        searchLessonTypeEq(cond.getLessonType()),
+                        maxStudentCountGraterOrEq(cond.getMinStudentCount()),
+                        maxStudentCountLowerOrEq(cond.getMaxStudentCount())
                 )
-                .join(lesson.teacher, teacher).fetchJoin() //선생님 페치조인
+                .leftJoin(lesson.teacher, teacher).fetchJoin() //선생님 페치조인
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -61,7 +65,9 @@ public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
                         titleHasStr(cond.getTitle()),
                         teacherNameHasStr(cond.getTeacherName()),
                         contentHasStr(cond.getContent()),
-                        maxStudentCountUnder(cond.getMaxStudentCount())
+                        searchLessonTypeEq(cond.getLessonType()),
+                        maxStudentCountGraterOrEq(cond.getMinStudentCount()),
+                        maxStudentCountLowerOrEq(cond.getMaxStudentCount())
                 );
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
@@ -76,15 +82,34 @@ public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
         return StringUtils.hasLength(content) ? lesson.content.contains(content) : null;
     }
 
-    //TODO : maxStudentCountUnder메소드 잘 실행되는지 확인
-    private BooleanExpression maxStudentCountUnder(int maxStudentCount) {
-        if(maxStudentCount == 0){
+
+    private BooleanExpression maxStudentCountGraterOrEq(int minStudentCount) {
+        if(minStudentCount == 0 || minStudentCount ==1 ){
             return null;
         }
-        return lesson.maxStudentCount.lt(maxStudentCount);
+        return lesson.maxStudentCount.goe(minStudentCount);
+    }
+
+    private BooleanExpression maxStudentCountLowerOrEq(int maxStudentCount) {
+        if(maxStudentCount == 0 || maxStudentCount ==1 ){
+            return null;
+        }
+        return lesson.maxStudentCount.loe(maxStudentCount);
     }
 
     private BooleanExpression titleHasStr(String title) {
         return StringUtils.hasLength(title) ? lesson.title.contains(title) : null;
+    }
+
+
+    private BooleanExpression searchLessonTypeEq(LessonType lessonType) {
+
+        if(lessonType == LessonType.GROUP){
+            return lesson.instanceOf(GroupLesson.class);//TODO :lesson.instanceOf(GroupLesson.class)이거 되나?
+        }else if(lessonType == LessonType.PERSONAL) {
+            return lesson.instanceOf(PersonalLesson.class);
+        }
+
+        return null;
     }
 }

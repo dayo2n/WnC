@@ -3,7 +3,7 @@ package com.springweb.web.exception.member;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.BaseExceptionType;
 
-public class MemberException extends Exception implements BaseException {
+public class MemberException extends BaseException {
 
     private BaseExceptionType exceptionType;
 

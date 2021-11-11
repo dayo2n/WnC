@@ -4,12 +4,11 @@ import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.BaseExceptionType;
 
 
-public class UploadFileException extends RuntimeException implements BaseException {
+public class UploadFileException extends BaseException  {
     private BaseExceptionType exceptionType;
 
 
     public UploadFileException(BaseExceptionType bt) { //생성자
-        super(bt.getErrorMessage());
         exceptionType = bt;
     }
 

@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +33,15 @@ public class CreateLessonDto {
     //TODO  :lessonType이 GROUP일 경우 최소 2 이상
     private int maxStudentCount;
 
-    private LocalDateTime period;//모집기간
+    private String startPeriod;//모집기간
+    private String endPeriod;//모집기간
+
 
 
 
     public Lesson toEntity(){
         if(lessonType == LessonType.PERSONAL){
+            log.info("개인과외입니다");
             return PersonalLesson.builder()
                     .title(title)
                     .content(content)
@@ -50,7 +55,8 @@ public class CreateLessonDto {
                     .content(content)
                     .maxStudentCount(maxStudentCount)
                     .nowStudentCount(0)
-                    .period(period)
+                    .startPeriod(LocalDate.parse(startPeriod, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
+                    .endPeriod(LocalDate.parse(endPeriod, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
                     .build();
         }
 

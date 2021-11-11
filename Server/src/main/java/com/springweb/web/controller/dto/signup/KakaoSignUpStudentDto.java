@@ -10,12 +10,15 @@ import java.util.UUID;
 @Data
 public class KakaoSignUpStudentDto {
 
-    private Long kakaoId;//카카오에서 가져옴
+    private String accessToken;//인가코드는 프론트에서 알아서 하고, accessToken만 받아와서 그걸로 인증
     private String username; //카카오로 로그인 하는 경우에도 사용한다!!!!!
     private String name;//직접 입력
     private int age; //나이
 
     private MultipartFile profileImg;//프사 URL
+
+
+    private Long kakaoId;//카카오에서 가져옴, 안보내줘도 됨
 
     //== 카카오 로그인일 경우 ==//
     private final boolean isKakaoMember=true;
@@ -26,7 +29,6 @@ public class KakaoSignUpStudentDto {
     private final boolean activated=true;//활성화 여부
 
 
-    private String accessToken;//인가코드는 프론트에서 알아서 하고, accessToken만 받아와서 그걸로 인증
 
 
     //== 카카오 가입시 꼭 해주어야 함 ==//

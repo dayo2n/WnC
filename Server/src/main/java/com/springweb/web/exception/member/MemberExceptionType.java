@@ -14,6 +14,7 @@ public enum MemberExceptionType implements BaseExceptionType {
 
 
 
+
     private int errorCode;
     private HttpStatus httpStatus;
     private String errorMessage;

@@ -2,10 +2,8 @@ package com.springweb.web.domain.lesson;
 
 import com.springweb.web.domain.base.BaseTimeEntity;
 import com.springweb.web.domain.file.UploadFile;
-import com.springweb.web.domain.lesson.recommend.Recommend;
 import com.springweb.web.domain.member.Teacher;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,8 +30,6 @@ public abstract class Lesson extends BaseTimeEntity {
     @JoinColumn(name = "TEACHER_ID")
     private Teacher teacher;//작성자
 
-    private int recommendCount;//좋아요 개수
-
     private boolean isCompleted; //모집완료 여부, true면 모집완료, false면 모집중
 
 
@@ -41,12 +37,10 @@ public abstract class Lesson extends BaseTimeEntity {
 
 
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+        @JoinColumn(name = "LESSON_ID")
     private List<UploadFile> uploadFiles = new ArrayList<>();
 
-    //== 중복 추천 방지 ==//
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Recommend> recommends = new ArrayList<>();
 
     
 
@@ -70,13 +64,25 @@ public abstract class Lesson extends BaseTimeEntity {
     }
 
     public void changeUploadFiles(List<UploadFile> uploadFiles) {
-        this.uploadFiles = uploadFiles;
+        this.uploadFiles.clear();
+        uploadFiles.forEach(uploadFile->this.uploadFiles.add(uploadFile));//바로 갈아끼우면 오류나므로 하나씩 갈아준다
     }
 
     public void changeMaxStudentCount(int maxStudentCount) {
         this.maxStudentCount = maxStudentCount;
     }
 
+
+    public void confirmTeacher(Teacher teacher){
+        this.teacher=teacher;
+        teacher.addLesson(this);
+    }
+
+
+    //== 모집완료 ==//
+    public void complete(){
+        this.isCompleted=true;
+    }
 
     //== 조회수 & 좋아요 ==//
     public void upView(){

@@ -10,3 +10,6 @@ properties파일 git ignore
 
 
 과외 신청시 교수님께 알람 가야함
+
+
+member.team.getId => 이경우에는 쿼리 추가로 안나간다!!!!

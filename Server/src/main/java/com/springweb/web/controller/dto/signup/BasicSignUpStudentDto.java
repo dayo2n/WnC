@@ -5,6 +5,8 @@ import com.springweb.web.domain.member.Student;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+
 
 @Data
 public class BasicSignUpStudentDto {

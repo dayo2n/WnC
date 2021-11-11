@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "PRIVATE_LESSON_ID"))
+//@AttributeOverride(name = "id", column = @Column(name = "PRIVATE_LESSON_ID"))
 @DiscriminatorValue("PERSONAL")
 public class PersonalLesson extends Lesson{
 
@@ -22,4 +22,6 @@ public class PersonalLesson extends Lesson{
     public PersonalLesson(String title, String content, Teacher teacher, int maxStudentCount) {
         super(title, content, teacher, maxStudentCount);
     }
+
+
 }

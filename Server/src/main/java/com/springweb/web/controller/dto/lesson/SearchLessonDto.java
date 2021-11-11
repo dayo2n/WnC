@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +46,11 @@ public class SearchLessonDto {
 
         private int views;//조회수
 
-        private String teacherName;//작성자(선생님 이름) => 페치조인 사용,
+        private String teacherName;//작성자(선생님 이름) => 페치조인 사용
 
-        private int recommendCount;//좋아요 개수
+        private LocalDateTime createdDate; //작성일
+
+        private boolean isCompleted; //모집완료 여부, true면 모집완료, false면 모집중
 
         private LessonType lessonType ; // PERSONAL이면 개인과외, GROUP이면 그룹과외
 
@@ -55,9 +58,8 @@ public class SearchLessonDto {
 
         private int nowStudentCount;
 
-        private boolean isCompleted; //모집완료 여부, true면 모집완료, false면 모집중
-
-        private LocalDateTime period;//모집기간
+        private LocalDateTime startPeriod;//모집기간
+        private LocalDateTime endPeriod;//모집기간
 
 
         public SimpleLessonDto(Lesson lesson) {
@@ -65,8 +67,8 @@ public class SearchLessonDto {
             this.title = lesson.getTitle();
             this.views = lesson.getViews();
             this.teacherName = lesson.getTeacher().getName();
-            this.recommendCount = lesson.getRecommendCount();
 
+            this.createdDate = lesson.getCreatedDate();
             this.maxStudentCount = lesson.getMaxStudentCount();
             this.isCompleted = lesson.isCompleted();
 
@@ -75,7 +77,8 @@ public class SearchLessonDto {
             if(lesson instanceof GroupLesson groupLesson){
                 this.lessonType = LessonType.GROUP;
                 this.nowStudentCount = groupLesson.getNowStudentCount();
-                this.period = groupLesson.getPeriod();
+                this.startPeriod = groupLesson.getStartPeriod();
+                this.endPeriod = groupLesson.getEndPeriod();
             }
         }
 
