@@ -105,3 +105,65 @@
 }
 
 .teacher_name {}
+
+
+
+
+/* ----------------------------------------------------------------- */
+
+.popular_teacher_container{
+    width:1120px;
+}
+
+.popular_title_container {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .popular_title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #545e6f;
+    margin-right: 30px;
+  }
+  
+  .slide_prev {
+    font-size: 2rem;
+    cursor: pointer;
+    color: rgb(47, 48, 89);
+  }
+  
+  .slide_next {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #cfd8dc;
+  }
+  
+  .slide_prev_hover:hover {
+    transition: transform 0.5s;
+    transform: translateX(-2px);
+  }
+  
+  .slide_next_hover:hover {
+    transition: transform 0.5s;
+    transform: translateX(2px);
+  }
+  
+  .arrow-container {
+    display: flex;
+  }
+
+
+  
+  .popular_teacher_list{
+    display: flex;
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    overflow: none; 
+    max-width: 1200px;
+    overflow: none;
+  }
