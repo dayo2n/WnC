@@ -1,7 +1,8 @@
 
 $(document).ready(function () { 
     // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
-    $("#notice_board_title tr").click(function(e){
+    $(".notice_board_title tr").click(function(e){
+      console.log("hi");
         var editorType = "none";
         var postType = "viewPost";
         var rowIdx = e.target.closest("tr").rowIndex;
@@ -15,26 +16,49 @@ $(document).ready(function () {
         var postType = "editPost";
         $(location).attr('href', "postEditor.html?editorType=" + editorType + "&postType=" + postType);
     });
+
+    // for notification modal
+    $('#notification_icon').click(function(){
+      $(".notification_modal").css("display", "block");
+      $(".user_modal").css("display", "none");
+    });
+    $('.notification_modal_close_area').click(function(){
+      $(".notification_modal").css("display", "none");
+    });
+
+    // for user modal
+    $('#user_icon').click(function(e){
+      $(".user_modal").css("display", "block");
+      $(".notification_modal").css("display", "none");
+    });
+  
+    $('.user_modal_close_area').click(function(){
+      $(".user_modal").css("display", "none");
+    });
+
+
+
+    // $('body').click(function(e){
+    //   $(".notification_modal").css("display", "none");
+    //   $(".user_modal").css("display", "none");
+    // });
 });
-const teacher_list_search_form = document.querySelector(
-  ".teacher_list_search_form"
-);
-const notification_icon = document.querySelector("#notification_icon");
-const user_icon = document.querySelector("#user_icon");
-const notification_modal = document.querySelector(".notification_modal");
-const user_modal = document.querySelector(".user_modal");
+// const notification_icon = document.querySelector("#notification_icon");
+// const user_icon = document.querySelector("#user_icon");
+// const notification_modal = document.querySelector(".notification_modal");
+// const user_modal = document.querySelector(".user_modal");
 
-notification_icon.addEventListener("click",e =>notification_modal.style.display="inline");
-user_icon.addEventListener("click",e =>user_modal.style.display="inline");
+// notification_icon.addEventListener("click",e =>notification_modal.style.display="inline");
+// user_icon.addEventListener("click",e =>user_modal.style.display="inline");
 
-const notification_modal_close_area = document.querySelector(".notification_modal_close_area");
-const user_modal_close_area = document.querySelector(".user_modal_close_area");
+// const notification_modal_close_area = document.querySelector(".notification_modal_close_area");
+// const user_modal_close_area = document.querySelector(".user_modal_close_area");
 
-notification_modal_close_area.addEventListener("click",e=> notification_modal.style.display="none");
-user_modal_close_area.addEventListener("click",e => user_modal.style.display="none");
+// notification_modal_close_area.addEventListener("click",e=> notification_modal.style.display="none");
+// user_modal_close_area.addEventListener("click",e => user_modal.style.display="none");
 
 
-const teacher_list_search_form = document.querySelector(".teacher_list_search_form");
+
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
 
@@ -58,7 +82,7 @@ function getTeacherList(event) {
     .then((data) => console.log(data));
 }
 
-teacher_list_search_form.addEventListener("submit", getTeacherList2);
+// teacher_list_search_form.addEventListener("submit", getTeacherList2);
 
 const teacher_list = document.querySelector(".teacher_list");
 function getTeacherList2(event) {
