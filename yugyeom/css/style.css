@@ -60,22 +60,6 @@ a:hover {
   }
 }
 
-.head_container{
-  display: flex;
-  justify-content: space-between;
-}
-
-.head_container .right_head_items{
-  margin-top: 20px;
-}
-
-.logoBox{
-  display: inline;
-
-  vertical-align: middle;
-  margin: 20px 5px;
-}
-
 .notice_board_container{
   display: flex;
   flex-direction: column;
@@ -84,18 +68,12 @@ a:hover {
 }
 
 .searchBoxComponent{
-  height: 35px;
-  border-radius: 4px;
-}
-
-.searchBoxComponent:focus{
-  outline: none;
+  height: 30px;
+  border-radius: 0;
 }
 
 #searchCondition{
   width: 50%;
-  border: 1px solid lightgray;
-  padding: 10px;
 }
 
 .searchBox{
@@ -120,7 +98,7 @@ button:hover{
 }
 
 table{
-  width: 100%;
+  width: 80%;
   border-top: 1px solid gray;
   border-collapse: collapse;
   margin-left: auto;
