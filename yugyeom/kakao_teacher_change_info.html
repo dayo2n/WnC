@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>WnC 과외 선생님 매칭</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <!-- user-scalable 을 사용하지 않는 디바이스를 위해, maximun-scale/minimum-scale 설정을 하는 것-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- Open Graph (Facebook, Linkedin) -->
+    <!-- https://ourcodeworld.com/public-media/articles/articleocw-56d1a6901b773.png -->
+    <meta propery="og:type" content="website" />
+    <!-- https://ogp.me/#types -->
+    <meta property="og:title" content="Open Graph title" />
+    <meta property="og:description" content="Open Graph description" />
+    <meta property="og:image" content="Open Graph img" />
+    <meta property="og:url" content="Open Graph url" />
+    <meta property="og:site_name" content="Open Graph site name" />
+
+    <!-- 일반적인 fabicon 설정 -->
+    <link rel="icon" href="" />
+    <!-- 아이폰용 fabicon 설정 -->
+    <link rel="apple-touch-icon" href="" />
+    <!-- 인터넷 익스플러오용 fabicon 설정-->
+    <link rel="short icon" type="image/x-icon" href="" />
+
+    <!-- CSS Reset(1), 아이콘 폰트, 웹페이지 사용폰트, style.css -->
+    <link rel="stylesheet" href="css/nomalize.css" /> <!-- nomalize.css 파일 다운받아서 사용, 다른설정 하기 전에 초기화 -->
+    <!-- https://fontawesome.com/start -->
+    <script src="https://kit.fontawesome.com/9f3180d267.js" crossorigin="anonymous"></script> <!-- 각종 아이콘 -->
+    <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
+    <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
+    <!-- 웹 폰트-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/change_info.css"/>
+</head>
+
+<body>
+    <header>
+        <div class="inner">
+            <div class="head_container">
+                <div class="left_head_items">
+                    <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                    <h1 class="logoBox">WnC Tutoring</h1>
+                    <div class="search_teacher_link logoBox">선생님 탐색</div>
+                    <div class="search_tutoring_link logoBox">게시글 탐색</div>
+                </div>
+                <div class="right_head_items">
+                    <img id="notification_icon" src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                        <div class="notification_modal">
+                            <div class="notification_modal_title">
+                                <h2>알림모달</h2>
+                            </div>
+                            <div class="notification_modal_close_area">X</div>
+                            <div class="notification_modal_content">
+                                <p>123</p>
+                            </div>
+                        </div>
+                  
+                    <img id="user_icon" src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                        <div class="user_modal">
+                            <div class="user_modal_title">
+                                <h2>유저모달</h2>
+                            </div>
+                            <div class="user_modal_close_area">X</div>
+                            <div class="user_modal_content">
+                                <p>123</p>
+                            </div>
+                        </div>
+                    <img src="img/login.png" class="logoBox" alt="">
+                    <div class="login_button"></div>
+                    <div class="profile"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="inner">
+            <div class="change_info_container">
+                <form class="change_info_name">
+                    <div>이름</div>
+                    <input id="name" type="text" placeholder="변경할 이름" required>
+                    <input id="name_submit" type="submit" value="저장하기"> 
+                </form>
+                <form class="change_info_age">
+                    <div>나이</div>
+                    <input type="text" id="age" placeholder="변경할 나이" required>
+                    <input type="submit" id="age_submit" value="저장하기">
+                </form>
+                <div class="change_info_img"> 
+                    <label for="info_img">사진변경</label>
+                    <br> 
+                    <input type="file" id="info_img"> 
+                </div>
+                <form class="change_info_career">
+                    <div>경력</div>
+                    <input type="text" id="career" placeholder="변경할 경력" required>
+                    <input type="submit" id="career_submit" value="저장하기">
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
