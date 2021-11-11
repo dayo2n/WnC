@@ -1,6 +1,6 @@
 ## <span style="color:orange">DATABASE</span>
 
-##### 공통 
+##### 공통
 
 ```
 CREATED_DATE  		=> 생성일
