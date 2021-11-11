@@ -1,0 +1,9 @@
+
+
+.writeComponent{
+    border: 0px solid black;
+}
+
+.writeComponent:focus{
+    outline: none;
+}

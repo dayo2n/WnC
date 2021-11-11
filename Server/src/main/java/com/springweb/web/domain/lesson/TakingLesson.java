@@ -1,8 +1,6 @@
 package com.springweb.web.domain.lesson;
 
-import com.springweb.web.controller.dto.member.StudentDto;
 import com.springweb.web.domain.base.BaseTimeEntity;
-import com.springweb.web.domain.lesson.Lesson;
 import com.springweb.web.domain.member.Student;
 import lombok.AccessLevel;
 import lombok.Getter;

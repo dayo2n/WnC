@@ -17,7 +17,7 @@ public interface FileService {
      * 파일들을 저장하다 오류가 발생하면
      * 저장한 파일들을 모두 삭제
      */
-    //void saveFiles(Object object, List<MultipartFile> multipartFiles) throws UploadFileException, IOException;//컴퓨터에 파일들 저장
+    List<UploadFile> saveFiles(List<MultipartFile> multipartFiles) throws UploadFileException, IOException;//컴퓨터에 파일들 저장
 
 
 
