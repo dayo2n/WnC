@@ -36,8 +36,8 @@
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
+    <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
 </head>
 
 <body>
@@ -57,34 +57,127 @@
         </div>
     </header>
     <section>
-        <div class="notice_board_container">
-            <div class="notice_board_submit_container">
-                <div class="select_items">
-                    <div class="select_option"></div>
-                    <div class="select_people_num"></div>
+        <div class="inner">
+            <div class="notice_board_container">
+                <div class="notice_board_submit_container">
+                    <div class="select_items">
+                        <div class="select_option"></div>
+                        <div class="select_people_num"></div>
+                    </div>
+                    <div class="search_items">
+                        <div class="search_title"></div>
+                        <div class="search_people_num"></div>
+                    </div>
+                    <input type="submit" value="검색">
                 </div>
-                <div class="search_items">
-                    <div class="search_title"></div>
-                    <div class="search_people_num"></div>
-                </div>
-                <input type="submit" value="검색">
+                <ul class="notice_board_content_container">
+                    <li class="notice_board_title">
+                        <span class="list_num"></span>
+                        <span class="list_title"></span>
+                        <span class="list_upload_files"></span>
+                        <span class="list_writer"></span>
+                        <span class="list_created_date"></span>
+                        <span class="list_views"></span>
+                    </li>
+                    <li class="notice_board_content"></li>
+                </ul>
             </div>
-            <ul class="notice_board_content_container">
-                <li class="notice_board_title">
-                    <span class="list_num"></span>
-                    <span class="list_title"></span>
-                    <span class="list_upload_files"></span>
-                    <span class="list_writer"></span>
-                    <span class="list_created_date"></span>
-                    <span class="list_views"></span>
-                </li>
-                <li class="notice_board_content"></li>
-            </ul>
         </div>
     </section>
-
     <section>
-
+        <div class="inner">
+            <div class="teacher_list_container">
+                <div class="teacher_list_title">
+                    <select id="teacher_list_select" name="job">
+                        <option id="select_teacher_name" value="이름">이름</option>
+                        <option id="select_teacher_subject" value="과목">과목</option>
+                    </select>
+                    <input id="teacher_search"type="text" placeholder="검색어 입력">
+                </div>
+                <ul class="teacher_list">
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </section>
 
 </body>
