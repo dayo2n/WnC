@@ -1,6 +1,19 @@
-const teacher_list_search_form = document.querySelector(
-  ".teacher_list_search_form"
-);
+const notification_icon = document.querySelector("#notification_icon");
+const user_icon = document.querySelector("#user_icon");
+const notification_modal = document.querySelector(".notification_modal");
+const user_modal = document.querySelector(".user_modal");
+
+notification_icon.addEventListener("click",e =>notification_modal.style.display="inline");
+user_icon.addEventListener("click",e =>user_modal.style.display="inline");
+
+const notification_modal_close_area = document.querySelector(".notification_modal_close_area");
+const user_modal_close_area = document.querySelector(".user_modal_close_area");
+
+notification_modal_close_area.addEventListener("click",e=> notification_modal.style.display="none");
+user_modal_close_area.addEventListener("click",e => user_modal.style.display="none");
+
+
+const teacher_list_search_form = document.querySelector(".teacher_list_search_form");
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
 
@@ -189,3 +202,4 @@ if (classList.clientWidth < liList.length * 270) {
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
 }
+
