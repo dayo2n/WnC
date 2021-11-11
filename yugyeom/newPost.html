@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-    
+
 </head>
 
 <body>
@@ -24,41 +24,52 @@
                     </th>
                 </tr>
                 <tr>
-                    <td width=50>
-                        <select>
-                            <option value="OneByOne">일대일 과외</option>
-                            <option value="Group">그룹 과외</option>
+                    <td width=120>
+                        <select id="lessonType">
+                            <option value="PERSONAL">일대일 과외</option>
+                            <option value="GROUP">그룹 과외</option>
                         </select>
                     </td>
                     <td>
-                        <input type="text" placeholder="제목을 입력하세요." maxlength=20 style="width:100%">
+                        <input type="text" placeholder="제목을 입력하세요." class="writeComponent" id="title" maxlength=20
+                            style="width:100%">
                     </td>
                 </tr>
                 <tr>
-                    <td width=50>
+                    <td>
                         모집인원
                     </td>
                     <td>
-                        <input type="text" placeholder="최대인원을 입력하세요." id="maxTutee" maxlength=20 style="width:100%"">
+                        <input type="text" placeholder="최대인원을 입력하세요." class="writeComponent" id="maxStudentCount"
+                            maxlength=20 style="width:100%"">
                     </td>
                 </tr>
                 <tr>
-                    <td width=50>
+                    <td>
                         과외기간
                     </td>
                     <td>
-                        <input type="text" name="" id="startDate" placeholder="시작일자 yyyy-mm-dd"> ~ 
-                        <input type="text" name="" id="endDate" placeholder="종료일자 yyyy-mm-dd">
+                        <input type=" text" class="writeComponent" id="startDate"
+                            placeholder="시작일자 yyyy-mm-dd"> ~
+                        <input type="text" class="writeComponent" id="endDate" placeholder="종료일자 yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        모집 마감 기간
+                    </td>
+                    <td>
+                        <input type="text" class="writeComponent"  id="periodDate" placeholder="마감일자 yyyy-mm-dd">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" height=400>
-                        <textarea placeholder="내용을 입력하세요." style="width: 100%; height: 100%"></textarea>
+                        <textarea placeholder="내용을 입력하세요." class="writeComponent"  id="content" style="width: 100%; height: 100%"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" align=right>
-                        <input type="button" value="글쓰기">
+                        <input type="button" value="글 등록">
                         <input type="button" value="목록으로">
                     </td>
                 </tr>
