@@ -33,36 +33,183 @@
     <link rel="stylesheet" href="css/nomalize.css" /> <!-- nomalize.css 파일 다운받아서 사용, 다른설정 하기 전에 초기화 -->
     <!-- https://fontawesome.com/start -->
     <script src="https://kit.fontawesome.com/9f3180d267.js" crossorigin="anonymous"></script> <!-- 각종 아이콘 -->
-
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
     <header>
         <div class="inner">
-            <div class="head_container">
+            <div class="head_contianer">
                 <div class="left_head_items">
-                    <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
-                    <h1 class="logoBox">WnC Tutoring</h1>
-                    <div class="search_teacher_link logoBox">선생님 탐색</div>
-                    <div class="search_tutoring_link logoBox">게시글 탐색</div>
+                    <div class="logo"></div>
+                    <div class="search_tutoring_link"></div>
+                    <div class="search_teacher_link"></div>
                 </div>
                 <div class="right_head_items">
-                    <img src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
-                    <img src="img/user.png" class="logoBox" alt="" style="width: 25px;">
-                    <img src="img/login.png" class="logoBox" alt="">
                     <div class="login_button"></div>
                     <div class="profile"></div>
                 </div>
             </div>
         </div>
     </header>
+    <section>
+        <div class="inner">
+            <div class="notice_board_container">
+                <!-- 게시글 검색 부분 -->
+                <div class="notice_board_submit_container">
+                    <div class="searchBox">
+                        <select name="select_option" id="select_option" class="searchBoxComponent">
+                            <option value="Title">제목</option>
+                            <option value="Tutor">선생님</option>
+                            <option value="NumberOfTutee">모집인원</option>
+                            <option value="PERSONAL" id="lessonType">1대1 과외</option>
+                            <option value="GROUP" id="lessonType">그룹 과외</option>
+                        </select>
+                    </div>
+                    <div class="searchBox">
+                        <input type="text" class="searchBoxComponent" id="searchCondition" placeholder="검색어 입력">
+                    </div>
+                    <div class="searchBox">
+                        <button type="submit" class="btn searchBoxComponent">검색</button>
+                    </div>
+                    <input type="hidden" name="searchFlag" value="true">
+                </div>
+                <div class="notice_board_title">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>첨부</th>
+                                <th>작성자</th>
+                                <th>등록일</th>
+                                <th>조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>d</td>
+                                <td id="titleCell">ddddddddddddddddddddddddddddddddddddd</td>
+                                <td>ddd</td>
+                                <td>ddd</td>
+                                <td>ddd</td>
+                                <td>d</td>
+                            </tr>
+                            <tr>
+                                <td>d</td>
+                                <td id="titleCell">d</td>
+                                <td>ddd</td>
+                                <td>ddd</td>
+                                <td>ddd</td>
+                                <td>d</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="inner">
+            <div class="teacher_list_container">
+                <div class="teacher_list_title">
+                    <form class="teacher_list_search_form">
+                        <select id="teacher_list_select">
+                            <option id="teacher_select_name" value="이름">이름</option>
+                            <option id="teacher_select_subject" value="과목">과목</option>
+                        </select>
+                        <input id="teacher_search" type="text" placeholder="검색어 입력" required>
+                    </form>
+                </div>
+                <ul class="teacher_list">
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="teacher_card">
+                        <img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img>
+                        <div class="teacher_description">
+                            <div class="teacher_description_top">
+                                <div class="teacher_name">한석원선생님</div>
+                                <div class="teacher_subject">수학</div>
+                            </div>
+                            <div class="teacher_description_mid">
+                                <div class="teacher_rating">⭐⭐⭐⭐⭐</div>
+                                <input class="chatting_button" type="button" value="채팅하기">
+                            </div>
+                            <div class="teacher_description_bottom">
+                                <div class="teacher_career">경력:</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
     <section>
         <div class="inner">
             <div class="popular_teacher_container">
@@ -177,62 +324,3 @@
 
     <script src="js/home.js"></script>
 </body>
-            <div class="notice_board_container">
-                <!-- 게시글 검색 부분 -->
-                <div class="notice_board_submit_container">
-                    <div class="searchBox">
-                        <select name="select_option" id="select_option" class="searchBoxComponent">
-                            <option value="Title">제목</option>
-                            <option value="Tutor">선생님</option>
-                            <option value="NumberOfTutee">모집인원</option>
-                            <option value="PERSONAL" id="lessonType">1대1 과외</option>
-                            <option value="GROUP" id="lessonType">그룹 과외</option>
-                        </select>
-                    </div>
-                    <div class="searchBox">
-                        <input type="text" class="searchBoxComponent" id="searchCondition" placeholder="검색어 입력">
-                    </div>
-                    <div class="searchBox">
-                        <button type="submit" class="btn searchBoxComponent">검색</button>
-                    </div>
-                    <input type="hidden" name="searchFlag" value="true">
-                </div>
-                <div>
-                    <table id="notice_board_title">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>첨부</th>
-                                <th>작성자</th>
-                                <th>등록일</th>
-                                <th>조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>d</td>
-                                <td id="titleCell">ddddddddddddddddddddddddddddddddddddd</td>
-                                <td>ddd</td>
-                                <td>ddd</td>
-                                <td>ddd</td>
-                                <td>d</td>
-                            </tr>
-                            <tr>
-                                <td>d</td>
-                                <td id="titleCell">d</td>
-                                <td>ddd</td>
-                                <td>ddd</td>
-                                <td>ddd</td>
-                                <td>d</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-    <script src="js/home.js"></script>
-</body>
-
-</html>
