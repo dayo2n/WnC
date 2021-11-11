@@ -1,38 +1,52 @@
 
 .teacher_list_container{
-    width:1200px;
-    height: 800px;
+    width:1090px;
     box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
     transition: 0.4s;
     /* IE11 에서는 flex 설정시, 디폴트로 flex 아이템들에 고정 너비를 무시 */
     flex-shrink: 0;
     margin: 0 auto;
-    background-color: aliceblue;
+    background-color: rgba(224, 255, 255, 0.425);
+    border-radius: 4px;
 }
 
 .teacher_list_title{
+    width: 100%;
     display: flex;
     justify-content: end;
-    margin-right: 100px;
-    height: 100px;
-    padding-top: 50px;
+    height: 50px;
+    border: solid 1px;
+    background-color: rgba(242, 250, 255, 0.527);
+    border-radius: 4px;
+    align-items: center;
+    padding-right: 20px;
 }
 
 #teacher_list_select{
     height: 40px;
+    border-radius: 4px;
 }
 
 #teacher_search{
     height: 40px;
-   margin-left: 30px;
+    margin-left: 30px;
+    border-radius: 4px;
 }
 
 .teacher_list {
-    list-style: none;
     display: flex;
+    list-style: none;
+    padding-left:0px;
     flex-wrap: wrap;
-    
-    
+    margin-left: 5px;
+}
+
+#teacher_list_select{
+    border:none;
+}
+
+#teacher_search{
+    border:none;
 }
 
 .teacher_card {
@@ -40,14 +54,18 @@
     flex-direction: column;
     width: 250px;
     height: 300px;
-    box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
     border-radius: 8px;
-    margin: 0 10px;
+    margin: 10px 10px;
     transition: 0.4s;
+    box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
     /* IE11 에서는 flex 설정시, 디폴트로 flex 아이템들에 고정 너비를 무시 */
     flex-shrink: 0;
     font-size: 1.1rem;
+    background-color: rgba(255, 255, 224, 0);
 }
+.teacher_card:hover {
+    transform: translate(0, -3px);
+  }
 
 .teacher_img {
     max-width: 250px;
