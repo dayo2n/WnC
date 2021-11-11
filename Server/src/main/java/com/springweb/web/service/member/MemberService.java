@@ -1,4 +1,4 @@
-package com.springweb.web.service;
+package com.springweb.web.service.member;
 
 import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.controller.dto.member.StudentDto;
@@ -10,7 +10,7 @@ import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.member.MemberExceptionType;
-import com.springweb.web.repository.MemberRepository;
+import com.springweb.web.repository.member.MemberRepository;
 import com.springweb.web.service.file.FileService;
 import com.springweb.web.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.context.Theme;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -76,6 +75,7 @@ public class MemberService {
 
 
 
+    //TODO 이거 되는지 확인해야 함, 메소드에 student를 넘겼는데 영속성 컨텍스트에서 계속 관리되려나.,.?
     @Trace
     public void update(UpdateStudentDto updateStudentDto) throws MemberException, IOException {
         log.info("내 정보 수정 시작 => 학생");
@@ -87,39 +87,7 @@ public class MemberService {
         changeProfileImg(updateStudentDto, student);
 
     }
-    @Trace
-    private void changeProfileImg(UpdateStudentDto updateStudentDto, Member member) throws IOException {
-        if(updateStudentDto.getProfileImg() != null){
-            fileService.deleteFile(member.getProfileImgPath());//원래 저장한 프사 삭제
-            String saveFilePath = fileService.saveFile(updateStudentDto.getProfileImg());//새로운 프사 저장
-            member.changeProfileImgPath(saveFilePath);
-        }
-    }//상속받아 구현
-    @Trace
-    private void changeAge(UpdateStudentDto updateStudentDto,  Member member) {
-        if(updateStudentDto.getAge() != 0){
-            member.changeAge(updateStudentDto.getAge());
-        }
-    }
-    @Trace
-    private void changePassword(UpdateStudentDto updateStudentDto,  Member member) {
-        if(StringUtils.hasLength(updateStudentDto.getPassword())){
-            member.changePassword(updateStudentDto.getPassword(), passwordEncoder);
-        }
-    }
-    @Trace
-    private void changeName(UpdateStudentDto updateStudentDto,  Member member) {
-        if(StringUtils.hasLength(updateStudentDto.getName())){
-            member.changeName(updateStudentDto.getName());
-        }
-    }
 
-    @Trace
-    private void changeCareer(UpdateTeacherDto updateTeacherDto, Teacher teacher) {
-        if(StringUtils.hasLength(updateTeacherDto.getCareer())){
-            teacher.changeCareer(updateTeacherDto.getCareer());
-        }
-    }
     @Trace
     public void update(UpdateTeacherDto updateTeacherDto) throws MemberException, IOException {
         log.info("내 정보 수정 시작 => 선생님");
@@ -167,6 +135,44 @@ public class MemberService {
             throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
         }
         return username;
+    }
+
+
+
+
+
+    @Trace
+    private void changeProfileImg(UpdateStudentDto updateStudentDto, Member member) throws IOException {
+        if(updateStudentDto.getProfileImg() != null){
+            fileService.deleteFile(member.getProfileImgPath());//원래 저장한 프사 삭제
+            String saveFilePath = fileService.saveFile(updateStudentDto.getProfileImg());//새로운 프사 저장
+            member.changeProfileImgPath(saveFilePath);
+        }
+    }//상속받아 구현
+    @Trace
+    private void changeAge(UpdateStudentDto updateStudentDto,  Member member) {
+        if(updateStudentDto.getAge() != 0){
+            member.changeAge(updateStudentDto.getAge());
+        }
+    }
+    @Trace
+    private void changePassword(UpdateStudentDto updateStudentDto,  Member member) {
+        if(StringUtils.hasLength(updateStudentDto.getPassword())){
+            member.changePassword(updateStudentDto.getPassword(), passwordEncoder);
+        }
+    }
+    @Trace
+    private void changeName(UpdateStudentDto updateStudentDto,  Member member) {
+        if(StringUtils.hasLength(updateStudentDto.getName())){
+            member.changeName(updateStudentDto.getName());
+        }
+    }
+
+    @Trace
+    private void changeCareer(UpdateTeacherDto updateTeacherDto, Teacher teacher) {
+        if(StringUtils.hasLength(updateTeacherDto.getCareer())){
+            teacher.changeCareer(updateTeacherDto.getCareer());
+        }
     }
 
 }

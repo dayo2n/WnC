@@ -6,9 +6,11 @@ import com.springweb.web.controller.dto.member.DeleteMember;
 import com.springweb.web.controller.dto.member.UpdateStudentDto;
 import com.springweb.web.controller.dto.member.UpdateTeacherDto;
 import com.springweb.web.exception.member.MemberException;
-import com.springweb.web.service.MemberService;
+import com.springweb.web.service.lesson.search.LessonSearchCond;
+import com.springweb.web.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,4 +54,6 @@ public class MemberController {
         memberService.delete(deleteMember.getPassword());
         return new ResponseEntity("회원 탈퇴에 성공하였습니다.", HttpStatus.CREATED);
     }
+
+
 }

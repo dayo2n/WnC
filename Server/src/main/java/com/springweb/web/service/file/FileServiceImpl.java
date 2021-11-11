@@ -1,5 +1,6 @@
 package com.springweb.web.service.file;
 
+import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.domain.file.UploadFile;
 import com.springweb.web.exception.file.UploadFileException;
 import com.springweb.web.exception.file.UploadFileExceptionType;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,6 +60,33 @@ public class FileServiceImpl implements FileService {
         return getFullPath(storeFileName);
     }
 
+    @Trace
+    @Override
+    public List<UploadFile> saveFiles(List<MultipartFile> multipartFiles) throws UploadFileException, IOException {
+        if (multipartFiles == null || multipartFiles.get(0).isEmpty()) {
+            return new ArrayList<>();
+        }
+        log.info("파일 저장을 실햅합니다.");
+        List<String> uploadedFilePathList = new ArrayList<>();
+
+        try {
+            for (MultipartFile multipartFile : multipartFiles) {
+                uploadedFilePathList.add(saveFile(multipartFile));
+            }
+
+            List<UploadFile> uploadFiles = uploadedFilePathList.stream()
+                    .map(uploadedFilePath -> UploadFile.createUploadFile(uploadedFilePath)).toList();
+
+            return uploadFiles;
+        } catch (Exception e) {
+            log.error("파일 저장 과정에서 에러 발생 {}", e.getMessage());
+            e.getStackTrace();
+            for (String filePath : uploadedFilePathList) {
+                deleteFile(filePath);
+            }
+            throw new UploadFileException(UploadFileExceptionType.FILE_COULD_NOT_BE_SAVED);
+        }
+    }
 
 
     /**
@@ -106,6 +135,7 @@ public class FileServiceImpl implements FileService {
 
     }
 
+    @Trace
     @Override
     public void deleteFiles(List<UploadFile> uploadFiles) {//UUID 받아서 삭제하기
         uploadFiles.forEach(uploadFile -> deleteFile(uploadFile.getFilePath()));
