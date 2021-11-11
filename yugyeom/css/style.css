@@ -117,30 +117,6 @@ button:hover{
   color: white;
 }
 
-table{
-  width: 100%;
-  border-top: 1px solid gray;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-}
-
-th, td{
-  border-bottom: 1px solid gray;
-  padding: 6px;
-  text-align: center;
-}
-
-#titleCell{
-  text-align: left;
-}
-
-#btn-createNewPost{
-  margin: 15px 0px;
-  float: right;
-  background-color: white;
-}
 
   
 .notification_modal {
