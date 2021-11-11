@@ -1,4 +1,9 @@
 
+// edior 타입은 두 개. 글 수정용 에디터 : "editEditor", 새 글 작성용 데이터 : "newEditor"
+
+
+// ---------- for postEditor.html ----------
+
 $(document).ready(function () { 
     $.datepicker.setDefaults($.datepicker.regional['ko']);
 
@@ -48,6 +53,24 @@ $(document).ready(function () {
 
         }
     });
+    $("#btn-backToNoticeBoard").click(function(){
+        // viewPost /  editPost 모드 구분
+        data = location.href.split("?")[1];
+        types = data.split("&");
+        editorType = types[0].split("=")[1];
+        postType = types[1].split("=")[1];
+        console.log(editorType + " " +postType);
+        if(postType==="editPost"){
+            var flag = confirm('작성한 내용은 저장되지 않습니다. 글 작성을 취소하시겠습니까?');
+            console.log(flag);
+            if(flag){
+                $(location).attr('href', "home.html");
+            }
+        }else{
+            // $(location).attr('href', "home.html");
+        }
+        
+    });
 
 
 });
@@ -57,11 +80,12 @@ $(document).ready(function () {
 // ---------- for viewPost.html ----------
 
 $(document).ready(function () { 
-    // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
-    $("#btn-backToNoticeBoard").click(function(){
-            $(location).attr('href', "home.html");
-    });
+
+    // 글 수정 클릭시
     $("#btn-editPost").click(function(){
-        $(location).attr('href', "postEditor.html");
-});
+        var editorType = "editEditor";
+        var postType = "editPost";
+        // 기존에 작성된 내용을 불러와야함
+        $(location).attr('href', "postEditor.html?editorType=" +  editorType + "&postType=" + postType);
+    });
 });

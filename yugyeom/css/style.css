@@ -60,6 +60,22 @@ a:hover {
   }
 }
 
+.head_container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.head_container .right_head_items{
+  margin-top: 20px;
+}
+
+.logoBox{
+  display: inline;
+
+  vertical-align: middle;
+  margin: 20px 5px;
+}
+
 .notice_board_container{
   display: flex;
   flex-direction: column;
@@ -67,9 +83,13 @@ a:hover {
   margin: 20px;
 }
 
-.searchBoxComponent{
-  height: 30px;
-  border-radius: 0;
+.searchBoxComponent, #btn-createNewPost{
+  height: 35px;
+  border-radius: 4px;
+}
+
+.searchBoxComponent:focus{
+  outline: none;
 }
 
 #searchCondition{
@@ -98,7 +118,7 @@ button:hover{
 }
 
 table{
-  width: 80%;
+  width: 100%;
   border-top: 1px solid gray;
   border-collapse: collapse;
   margin-left: auto;
@@ -116,6 +136,11 @@ th, td{
   text-align: left;
 }
 
+#btn-createNewPost{
+  margin: 15px 0px;
+  float: right;
+  background-color: white;
+}
 
   
 .notification_modal {
