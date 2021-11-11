@@ -1,5 +1,5 @@
 
-$(document).ready(function () { 
+$(document).ready(function () {
     // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
     $(".notice_board_title tr").click(function(e){
       console.log("hi");
@@ -35,29 +35,6 @@ $(document).ready(function () {
     $('.user_modal_close_area').click(function(){
       $(".user_modal").css("display", "none");
     });
-
-
-
-    // $('body').click(function(e){
-    //   $(".notification_modal").css("display", "none");
-    //   $(".user_modal").css("display", "none");
-    // });
-});
-// const notification_icon = document.querySelector("#notification_icon");
-// const user_icon = document.querySelector("#user_icon");
-// const notification_modal = document.querySelector(".notification_modal");
-// const user_modal = document.querySelector(".user_modal");
-
-// notification_icon.addEventListener("click",e =>notification_modal.style.display="inline");
-// user_icon.addEventListener("click",e =>user_modal.style.display="inline");
-
-// const notification_modal_close_area = document.querySelector(".notification_modal_close_area");
-// const user_modal_close_area = document.querySelector(".user_modal_close_area");
-
-// notification_modal_close_area.addEventListener("click",e=> notification_modal.style.display="none");
-// user_modal_close_area.addEventListener("click",e => user_modal.style.display="none");
-
-
 
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
