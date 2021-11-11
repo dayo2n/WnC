@@ -1,5 +1,5 @@
 @import 'newPost.css';
-@import 'newPost.css';
+@import 'home.css';
 
 * {
   box-sizing: border-box;
@@ -116,8 +116,6 @@ button:hover{
               0 -80px 0 0 rgba(0,0,0,0.25) inset;
   color: white;
 }
-
-
   
 .notification_modal {
   background: rgba(228, 243, 255, 0.966);
