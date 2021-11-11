@@ -1,9 +1,20 @@
+@import 'newPost.css';
+@import 'newPost.css';
+
 * {
   box-sizing: border-box;
 }
 
+.inner {
+  width: 100%; /* 가로 사이즈가 1200px 넘는 해상도에서는 max-width 설정 /
+  height: 100%; / align-items 등으로 수직 가운데 정렬을 위해, 알맞은 height 설정이 필요함 /
+  margin: 0 auto; / 가운데 정렬: 동일 요소에 width 가 설정되어 있을 때에만 적용 /
+  padding: 0rem 2rem; / 좌우 padding 을 살짝 주어서, 좌우에 딱 붙지 않도록 함 /
+  overflow: hidden; / 넘치는 영역에 대해서는 표시안되도록 작성해야 함 */
+}
+
 body {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   color: #3f464d;
   font-family: "Spoqa Han Sans Neo", "Sans-serif";
 }
@@ -45,4 +56,60 @@ a:hover {
   .inner {
     max-width: 1200px;
   }
+}
+
+.notice_board_container{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 20px;
+}
+
+.searchBoxComponent{
+  height: 30px;
+  border-radius: 0;
+}
+
+#searchCondition{
+  width: 50%;
+}
+
+.searchBox{
+  display: inline;
+  padding: 0px 5px 0px 5px;
+}
+
+button{
+  text-align:center; 
+  cursor: pointer;
+  color:#333;
+  background-color: rgb(144, 179, 255);
+  transition:all 0.9s;
+  width: 100px;
+  height: 30px;
+}
+
+button:hover{
+  box-shadow: 0 80px 0 0 rgba(0,0,0,0.25) inset,
+              0 -80px 0 0 rgba(0,0,0,0.25) inset;
+  color: white;
+}
+
+table{
+  width: 80%;
+  border-top: 1px solid gray;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+th, td{
+  border-bottom: 1px solid gray;
+  padding: 6px;
+  text-align: center;
+}
+
+#titleCell{
+  text-align: left;
 }

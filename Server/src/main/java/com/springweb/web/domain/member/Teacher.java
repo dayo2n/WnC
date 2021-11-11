@@ -19,6 +19,8 @@ public class Teacher extends Member{
 
     private String career;//경력
 
+
+
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessonList = new ArrayList<>();//선생님이 탈퇴하면 연관된 강의도 모두 삭제
 

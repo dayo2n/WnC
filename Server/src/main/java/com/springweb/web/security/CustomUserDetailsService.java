@@ -2,7 +2,7 @@ package com.springweb.web.security;
 
 import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.domain.member.Member;
-import com.springweb.web.repository.MemberRepository;
+import com.springweb.web.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
