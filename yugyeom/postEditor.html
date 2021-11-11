@@ -13,14 +13,31 @@
 
 <body>
     <header>
-
+        <div class="inner">
+            <div class="head_container">
+                <div class="left_head_items">
+                        <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                        <h1 class="logoBox">WnC Tutoring</h1>
+                    <div class="search_teacher_link logoBox">선생님 탐색</div>
+                    <div class="search_tutoring_link logoBox">게시글 탐색</div>
+                </div>
+                <div class="right_head_items">
+                    <img src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                    <img src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                    <img src="img/login.png" class="logoBox" alt="">
+                    <div class="login_button"></div>
+                    <div class="profile"></div>
+                </div>
+            </div>
+        </div>
     </header>
+    <!-- 새 글 작성 / 기존 글 수정 모드 구분 -->
     <section>
         <div class="inner">
-            <table border="1" width=500>
+            <table border="1" width=500 frame=void>
                 <tr>
                     <th colspan="2">
-                        새 글 작성
+                        글 에디터
                     </th>
                 </tr>
                 <tr>
@@ -70,13 +87,13 @@
                 <tr>
                     <td colspan="2" align=right>
                         <input type="button" value="글 등록">
-                        <input type="button" value="목록으로">
+                        <input type="button" id="btn-backToNoticeBoard" value="목록으로">
                     </td>
                 </tr>
             </table>
         </div>
     </section>
-    <script src="js/newPost.js"></script>
+    <script src="js/post.js"></script>
 </body>
 
 </html>

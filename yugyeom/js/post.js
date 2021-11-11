@@ -40,4 +40,16 @@ $('#maxTutee').on('keypress', function(){
     if((event.keyCode<48)||(event.keyCode>57)){
         event.returnValue=false;
     }
-})
+});
+
+// ---------- for viewPost.html ----------
+
+$(document).ready(function () { 
+    // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
+    $("#btn-backToNoticeBoard").click(function(){
+            $(location).attr('href', "home.html");
+    });
+    $("#btn-editPost").click(function(){
+        $(location).attr('href', "postEditor.html");
+});
+});

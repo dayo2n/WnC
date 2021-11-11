@@ -31,25 +31,30 @@
 
     <!-- CSS Reset(1), 아이콘 폰트, 웹페이지 사용폰트, style.css -->
     <link rel="stylesheet" href="css/nomalize.css" /> <!-- nomalize.css 파일 다운받아서 사용, 다른설정 하기 전에 초기화 -->
-    <!-- https://fontawesome.com/start -->
-    <script src="https://kit.fontawesome.com/f1def33959.js" crossorigin="anonymous"></script> <!-- 각종 아이콘 -->
+    <!-- https://fontawesome.com/start --><script src="https://kit.fontawesome.com/9f3180d267.js" crossorigin="anonymous"></script> <!-- 각종 아이콘 -->
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
     <header>
         <div class="inner">
-            <div class="head_contianer">
+            <div class="head_container">
                 <div class="left_head_items">
-                    <div class="logo"></div>
-                    <div class="search_tutoring_link"></div>
-                    <div class="search_teacher_link"></div>
+                    <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                    <h1 class="logoBox">WnC Tutoring</h1>
+                    <div class="search_teacher_link logoBox">선생님 탐색</div>
+                    <div class="search_tutoring_link logoBox">게시글 탐색</div>
                 </div>
                 <div class="right_head_items">
+                    <img src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                    <img src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                    <img src="img/login.png" class="logoBox" alt="">
                     <div class="login_button"></div>
                     <div class="profile"></div>
                 </div>
@@ -173,8 +178,8 @@
                     </div>
                     <input type="hidden" name="searchFlag" value="true">
                 </div>
-                <div class="notice_board_title">
-                    <table>
+                <div>
+                    <table id="notice_board_title">
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -208,4 +213,7 @@
             </div>
         </div>
     </section>
+    <script src="js/home.js"></script>
 </body>
+
+</html>
