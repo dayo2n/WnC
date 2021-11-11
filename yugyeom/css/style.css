@@ -125,3 +125,82 @@ th, td{
   float: right;
   background-color: white;
 }
+
+  
+.notification_modal {
+  background: rgba(228, 243, 255, 0.966);
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  top: 200px;
+  padding: 10px;
+  z-index: 10;
+display: none;
+}
+.notification_modal .notification_modal_title {
+  padding-left: 10px;
+  display: inline;
+  text-shadow: 1px 1px 2px gray;
+  color: white;
+  
+}
+.notification_modal .notification_modal_title h2 {
+  display: inline;
+}
+.notification_modal .notification_modal_close_area {
+  display: inline;
+  float: right;
+  padding-right: 10px;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px gray;
+  color: white;
+}
+
+.notification_modal .notification_modal_content {
+  margin-top: 20px;
+  padding: 0px 10px;
+  text-shadow: 1px 1px 2px gray;
+  color: white;
+}
+
+
+
+.user_modal {
+background: rgba(228, 243, 255, 0.966);
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+width: 400px;
+height: 500px;
+position: absolute;
+top: 200px;
+padding: 10px;
+z-index: 10;
+display: none;
+}
+.user_modal .user_modal_title {
+padding-left: 10px;
+display: inline;
+text-shadow: 1px 1px 2px gray;
+color: white;
+
+}
+.user_modal .user_modal_title h2 {
+display: inline;
+}
+.user_modal .user_modal_close_area {
+display: inline;
+float: right;
+padding-right: 10px;
+cursor: pointer;
+text-shadow: 1px 1px 2px gray;
+color: white;
+}
+
+.user_modal .user_modal_content {
+margin-top: 20px;
+padding: 0px 10px;
+text-shadow: 1px 1px 2px gray;
+color: white;
+}

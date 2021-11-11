@@ -1,0 +1,116 @@
+input {
+    display: block;
+}
+
+.change_info_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change_info_name {
+    width: 450px;
+    padding: 20px 50px;
+    border: solid 1px;
+    margin: 10px;
+    border-radius: 4px;
+}
+
+#name {
+    width: 100%;
+    margin: 5px auto;
+}
+
+#name_submit {
+    margin: 15px auto;
+    width: 40%;
+    height: 30px;
+}
+
+.change_info_password {
+    width: 450px;
+    padding: 20px 50px;
+    border: solid 1px;
+    margin: 10px;
+    border-radius: 4px;
+}
+
+#current_password {
+    width: 100%;
+    margin: 5px auto;
+}
+
+#new_password {
+    width: 100%;
+    margin: 5px auto;
+}
+
+#check_new_password {
+    width: 100%;
+    margin: 5px auto;
+}
+
+#password_submit {
+    margin: 15px auto;
+    width: 40%;
+    height: 30px;
+}
+
+.change_info_age {
+    width: 450px;
+    padding: 20px 50px;
+    border: solid 1px;
+    margin: 10px;
+    border-radius: 4px;
+}
+
+#age {
+    width: 100%;
+    margin: 5px auto;
+}
+
+#age_submit {
+    margin: 15px auto;
+    width: 40%;
+    height: 30px;
+}
+
+
+.change_info_img label {
+    display: inline-block;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    width: 450px;
+    padding: 20px 50px;
+    border: solid 1px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.change_info_img input{
+    display: none;
+}
+
+.change_info_career{
+    width: 450px;
+    padding: 20px 50px;
+    border: solid 1px;
+    margin: 10px;
+    border-radius: 4px;
+}
+
+#career{
+    width: 100%;
+    margin: 5px auto;
+}
+
+#career_submit{
+    margin: 15px auto;
+    width: 40%;
+    height: 30px;
+}
