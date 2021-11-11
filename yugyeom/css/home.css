@@ -58,7 +58,6 @@
     margin: 10px 10px;
     transition: 0.4s;
     box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
-    /* IE11 에서는 flex 설정시, 디폴트로 flex 아이템들에 고정 너비를 무시 */
     flex-shrink: 0;
     font-size: 1.1rem;
     background-color: rgba(255, 255, 224, 0);
