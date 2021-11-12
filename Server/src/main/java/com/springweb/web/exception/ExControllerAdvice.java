@@ -23,28 +23,14 @@ public class ExControllerAdvice {
     private final MessageSource messageSource;
 
     @ExceptionHandler
-    public ResponseEntity ExHandler(MemberException e, Locale locale){
+    public ResponseEntity ExHandler(BaseException e, Locale locale){
 
         log.error("오류 발생{}" ,e.getExceptionType().getErrorMessage());
 
         return makeResponseEntity(e,locale);
     }
 
-    @ExceptionHandler
-    public ResponseEntity ExHandler(LessonException e, Locale locale){
 
-        log.error("포스트 관련 오류 발생{}" ,e.getExceptionType().getErrorMessage());
-
-        return makeResponseEntity(e,locale);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity ExHandler(ValidException e, Locale locale){
-
-        log.error("바인딩 관련 오류 발생{}" ,e.getMessage());
-
-        return makeResponseEntity(e,locale);
-    }
 
 
 

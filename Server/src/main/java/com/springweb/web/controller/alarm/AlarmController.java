@@ -38,6 +38,7 @@ public class AlarmController {
     }
 
 
+
     @GetMapping("/myInfo/myAlarms/{alarmId}")
     public ResponseEntity readAlarm(@PathVariable("alarmId") Long alarmId) throws BaseException {
 

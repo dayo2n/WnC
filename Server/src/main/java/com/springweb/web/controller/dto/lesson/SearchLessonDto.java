@@ -62,6 +62,7 @@ public class SearchLessonDto {
         private LocalDateTime endPeriod;//모집기간
 
 
+
         public SimpleLessonDto(Lesson lesson) {
             this.id = lesson.getId();
             this.title = lesson.getTitle();

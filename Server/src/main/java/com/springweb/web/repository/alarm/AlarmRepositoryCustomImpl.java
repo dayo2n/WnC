@@ -16,8 +16,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.springweb.web.domain.alarm.QAlarm.alarm;
-import static com.springweb.web.domain.lesson.QLesson.lesson;
-import static com.springweb.web.domain.member.QStudent.student;
 
 @Repository
 @Slf4j
@@ -40,8 +38,6 @@ public class AlarmRepositoryCustomImpl implements AlarmRepositoryCustom{
                         searchTypeEq(cond.getReadType()),
                         eqUsername(username)
                 )
-                .leftJoin(alarm.applicantMember, student).fetchJoin() //신청한 학생이 있다면 페치조인
-                .leftJoin(alarm.lesson, lesson).fetchJoin()//대상 강의 페치조인
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

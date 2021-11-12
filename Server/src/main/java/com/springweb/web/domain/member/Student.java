@@ -33,7 +33,7 @@ public class Student extends Member {
     private List<AppliedLesson> appliedLessonList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student") //학생이 탈퇴해도 결과는 남는다. HOW ? -> 그냥 연관관계를 끊어주면 된다.
     private List<Evaluation> evaluationList = new ArrayList<>();//내가 남긴 평가들
 
 

@@ -2,6 +2,7 @@ package com.springweb.web.domain.member;
 
 import com.springweb.web.domain.evaluation.Evaluation;
 import com.springweb.web.domain.lesson.Lesson;
+import com.springweb.web.domain.report.WarningConst;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,15 +22,20 @@ public class Teacher extends Member{
 
     private String career;//경력
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)//선생이 탈퇴하면 선생에 대한 평가도 사라지는게 맞다.
     private List<Evaluation> evaluationList = new ArrayList<>();//선생님에 대한 평가, 별점 + 평가내용
 
     private double starPoint; //선생님이 받은 별점의 평균
 
 
+
+    private boolean isBlack =false; //블랙리스트에 등록되었는지
+    private int warningCount;//경고 횟수
+
+
+
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessonList = new ArrayList<>();//선생님이 탈퇴하면 연관된 강의도 모두 삭제
-
 
 
 
@@ -71,5 +77,25 @@ public class Teacher extends Member{
 
         DecimalFormat df = new DecimalFormat("0.0");
         starPoint = Double.parseDouble(df.format((starPoint+evaluation.getStarPoint())/evaluationList.size()));
+    }
+
+
+
+
+    //== 블랙리스트 기능 ==//
+    public void makeBlack(){
+        this.isBlack = true;
+    }
+
+    public void makeWhite(){
+        this.isBlack = false;
+        this.warningCount=0;
+    }
+
+    public void addWarning(){
+        this.warningCount ++;
+        if(warningCount >= WarningConst.MAX_WARNING_COUNT){
+            makeBlack();
+        }
     }
 }

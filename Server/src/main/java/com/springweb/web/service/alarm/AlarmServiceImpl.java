@@ -38,7 +38,7 @@ public class AlarmServiceImpl implements AlarmService{
      * APPROVED => 승인 
      *              학생 : YY과외에 가입이 거절되었습니다.
      *
-     * REFUSE =>   거정
+     * REFUSED =>   거정
      *                학생 : YY과외에 가입이 거절되었습니다.
      *
      * COMPLETION => 교수님 + 학생들 모두에게 : YY 과외 모집이 완료되었습니다.
@@ -48,7 +48,7 @@ public class AlarmServiceImpl implements AlarmService{
      * SEND_APPLY, APPROVED, COMPLETION
      *
      * SEND_APPLY 이면 applicantMember, target, lesson이 모두 있어야 한다.
-     * APPROVED   이면 target, lesson이 있어야 한다.
+     * APPROVED,REFUSED   이면 target, lesson이 있어야 한다.
      * COMPLETION 이면 target, lesson
      */
 
@@ -58,7 +58,13 @@ public class AlarmServiceImpl implements AlarmService{
             throw new AlarmException(AlarmExceptionType.ALARM_PRODUCE_EXCEPTION);
         }
 
-        Alarm alarm = Alarm.builder().alarmType(alarmType).target(target).lesson(lesson).applicantMember(applicantMember).build();
+        Alarm alarm = Alarm.builder().alarmType(alarmType).target(target)
+                .lessonId(lesson.getId())
+                .lessonTitle(lesson.getTitle())
+                .lessonTeacherName(lesson.getTeacher().getName())
+                .applicantMemberId(applicantMember.getId())
+                .applicantMemberName(applicantMember.getName())
+                .build();
         alarmRepository.save(alarm);
 
     }
@@ -70,7 +76,11 @@ public class AlarmServiceImpl implements AlarmService{
         }
 
 
-        Alarm alarm = Alarm.builder().alarmType(alarmType).target(target).lesson(lesson).build();
+        Alarm alarm = Alarm.builder().alarmType(alarmType).target(target)
+                .lessonId(lesson.getId())
+                .lessonTitle(lesson.getTitle())
+                .lessonTeacherName(lesson.getTeacher().getName())
+                .build();
         alarmRepository.save(alarm);
 
     }

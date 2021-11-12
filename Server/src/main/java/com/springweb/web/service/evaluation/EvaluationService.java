@@ -1,11 +1,10 @@
 package com.springweb.web.service.evaluation;
 
 import com.springweb.web.controller.dto.evaluation.EvaluationDto;
-import com.springweb.web.controller.dto.evaluation.EvaluationTeacherDto;
 import com.springweb.web.controller.dto.evaluation.SearchEvaluationTeacherDto;
+import com.springweb.web.controller.dto.member.TeacherDetailWithEvaluationDto;
 import com.springweb.web.exception.BaseException;
-
-import java.util.List;
+import com.springweb.web.exception.member.MemberException;
 
 public interface EvaluationService {
     /**
@@ -20,4 +19,12 @@ public interface EvaluationService {
 
     //== 평가 가능한 선생님 목록 보여주기 , 이건 페이징 못하겠다 ㅈㅅ ==//
     SearchEvaluationTeacherDto getEvaluatedTeacherList() throws BaseException;
+
+
+
+    /**
+     * 선생님 평가글들 보여주기 => 탈퇴한 학생이 남긴 글은 알 수 없음으로 지정.
+     */
+    TeacherDetailWithEvaluationDto getTeacherEvaluationList(Long teacherId) throws MemberException;
+
 }

@@ -5,12 +5,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.controller.dto.kakaomemberinfo.KakaoMemberInfo;
 import com.springweb.web.controller.dto.member.*;
+import com.springweb.web.domain.evaluation.Evaluation;
 import com.springweb.web.exception.BaseException;
+import com.springweb.web.exception.alarm.AlarmException;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.repository.member.MemberRepository;
+import com.springweb.web.service.evaluation.EvaluationService;
 import com.springweb.web.service.member.KakaoService;
 import com.springweb.web.service.member.MemberService;
-import com.springweb.web.controller.dto.member.SearchOneTeacherDto;
 import com.springweb.web.service.member.search.TeacherSearchCond;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +35,13 @@ public class MemberController {
      * 회원정보 수정, 회원탈퇴, 내정보 보기
      */
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
     private final KakaoService kakaoService;
+    private final EvaluationService evaluationService;
 
 
-
+    /**
+     * 내정보보기
+     */
     @Trace
     @GetMapping("/myInfo")
     public ResponseEntity getMyInfo() throws MemberException {
@@ -52,7 +56,9 @@ public class MemberController {
     }
 
 
-
+    /**
+     * 내정보 수정
+     */
     @Trace
     @PutMapping("/members/student")
     public ResponseEntity update(@ModelAttribute UpdateStudentDto updateStudentDto) throws IOException, BaseException {
@@ -72,7 +78,7 @@ public class MemberController {
 
 
     @DeleteMapping("/members")
-    public ResponseEntity delete(@ModelAttribute DeleteMember deleteMember) throws MemberException {
+    public ResponseEntity delete(@ModelAttribute DeleteMember deleteMember) throws BaseException {
         memberService.delete(deleteMember.getPassword());
         return new ResponseEntity("회원 탈퇴에 성공하였습니다.", HttpStatus.CREATED);
     }
@@ -81,7 +87,7 @@ public class MemberController {
      * 카카오톡 회원 탈퇴
      */
     @DeleteMapping("/members/kakao")
-    public ResponseEntity deleteKakao(@ModelAttribute KakaoDeleteMember kakaoDeleteMember) throws MemberException, JsonProcessingException {
+    public ResponseEntity deleteKakao(@ModelAttribute KakaoDeleteMember kakaoDeleteMember) throws BaseException, JsonProcessingException {
 
         KakaoMemberInfo leaveMemberKakaoIdDto = kakaoService.leave(kakaoDeleteMember.getAccessToken());//카카오톡에서 연결을 끊은 후,
 
@@ -108,12 +114,12 @@ public class MemberController {
     }
 
     /**
-     * 선생님 목록 조회
+     * 선생님 1명 정보
      */
     @GetMapping("/members/teachers/{teacherId}")
     public ResponseEntity searchTeacher(@PathVariable("teacherId")Long teacherId) throws BaseException {
 
-        SearchOneTeacherDto teacher = memberService.findTeacher(teacherId);
+        TeacherDetailWithEvaluationDto teacher = evaluationService.getTeacherEvaluationList(teacherId);
         return new ResponseEntity(teacher, HttpStatus.OK);
     }
 

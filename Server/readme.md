@@ -13,3 +13,9 @@ properties파일 git ignore
 
 
 member.team.getId => 이경우에는 쿼리 추가로 안나간다!!!! 
+
+
+instanceof 로 학생, 선생일때 예외를 발생시키는게 아니라, 그냥 @PreAuthorize("hasRole('ADMIN')") 같은거 써서 처리하면 더 깔끔하고 좋았을걸...
+
+
+알람과 연관된 회원이 없으면 -> 예외처리를 해서 하는게 더 객체지향 적이고 이뻤을 거 같지만 시간이 없어서..ㅜ

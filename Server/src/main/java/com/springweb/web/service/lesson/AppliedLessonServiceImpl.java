@@ -53,8 +53,6 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
 
 
 
-    //TODO :알람 읽음표시 애햐 함
-
     /**
      * 가입신청
      * 이미 가입이 승인된 강의인 경우 => 또다시 신청하면 예외
@@ -88,7 +86,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
             throw new LessonException(LessonExceptionType.ALREADY_APPLIED);
         }
         //이미 가입요청을 보낸 경우 => 예외
-        AppliedLesson appliedLesson = appliedLessonRepository.findByLessonIdAndStudentId(lessonId, student.getId()).orElse(null);
+        AppliedLesson appliedLesson = appliedLessonRepository.findWithStudentByLessonIdAndStudentId(lessonId, student.getId()).orElse(null);
         if(appliedLesson != null){
             throw new LessonException(LessonExceptionType.ALREADY_APPLIED);
         }
@@ -144,7 +142,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
         }//모집완료된 강의의 경우 취소 불가능
 
         //이미 신청요청을 보낸 과외의 경우, 이미 가입된 과외의 경우
-        AppliedLesson appliedLesson = appliedLessonRepository.findByLessonIdAndStudentId(lessonId, s_me.getId()).orElse(null);
+        AppliedLesson appliedLesson = appliedLessonRepository.findWithStudentByLessonIdAndStudentId(lessonId, s_me.getId()).orElse(null);
         TakingLesson takingLesson = takingLessonRepository.findByLessonIdAndStudentId(lessonId, s_me.getId()).orElse(null);
 
         if(appliedLesson == null && takingLesson == null){
@@ -155,7 +153,12 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
             GroupLesson groupLesson = (GroupLesson) takingLesson.getLesson();//개인레슨은 수락 시 바로 모집완료되므로 , 무조건 그룹레슨일 경우밖에 없음
             groupLesson.removeTakingLesson(takingLesson);//강의에서 지워주고, 강의 듣는 학생 -1,
             s_me.getTakingLessonList().remove(takingLesson);//학생이 듣는 강의에서도 지워줌
+        }
 
+
+        if(appliedLesson != null){
+            s_me.getAppliedLessonList().remove(appliedLesson);//신청한 강의에서 지워주고
+            //null인 경우, 즉 학생이 강의를 신청했다 취소한 경우에는 이미 지워졌으므로 안지워도 됨
         }
 
     }
@@ -186,7 +189,14 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
             throw new LessonException(LessonExceptionType.ETC_EXCEPTION);
         }//SEND_APPLY가 아닌 경우 accept를 할 수 없음
 
-        Lesson findLesson = alarm.getLesson();
+
+        //블랙리스트인경우 수락 불가능
+        Member me = memberRepository.findByUsername(getMyUsername()).orElse(null);
+        Teacher teacher =(Teacher) me;
+        if(teacher.isBlack()) throw new LessonException(LessonExceptionType.NO_AUTHORITY_ACCEPT_LESSON);
+
+        Lesson findLesson = lessonRepository.findById(alarm.getLessonId()).orElse(null);
+
 
         //== 강의 수락 가능여부 체크 로직 ==//
         if(findLesson == null){
@@ -199,6 +209,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
         }
 
 
+
         //이 위에까지는 사용자가 아닌 권한 없는 사람이 임의로 접근할 거일수도 있으므로 read를 하지 않는다!
         alarm.read();//읽음 표시!
 
@@ -206,42 +217,42 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
             throw new LessonException(LessonExceptionType.CAN_NOT_ACCEPT_STUDENT_COMPLETED);
         }//모집완료된 경우
 
-        Student student = alarm.getApplicantMember();//신청한 학생
-        AppliedLesson appliedLesson = appliedLessonRepository.findByLessonIdAndStudentId(findLesson.getId(), student.getId()).orElse(null);
+
+        AppliedLesson appliedLesson = appliedLessonRepository.findWithStudentByLessonIdAndStudentId(findLesson.getId(), alarm.getApplicantMemberId()).orElse(null);
+
 
         if(appliedLesson == null){
             throw new LessonException(LessonExceptionType.CAN_NOT_ACCEPT_STUDENT_CANCEL);
         }//신청한 강의가 없다면 => 즉 학생이 강의 신청을 보냈다가 그 요청을 취소한 경우
         //== 강의 신청 가능여부 체크 로직 종료 ==//
 
-
+        Student student = appliedLesson.getStudent();
         student.getAppliedLessonList().remove(appliedLesson);//신청한 강의에서 지워주고
 
 
         //== 수락한 강의가 개인과외라면, 수락과 동시에 모집완료 + 알람, 학생이 수강한 강의에 추가 ==//
-        casePersonalLesson(alarm, findLesson);
+        casePersonalLesson(alarm, findLesson, student);
 
         //== 그룹과외라면, 인원이 다 찼으면 모집완료 알림, 아니라면 +1만,학생이 수강한 강의에 추가 ==//
-        caseGroupLesson(alarm, findLesson);
+        caseGroupLesson(alarm, findLesson, student);
 
 
     }
 
-
-    private void caseGroupLesson(Alarm alarm, Lesson findLesson) throws BaseException {
+    private void caseGroupLesson(Alarm alarm, Lesson findLesson,Student student) throws BaseException {
         if(findLesson instanceof GroupLesson groupLesson){
             TakingLesson tl = TakingLesson.builder()
                     .lesson(groupLesson)  //여기서 강의 설정
-                    .student(alarm.getApplicantMember())//여기서 학생 설정
+                    .student(student)//여기서 학생 설정
                     .title(groupLesson.getTitle())
                     .teacherName(alarm.getTarget().getName())
                     .teacherId(alarm.getTarget().getId())
                     .build();
 
             groupLesson.addTakingLesson(tl);//학생 +1
-            alarm.getApplicantMember().addTakingLesson(tl);//학생이 수강하는 강의 추가
+            student.addTakingLesson(tl);//학생이 수강하는 강의 추가
 
-            alarmService.sendAlarm(AlarmType.APPROVED, alarm.getApplicantMember(), findLesson);//신청한 학생에게 수학되었다고 알람
+            alarmService.sendAlarm(AlarmType.APPROVED, student, findLesson);//신청한 학생에게 수학되었다고 알람
 
             //== 수락하여 모집이 완료된 경우 -> applyCompleted실행 ==//
             if(groupLesson.getNowStudentCount() == groupLesson.getMaxStudentCount()){
@@ -249,28 +260,25 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
             }
         }
     }
-
-    private void casePersonalLesson(Alarm alarm, Lesson findLesson) throws AlarmException {
+    private void casePersonalLesson(Alarm alarm, Lesson findLesson, Student student) throws AlarmException {
         if(findLesson instanceof PersonalLesson personalLesson){
             TakingLesson tl = TakingLesson.builder()
                     .lesson(personalLesson)  //여기서 강의 설정
-                    .student(alarm.getApplicantMember())//여기서 학생 설정
+                    .student(student)//여기서 학생 설정
                     .title(personalLesson.getTitle())
                     .teacherName(alarm.getTarget().getName())
                     .teacherId(alarm.getTarget().getId())
                     .build();
 
-            alarm.getApplicantMember().addTakingLesson(tl);//학생이 듣는 강의 추가
+            student.addTakingLesson(tl);//학생이 듣는 강의 추가
 
             personalLesson.complete();//강의 모집완료
 
-            alarmService.sendAlarm(AlarmType.APPROVED, alarm.getApplicantMember(), findLesson);//가입이 승인되었고
-            alarmService.sendAlarm(AlarmType.COMPLETION,  alarm.getApplicantMember(), findLesson);//모집이 완료되었습니다
+            alarmService.sendAlarm(AlarmType.APPROVED, student, findLesson);//가입이 승인되었고
+            alarmService.sendAlarm(AlarmType.COMPLETION,  student, findLesson);//모집이 완료되었습니다
             alarmService.sendAlarm(AlarmType.COMPLETION, alarm.getTarget(), findLesson);//이거 안해줘도 될 것 같은데, 그냥 해주는게 나을듯???
         }
     }
-
-
 
 
 
@@ -294,16 +302,27 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
 
         if(alarm.getAlarmType() != AlarmType.SEND_APPLY) throw new LessonException(LessonExceptionType.ETC_EXCEPTION);//SEND_APPLY가 아닌 경우 refuse를 할 수 없음 => 뭔가 잘못된 요청임
 
-        Lesson findLesson = alarm.getLesson();
-        if(!findLesson.getId().equals(lessonId)) throw new LessonException(LessonExceptionType.ETC_EXCEPTION);
 
+        if(!alarm.getLessonId().equals(lessonId)) throw new LessonException(LessonExceptionType.ETC_EXCEPTION);//알람의 과외정보와, 거절하려는 과외정보가 다르면 예외(비정상적인 임의 접근)
+
+        Lesson findLesson = lessonRepository.findById(alarm.getLessonId()).orElse(null);
         if(findLesson == null) throw new LessonException(LessonExceptionType.NOT_FOUND_LESSON);//== 과외가 없는경우 -> 먼가 문제;;==//
 
 
         alarm.read();//읽음 표시! , 이 위에까지는 사용자가 아닌 권한 없는 사람이 임의로 접근할 거일수도 있으므로 read를 하지 않는다!
 
+
+        AppliedLesson appliedLesson = appliedLessonRepository.findWithStudentByLessonIdAndStudentId(findLesson.getId(), alarm.getApplicantMemberId()).orElse(null);
+
+        Student student = appliedLesson.getStudent();
+        if(appliedLesson != null){
+            student.getAppliedLessonList().remove(appliedLesson);//신청한 강의에서 지워주고
+            //null인 경우, 즉 학생이 강의를 신청했다 취소한 경우에는 이미 지워졌으므로 안지워도 됨
+        }
+
+
         //모집완료된 경우에도 결국은 거절이므로!
-        alarmService.sendAlarm(AlarmType.REFUSED, alarm.getApplicantMember(), findLesson);//신청한 학생에게 거절되었다고 알림
+        alarmService.sendAlarm(AlarmType.REFUSED, student, findLesson);//신청한 학생에게 거절되었다고 알림
     }
 
 
@@ -324,6 +343,14 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
         if(!findLesson.getTeacher().getUsername().equals(getMyUsername())){
             throw new LessonException(LessonExceptionType.ETC_EXCEPTION);
         }//내가 올린 강의가 아닌데 모집완료 버튼을 누른경우
+
+
+        //블랙리스트인경우 모집 완료 불가능
+        Member me = memberRepository.findByUsername(getMyUsername()).orElse(null);
+        Teacher teacher =(Teacher) me;
+        if(teacher.isBlack()) throw new LessonException(LessonExceptionType.NO_AUTHORITY_COMPLETE_LESSON);
+
+
 
         if(findLesson.isCompleted()){
             throw new LessonException(LessonExceptionType.ALREADY_COMPLETED);

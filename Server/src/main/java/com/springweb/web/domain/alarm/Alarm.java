@@ -61,13 +61,15 @@ public class Alarm extends BaseTimeEntity {
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member target; //알람을 받는 사람
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "APPLICATNT_MEMBER_ID")
-    private Student applicantMember; //강의를 신청한 학생
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LESSON_ID",  nullable = false)
-    private Lesson lesson;//알람의 대상이 되는 강의 정보
+    private String applicantMemberName;
+    private Long applicantMemberId;
+
+    private String lessonTitle;
+    private Long lessonId;
+    private String lessonTeacherName;
+
+
 
 
     private boolean isRead; //읽었으면 true, 안읽었으면 false

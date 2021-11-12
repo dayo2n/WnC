@@ -24,11 +24,6 @@ public class KakaoService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    /*private final String GRANT_TYPE = "authorization_code";
-    private final String KAKAO_OAUTH2_CLIENT_ID = "5f53cd479060b1eafe7255fddc34297a";
-    private final String REDIRECT_URL = "http://localhost:8080/login";
-    private final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";*/
-
 
 
     private final String MEMBER_INFO_URL = "https://kapi.kakao.com/v2/user/me";

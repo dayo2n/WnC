@@ -10,20 +10,8 @@ import org.springframework.data.domain.Page;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 public class SearchTeacherDto {
-    /**
-     * 총 페이지 수
-     * 현재 페이지 번호
-     * 현재 페이지에 존재하는 과외들의 개수
-     * 총 과외 수
-     * <p>
-     * ==과외 정보==
-     * id
-     * 제목
-     * 교수님 정보
-     * 개인과외인지,그룹과외인지
-     */
+
     private int totalPageNum;
     private int currentPageNum;
     private long totalElementCount;

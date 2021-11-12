@@ -15,5 +15,6 @@ public class UpdateStudentDto {
     private int age; //나이
     private MultipartFile profileImg;//프사
     private String password;
+    private boolean doProfileImgChange;
 
 }

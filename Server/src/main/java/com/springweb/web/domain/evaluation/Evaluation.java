@@ -42,6 +42,8 @@ public class Evaluation extends BaseTimeEntity {
 
     public Evaluation(String content, double starPoint) {
         this.content = content;
+
+
         this.starPoint = starPoint;
     }
 
@@ -51,7 +53,16 @@ public class Evaluation extends BaseTimeEntity {
     }
 
     public void confirmStudent(Student student) {
+
         student.addEvaluation(this);
+
         this.student = student;
     }
+
+    //== 학생 회원탈퇴 시 사용 ==//
+    public void deleteStudent(){
+        this.student =null;
+    }
+
+
 }

@@ -29,8 +29,8 @@ public class GroupLesson extends Lesson{
     private LocalDateTime endPeriod;//과외종료일
 
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)//TODO :이거 되는지 확인, 상속 좀 어지럽네
-    private List<TakingLesson> lessonList =new ArrayList<>();
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TakingLesson> takingLessonList =new ArrayList<>();
 
 
 
@@ -51,12 +51,12 @@ public class GroupLesson extends Lesson{
     }
 
     public void addTakingLesson(TakingLesson takingLesson){
-        this.lessonList.add(takingLesson);
+        this.takingLessonList.add(takingLesson);
         nowStudentCount++;
     }
 
     public void removeTakingLesson(TakingLesson takingLesson){
-        this.lessonList.remove(takingLesson);
+        this.takingLessonList.remove(takingLesson);
         nowStudentCount--;
     }
 

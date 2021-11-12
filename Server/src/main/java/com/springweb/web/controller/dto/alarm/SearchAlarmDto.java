@@ -51,8 +51,13 @@ public class SearchAlarmDto {
         private boolean isRead; //읽었으면 true, 안읽었으면 false
         private LocalDateTime createdDate; //알람이 온 날짜
 
-        private LessonDto lessonDto;//알람의 대상이 되는 강의 정보
-        private StudentDto applicantMemberDto; //강의를 신청한 학생
+        private Long lessonId;
+        private String title;
+        private String teacherName;
+
+
+        private Long applicantStudentId;
+        private String applicantStudentName; ; //강의를 신청한 학생
 
         public SimpleAlarmDto(Alarm alarm) {
             this.id = alarm.getId();
@@ -60,31 +65,15 @@ public class SearchAlarmDto {
             this.isRead = alarm.isRead();
             this.createdDate= alarm.getCreatedDate();
 
-            this.lessonDto = new LessonDto(alarm.getLesson());
-            this.applicantMemberDto = new StudentDto(alarm.getApplicantMember());
+            this.lessonId=alarm.getLessonId();
+            this.title=alarm.getLessonTitle();
+            this.teacherName=alarm.getLessonTeacherName();
+
+            this.applicantStudentId=alarm.getApplicantMemberId();
+            this.applicantStudentName=alarm.getApplicantMemberName(); ; //강의를 신청한 학생
         }
 
-        private static class LessonDto {
-            private Long lessonId;
-            private String title;
-            private String teacherName; //XX님의 강의 title에 요청이 들어왔어요! 이런식
 
-            public LessonDto(Lesson lesson) {
-                this.lessonId = lesson.getId();
-                this.title = lesson.getTitle();
-                this.teacherName = lesson.getTeacher().getName();
-            }
-        }
-
-        private static class StudentDto {
-            private Long applicantStudentId;
-            private String studentName; //XX학생이 가입 요청을 보냈어요! 이런식
-
-            public StudentDto(Student student) {
-                this.applicantStudentId = student.getId();
-                this.studentName = student.getName();
-            }
-        }
 
 
     }

@@ -32,7 +32,7 @@ public abstract class Member extends BaseTimeEntity {
     private String profileImgPath;//프사 URL, 풀 경로 저장
 
     @Enumerated(EnumType.STRING)
-    private Role role;  //BASIC, ADMIN,관리자가 아니면 다 BASIC
+    private Role role = Role.BASIC;  //BASIC, ADMIN,관리자가 아니면 다 BASIC
 
 
     @Column(unique = true)
@@ -82,6 +82,10 @@ public abstract class Member extends BaseTimeEntity {
     }
     public void changePassword(String password, PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(password);
+    }
+
+    protected void designateAdmin(){
+        role = Role.ADMIN;
     }
 
 

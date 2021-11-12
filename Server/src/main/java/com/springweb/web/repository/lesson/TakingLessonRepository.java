@@ -31,4 +31,9 @@ public interface TakingLessonRepository extends JpaRepository<TakingLesson, Long
     @Trace
     @Query("select tl from TakingLesson tl join fetch tl.lesson l join fetch l.teacher t where tl.student.username = :username")
     List<TakingLesson> findAllWithTeacherByStudentUsername(String username);
+
+
+    @Trace
+    @Query("select tl from TakingLesson tl join fetch tl.lesson l where tl.student.id = :studentId")
+    List<TakingLesson> findAllWithLessonByStudentId(@Param(value = "studentId")Long studentId);
 }

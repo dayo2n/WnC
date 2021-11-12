@@ -17,6 +17,8 @@ public interface AppliedLessonRepository extends JpaRepository<AppliedLesson, Lo
     List<AppliedLesson> findAllWithStudentByLessonId(Long lessonId);
 
 
-    @Query("select al from AppliedLesson al where al.student.id = :studentId and al.lesson.id = :lessonId")
-    Optional<AppliedLesson> findByLessonIdAndStudentId(@Param(value = "lessonId")Long lessonId, @Param(value = "studentId")Long studentId);
+    @Query("select al from AppliedLesson al join fetch al.student s where al.student.id = :studentId and al.lesson.id = :lessonId")
+    Optional<AppliedLesson> findWithStudentByLessonIdAndStudentId(@Param(value = "lessonId")Long lessonId, @Param(value = "studentId")Long studentId);
+
+
 }

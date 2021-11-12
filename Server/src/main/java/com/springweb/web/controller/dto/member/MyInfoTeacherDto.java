@@ -5,6 +5,7 @@ import com.springweb.web.domain.lesson.GroupLesson;
 import com.springweb.web.domain.lesson.Lesson;
 import com.springweb.web.domain.lesson.PersonalLesson;
 import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.myconst.EvaluationConstName;
 import com.springweb.web.service.lesson.LessonType;
 import lombok.Data;
 
@@ -20,8 +21,7 @@ import java.util.List;
 @Data
 public class MyInfoTeacherDto {
 
-    //@Column(unique = true)
-    //private String username;//카카오로 로그인 하는 경우에도 아이디는 입력
+
 
     private Long id;
     private String name;//직접 입력
@@ -29,7 +29,10 @@ public class MyInfoTeacherDto {
     private String profileImgPath;//프사 URL
     private String career;//경력
     private double starPoint;//별점
-    private boolean isKakaoMember;
+    private boolean isKakaoMember;//카카오톡 회원인지 여부
+
+    private boolean isBlack;//블랙리스트인가?
+    private int warningCount;//받은 경고 수
 
 
     private List<LessonDto> lessonList = new ArrayList<>();//내가 올린 강의
@@ -87,7 +90,13 @@ public class MyInfoTeacherDto {
             evaluationId = evaluation.getId();
             content = evaluation.getContent();
             startPoint = evaluation.getStarPoint();
-            studentName = evaluation.getStudent().getName();
+
+
+            if(evaluation.getStudent() ==null){
+                studentName= EvaluationConstName.DEFAULT_NAME;//귀욤둥이 동훈이
+            }else {
+                studentName = evaluation.getStudent().getName();
+            }
         }
     }
 
@@ -100,6 +109,8 @@ public class MyInfoTeacherDto {
         this.career = teacher.getCareer();
         this.starPoint = teacher.getStarPoint();
         this.isKakaoMember = teacher.isKakaoMember();
+        this.isBlack = teacher.isBlack();
+        this.warningCount = teacher.getWarningCount();
 
 
         this.lessonList = teacher.getLessonList().stream().map(lesson -> new LessonDto(lesson)).toList();//배치사이즈로 해결

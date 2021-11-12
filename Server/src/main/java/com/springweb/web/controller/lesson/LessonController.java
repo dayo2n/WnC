@@ -52,6 +52,17 @@ public class LessonController {
         return ResponseEntity.ok("포스트 등록에 성공했습니다");
     }
 
+
+    //== 과외 게시물 조회 ==//
+    @Trace
+    @GetMapping("/lesson/{lessonId}")
+    public ResponseEntity readOne(@PathVariable("lessonId") Long lessonId) throws BaseException {
+        log.info("lessonId [{}]",lessonId);
+        LessonDetailDto lessonInfo = lessonService.getLessonInfo(lessonId);//안되면 기본생성자 추가하기
+        return new ResponseEntity(lessonInfo, HttpStatus.OK);
+    }
+
+
     //== 과외 게시물 검색 ==//
     @Trace
     @GetMapping("/lesson")
@@ -66,15 +77,6 @@ public class LessonController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-
-    //== 과외 게시물 조회 ==//
-    @Trace
-    @GetMapping("/lesson/{lessonId}")
-    public ResponseEntity readOne(@PathVariable("lessonId") Long lessonId) throws BaseException {
-        log.info("lessonId [{}]",lessonId);
-        LessonDetailDto lessonInfo = lessonService.getLessonInfo(lessonId);//안되면 기본생성자 추가하기
-        return new ResponseEntity(lessonInfo, HttpStatus.OK);
-    }
 
 
     //== 과외 게시물 수정 ==//

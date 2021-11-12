@@ -22,7 +22,11 @@ public enum LessonExceptionType implements BaseExceptionType {
     CAN_NOT_ACCEPT_STUDENT_COMPLETED(712, HttpStatus.BAD_REQUEST,"이미 모집이 완료되었으므로 학생을 더 받을 수 없습니다." ),
     CAN_NOT_ACCEPT_STUDENT_CANCEL(712, HttpStatus.BAD_REQUEST,"학생이 강의 수강을 취소하였습니다." ),
     NO_AUTHORITY_ACCEPT_LESSON(713, HttpStatus.FORBIDDEN,"강의 요청을 수락하실 권한이 없습니다" ),
+    PERIOD_ERROR(714, HttpStatus.BAD_REQUEST, "기간은 현재보다 과거일 수 없습니다."),
+    MAX_STUDENT_MUST_LARGER_THAN_TWO(716, HttpStatus.BAD_REQUEST, "그룹 과외의 경우 모집인원 수는 최소 2명 이상이어야 합니다."),
+    NO_AUTHORITY_COMPLETE_LESSON(717, HttpStatus.BAD_REQUEST, "모집을 완료할 권한이 없습니다."),
     ETC_EXCEPTION(799,HttpStatus.BAD_REQUEST, "불가능한 요청이 들어옴");
+
 
 
     private int errorCode;
