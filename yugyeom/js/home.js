@@ -28,14 +28,8 @@ fetch("http://219.255.114.140:8090/lesson",{
           // title: "개인"
           // views: 0
 
-          var completed = singleData.completed;
           var createdDate = singleData.createdDate;
-          var endPeriod = singleData.endPeriod;
           var index = singleData.id;
-          var lessonType = singleData.lessonType;
-          var maxStudentCount = singleData.maxStudentCount;
-          var nowStudentCount = singleData.nowStudentCount;
-          var startPeriod = singleData.startPeriod;
           var teacherName = singleData.teacherName;
           var title = singleData.title;
           var views = singleData.views;
