@@ -20,4 +20,4 @@ public class EvaluationDto {
         starPoint = Double.parseDouble(df.format((starPoint)));
         return new Evaluation(content,starPoint);
     }
-}
+} 

@@ -9,7 +9,7 @@ LAST_MODIFIED_DATE  => 마지막 수정일
 
 <br/>
 
-- ##### ALARM(알림)
+- ##### ALARM(알림) 
 
   ```
   ALARM_ID  	 		=> PK, 식별값
