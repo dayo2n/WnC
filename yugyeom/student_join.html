@@ -40,17 +40,67 @@
     <link rel="stylesheet" href="https://unpkg.com/mvp.css">
     <link rel="stylesheet" href="css/join.css" />
 </head>
+
 <body>
+    <header>
+        <div class="inner">
+            <div class="head_container">
+                <div class="left_head_items">
+                    <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                    <h1 class="logoBox">WnC Tutoring</h1>
+                </div>
+                <div class="right_head_items">
+                    <img id="notification_icon" src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                        <div class="notification_modal">
+                            <div class="notification_modal_title">
+                                <h2>알림모달</h2>
+                            </div>
+                            <div class="notification_modal_close_area">X</div>
+                            <div class="notification_modal_content">
+                                <p>123</p>
+                            </div>
+                        </div>
+                  
+                    <img id="user_icon" src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                        <div class="user_modal">
+                            <div class="user_modal_title">
+                                <h2>유저모달</h2>
+                            </div>
+                            <div class="user_modal_close_area">X</div>
+                            <div class="user_modal_content">
+                                <p>123</p>
+                            </div>
+                        </div>
+                    <img src="img/login.png" id="login_icon"class="logoBox" alt="로그인">
+                    <div class="login_button"></div>
+                    <div class="profile"></div>
+                </div>
+            </div>
+        </div>
+    </header>
     <div class="inner">
         <div class="join_container">
-            <input type="text" id="join_username" placeholder="username">
-            <input type="text" id="join_password" placeholder="password">
-            <input type="text" id="join_name" placeholder="name">
-            <input type="text" id="join_age" placeholder="age">
-            <input type="file" id="join_image" accept="image/*">
-            <input type="button" id="join_button" value="회원가입">
+            <div class="join_form_container">
+                <form class="join_form">
+                    <div>아이디</div>
+                    <input type="text" id="join_username" placeholder="username">
+                    <div>비밀번호</div>
+                    <input type="password" id="join_password" placeholder="password">
+                    <div>이름</div>
+                    <input type="text" id="join_name" placeholder="name">
+                    <div>나이</div>
+                    <input type="text" id="join_age" placeholder="age">
+                    <div>프로필 사진</div>
+                    <div class="join_img"> 
+                        <label for="join_img">사진추가</label>
+                        <br> 
+                        <input type="file" id="join_img" accept="image/*"> 
+                    </div>
+                    <input type="button" id="join_button" value="회원가입">
+                </form>
+            </div>
         </div>
     </div>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="js/join.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="js/join.js"></script>
 </body>

@@ -1,40 +1,53 @@
-
 $(document).ready(function () {
-    // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
-    $(".notice_board_title tr").click(function(e){
-      console.log("hi");
-        var editorType = "none";
-        var postType = "viewPost";
-        var rowIdx = e.target.closest("tr").rowIndex;
-        if(rowIdx !== 0){ // th가 인덱스 0이므로 게시글 인덱스는 1부터 시작
-            $(location).attr('href', "viewPost.html?editorType=" + editorType + "&postType=" + postType); // 경로 바꿔야함
-        }
-    });
+  // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
+  $(".notice_board_title tr").click(function (e) {
+    console.log("hi");
+    var editorType = "none";
+    var postType = "viewPost";
+    var rowIdx = e.target.closest("tr").rowIndex;
+    if (rowIdx !== 0) {
+      // th가 인덱스 0이므로 게시글 인덱스는 1부터 시작
+      $(location).attr(
+        "href",
+        "viewPost.html?editorType=" + editorType + "&postType=" + postType
+      ); // 경로 바꿔야함
+    }
+  });
 
-    $("#btn-createNewPost").click(function(e){
-        var editorType = "newEditor";
-        var postType = "editPost";
-        $(location).attr('href', "postEditor.html?editorType=" + editorType + "&postType=" + postType);
-    });
+  $("#btn-createNewPost").click(function (e) {
+    var editorType = "newEditor";
+    var postType = "editPost";
+    $(location).attr(
+      "href",
+      "postEditor.html?editorType=" + editorType + "&postType=" + postType
+    );
+  });
 
-    // for notification modal
-    $('#notification_icon').click(function(){
-      $(".notification_modal").css("display", "block");
-      $(".user_modal").css("display", "none");
-    });
-    $('.notification_modal_close_area').click(function(){
-      $(".notification_modal").css("display", "none");
-    });
+  // for notification modal
+  $("#notification_icon").click(function () {
+    $(".notification_modal").css("display", "block");
+    $(".user_modal").css("display", "none");
+  });
+  $(".notification_modal_close_area").click(function () {
+    $(".notification_modal").css("display", "none");
+  });
 
-    // for user modal
-    $('#user_icon').click(function(e){
-      $(".user_modal").css("display", "block");
-      $(".notification_modal").css("display", "none");
-    });
-  
-    $('.user_modal_close_area').click(function(){
-      $(".user_modal").css("display", "none");
-    });
+  // for user modal
+  $("#user_icon").click(function (e) {
+    $(".user_modal").css("display", "block");
+    $(".notification_modal").css("display", "none");
+  });
+
+  $(".user_modal_close_area").click(function () {
+    $(".user_modal").css("display", "none");
+  });
+});
+
+
+//로그인버튼
+const login_button = document.querySelector("#login_icon");
+login_button.addEventListener("click", e => console.log(1),window.location.href="http://127.0.0.1:5500/yugyeom/login.html");
+
 
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
@@ -200,7 +213,6 @@ function transformNext(event) {
   classList.setAttribute("data-position", activeLi);
 }
 
-
 // ul 태그 선택
 const slideNext_btn = document.querySelector(".slide_next");
 const slidePrev_btn = slideNext_btn.previousElementSibling;
@@ -212,7 +224,7 @@ if (classList.clientWidth < liList.length * 270) {
   slideNext_btn.classList.add("slide_next_hover");
   slideNext_btn.classList.remove("slide_next");
   slidePrev_btn.classList.add("slide_next");
-  slideNext_btn.classList.add("slide_prev");// 스타일 변경 안돼서 클래스로 바꿈
+  slideNext_btn.classList.add("slide_prev"); // 스타일 변경 안돼서 클래스로 바꿈
   slideNext_btn.addEventListener("click", transformNext);
 } else {
   /* 카드가 ul 태그 너비보다 넘치지 않으면, prev, next 버튼 불필요하므로, 아예 삭제함
@@ -224,4 +236,3 @@ if (classList.clientWidth < liList.length * 270) {
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
 }
-
