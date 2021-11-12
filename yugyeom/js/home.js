@@ -1,4 +1,5 @@
-var token = '';
+var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSUMiLCJleHAiOjE2MzY4MTYyMjd9.12vfH1Ciy09hF2cNgJJEyZnh_V-EoDtnVDWn3B5r8UBBsZtw0sGqUckD0uRR8CuupTTLzYTVgk4WGL6AWDgCsQ';
+//날짜형식변환 yyyy-mm-dd
 
 $(document).ready(function () {
 //8080/lesson?teacherName=1
@@ -27,8 +28,14 @@ fetch("http://219.255.114.140:8090/lesson",{
           // title: "개인"
           // views: 0
 
+          var completed = singleData.completed;
           var createdDate = singleData.createdDate;
+          var endPeriod = singleData.endPeriod;
           var index = singleData.id;
+          var lessonType = singleData.lessonType;
+          var maxStudentCount = singleData.maxStudentCount;
+          var nowStudentCount = singleData.nowStudentCount;
+          var startPeriod = singleData.startPeriod;
           var teacherName = singleData.teacherName;
           var title = singleData.title;
           var views = singleData.views;
@@ -62,24 +69,6 @@ fetch("http://219.255.114.140:8090/lesson",{
       );
     });
 
-    $('.chatting_button').click(function(e){
-      $(".message_modal").css("display", "none");
-      $(".notification_modal").css("display", "none");
-      $(".user_modal").css("display", "none");
-      $(".chatting_modal").css("display", "block");
-
-
-      $('#chattingTable>tbody').prepend('<tr><td></td><td>안녕하세요</td></tr>');
-      $('#chattingTable>tbody').prepend('<tr><td>ㅎㅇㅎㅇ</td><td></td></tr>');
-      $('#chattingTable>tbody').prepend('<tr><td></td><td>어쩌구저쩌구</td></tr>');
-
-      $("#messageTable tr").click(function (e) {
-        var rowIdx = e.target.closest("tr").rowIndex;
-
-        $('.chatting_modal').css('display', 'block');
-        $('.message_modal').css('display', 'none');
-    });
-  })
 
   /// 여기부터는 선생님 정보 조회
   fetch("http://219.255.114.140:8090/members/teachers",{
@@ -92,47 +81,57 @@ fetch("http://219.255.114.140:8090/lesson",{
     .then(data => {
       console.log(data);
       console.log(data.totalElementCount);
-      // for(i=0;i < data.totalElementCount; i++){
-      //   var singleData = data.simpleLectureDtoList[i];
+      for(i=0;i < data.teacherProfiles.length; i++){
+        var singleData = data.teacherProfiles[i];
 
-      //   var completed = singleData.completed;
-      //   var createdDate = singleData.createdDate;
-      //   var endPeriod = singleData.endPeriod;
-      //   var index = singleData.id;
-      //   var lessonType = singleData.lessonType;
-      //   var maxStudentCount = singleData.maxStudentCount;
-      //   var nowStudentCount = singleData.nowStudentCount;
-      //   var startPeriod = singleData.startPeriod;
-      //   var teacherName = singleData.teacherName;
-      //   var title = singleData.title;
-      //   var views = singleData.views;
-      //   $('#table>tbody').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">한석원선생님</div><div class="teacher_subject">수학</div></div><div class="teacher_description_mid"><div class="teacher_rating">⭐⭐⭐⭐⭐</div><input class="chatting_button" type="button" value="채팅하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력:</div> </div></div></li>');
-      //   }
+        // age: 22
+        // career: "똥을 기똥차게 "
+        // id: 2
+        // name: "선생1"
+        // profileImgPath: null
+        // starPoint: 0
 
-      //   console.log("length : " + $('#table >tbody tr').length);
-      //   // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
-      //   $("#table tr").click(function (e) {
-      //     var editorType = "none";
-      //     var postType = "viewPost";
-      //     var rowIdx = e.target.closest("tr").rowIndex;
-      //     var idx =  $(this).children().eq(0).text(); // 게시글의 id
+        var age = singleData.age;
+        var career = singleData.career;
+        var id = singleData.id;
+        var name = singleData.name;
+        var profileImgPath = singleData.profileImgPath;
+        var starPoint = singleData.starPoint;
 
-      //     var url ="http://219.255.114.140:8090/lesson/"+idx;
-      //     if(rowIdx !== 0){
-      //           $(location).attr(
-      //             "href",
-      //             "viewPost.html?editorType=" + editorType + "&postType=" + postType + "&postID=" + idx
-      //           ); // 경로 바꿔야함
-      //     }
-      // });
+        starToText = ""
+        for(i=0;i<starPoint;i++){
+          starToText += "⭐";
+        }
+
+        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starToText+'</div><input class="chatting_button" type="button" value="채팅하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+        }
+
+        $('.chatting_button').click(function(e){
+          $(".message_modal").css("display", "none");
+          $(".notification_modal").css("display", "none");
+          $(".user_modal").css("display", "none");
+          $(".chatting_modal").css("display", "block");
+    
+    
+          $('#chattingTable>tbody').prepend('<tr><td></td><td>안녕하세요</td></tr>');
+          $('#chattingTable>tbody').prepend('<tr><td>ㅎㅇㅎㅇ</td><td></td></tr>');
+          $('#chattingTable>tbody').prepend('<tr><td></td><td>어쩌구저쩌구</td></tr>');
+    
+          $("#messageTable tr").click(function (e) {
+            var rowIdx = e.target.closest("tr").rowIndex;
+    
+            $('.chatting_modal').css('display', 'block');
+            $('.message_modal').css('display', 'none');
+        });
+      })
   });
-
 });
 
 
 //로그인버튼
 const login_button = document.querySelector("#login_icon");
 login_button.addEventListener("click", e =>location.href="http://127.0.0.1:5500/yugyeom/login.html");
+
 
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
@@ -321,4 +320,3 @@ if (classList.clientWidth < liList.length * 270) {
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
 }
-
