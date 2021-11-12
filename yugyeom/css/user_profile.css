@@ -1,0 +1,12 @@
+.applied_subject_container{
+    width: 100%;
+    align-items: center;
+}
+
+.applied_subject_list_container{
+    align-items: center;
+}
+.applied_subject_list{
+    display: flex;
+    justify-content: space-around;
+}

@@ -46,7 +46,7 @@ $(document).ready(function () {
 
 //로그인버튼
 const login_button = document.querySelector("#login_icon");
-login_button.addEventListener("click", e => console.log(1),window.location.href="http://127.0.0.1:5500/yugyeom/login.html");
+login_button.addEventListener("click", e =>location.href="http://127.0.0.1:5500/yugyeom/login.html");
 
 
 const teacher_list_select = document.querySelector("#teacher_list_select");
@@ -236,3 +236,4 @@ if (classList.clientWidth < liList.length * 270) {
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
 }
+

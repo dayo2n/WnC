@@ -36,8 +36,10 @@
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
+    <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/change_info.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -50,27 +52,27 @@
                 </div>
                 <div class="right_head_items">
                     <img id="notification_icon" src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
-                        <div class="notification_modal">
-                            <div class="notification_modal_title">
-                                <h2>알림모달</h2>
-                            </div>
-                            <div class="notification_modal_close_area">X</div>
-                            <div class="notification_modal_content">
-                                <p>123</p>
-                            </div>
+                    <div class="notification_modal">
+                        <div class="notification_modal_title">
+                            <h2>알림모달</h2>
                         </div>
-                  
+                        <div class="notification_modal_close_area">X</div>
+                        <div class="notification_modal_content">
+                            <p>123</p>
+                        </div>
+                    </div>
+
                     <img id="user_icon" src="img/user.png" class="logoBox" alt="" style="width: 25px;">
-                        <div class="user_modal">
-                            <div class="user_modal_title">
-                                <h2>유저모달</h2>
-                            </div>
-                            <div class="user_modal_close_area">X</div>
-                            <div class="user_modal_content">
-                                <p>123</p>
-                            </div>
+                    <div class="user_modal">
+                        <div class="user_modal_title">
+                            <h2>유저모달</h2>
                         </div>
-                    <img src="img/login.png" class="logoBox" alt="">
+                        <div class="user_modal_close_area">X</div>
+                        <div class="user_modal_content">
+                            <p>123</p>
+                        </div>
+                    </div>
+                    <img src="img/login.png" id="login_icon" class="logoBox" alt="로그인">
                     <div class="login_button"></div>
                     <div class="profile"></div>
                 </div>
@@ -78,27 +80,44 @@
         </div>
     </header>
     <section>
-        <div class="inner">
-            <div class="change_info_container">
-                <form class="change_info_name">
-                    <div>이름</div>
-                    <input id="name" type="text" placeholder="변경할 이름" required>
-                    <input id="name_submit" type="submit" value="저장하기"> 
-                </form>
-                <form class="change_info_age">
-                    <div>나이</div>
-                    <input type="text" id="age" placeholder="변경할 나이" required>
-                    <input type="submit" id="age_submit" value="저장하기">
-                </form>
-                <div class="change_info_img"> 
-                    <label for="info_img">사진변경</label>
-                    <br> 
-                    <input type="file" id="info_img"> 
-                </div>
-                <input type="button" id="withdrawal" value="회원탈퇴"></input>
+        <div class="teacher_profile_view_container">
+            <div class="teacher_profile_view">
+                <div>선생님이름</div>
+                <div id="view_name"></div>
+                <div>나이</div>
+                <div id="view_age"></div>
+                <div>경력</div>
+                <div id="view_career" class="teacher"></div>
+                <div>별점</div>
+                <div id="view_rating" class="teacher"></div>
+                <div>프로필사진</div>
+                <div id="view_img"></div>
             </div>
+            <br>
+        </div>
+        <div class="evaluation_list_container">
+            <table>
+                평가목록
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>내용</th>
+                        <th>별점</th>
+                        <th>학생이름</th>
+                    </tr>
+                </thead>
+                <tbody class = "evaluation_list_tbody">
+                    <tr>
+                        <td>d</td>
+                        <td>ddddddddddddddddddddddddddddddddddddd</td>
+                        <td>a</td>
+                        <td>d</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
-    <script src="js/chansge_info_kakao"></script>
+
+    <script src="js/teacher_profile_view.js"></script>>
     <script src="js/init.js"></script>
 </body>
