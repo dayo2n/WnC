@@ -22,6 +22,7 @@ body {
 
 .hidden{
   visibility: hidden;
+  display: none;
 }
 
 /* a 링크 태그 스타일 초기화 */
@@ -173,4 +174,8 @@ display: none;
 
 #chattingTable{
   margin-bottom: 0px;
+}
+
+.logoBox:hover{
+  cursor: pointer;
 }

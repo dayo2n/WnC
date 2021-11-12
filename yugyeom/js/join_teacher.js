@@ -10,7 +10,6 @@ join_form.addEventListener("submit", postJoin);
 //lesson
 function postJoin(event){
     event.preventDefault();
-
     const formData = new FormData();
     formData.append("username",join_username.value);
     formData.append("password", join_password.value);
@@ -26,7 +25,6 @@ function postJoin(event){
         .then((response) => response.json())
         .then((data) => console.log(data));
 }//에러메세지
-
 
 
 function usernameOverlapCheck(){//아이디중복확인
