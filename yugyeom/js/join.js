@@ -7,22 +7,21 @@ const join_career = document.querySelector("#join_career");
 const join_form = document.querySelector(".join_form");
 
 join_form.addEventListener("submit", postJoin);
-
+//lesson
 function postJoin(event){
     event.preventDefault();
 
-    const formdata = new FormData();
-    formdata.append("username",join_username.value);
-    formdata.append("password", join_password.value);
-    formdata.append("name", join_name.value);
-    formdata.append("age", join_age.value);
-    formdata.append("career", join_career.value);
-    console.log(join_img.files[0]);
-    if(join_img.files[0] !== undefined){formdata.append("profileImg", null);}
-    
+    const formData = new FormData();
+    formData.append("username",join_username.value);
+    formData.append("password", join_password.value);
+    formData.append("name", join_name.value);
+    formData.append("age", join_age.value);
+    formData.append("career", join_career.value);
+    formData.append("profileImg",join_img.files[0]);
+    if(join_img.files[0] === undefined){formData.append("profileImg", null);}
     fetch("http://219.255.114.140:8090/join/teacher", { //FormData로 보낼때 헤더설정 X
         method: "POST",
-        body: formdata
+        body: formData
       })
         .then((response) => response.json())
         .then((data) => console.log(data));

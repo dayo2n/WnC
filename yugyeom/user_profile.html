@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <title>WnC 과외 선생님 매칭</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
@@ -36,9 +36,9 @@
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/user_profile.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
@@ -72,39 +72,81 @@
                             <p>123</p>
                         </div>
                     </div>
-                    <img src="img/login.png" class="logoBox" alt="">
+                    <img src="img/login.png" id="login_icon" class="logoBox" alt="로그인">
                     <div class="login_button"></div>
                     <div class="profile"></div>
                 </div>
             </div>
         </div>
     </header>
-    <div class="inner">
-
-        <div class="login_container">
-            <div class="login_form_container">
-                <form class="login_form">
-                    <div>아이디</div>
-                    <input type="text" id="login_username" placeholder="username" name="username">
-                    <div>비밀번호</div>
-                    <input type="password" id="login_password" placeholder="password" name="password">
-                    <input type="submit" id="login_button" value="로그인">
-
-                    <a id="custom-login-btn" href="javascript:loginWithKakao()">
-                        <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="250" />
-                    </a>
-                    <div class="join_box">
-                        <a href="/yugyeom/student_join.html" id="join_student">학생회원가입</a>
-                        <a href="/yugyeom/teacher_join.html" id="join_teacher">선생님회원가입</a>
-                    </div>
-                </form>
-            </div>
+    <section>
+        <div class="user_profile_container">
+            <div id="info_name">이름</div>
+            <div id="info_age">나이</div>
+            <div id="info_career" class="teacher">경력</div>
+            <div id="info_rating" class="teacher">별점</div>
+            <div id="info_img"></div>
+            <br>
+            <!-- class:teacher은 선생님일때 hidden하려고 -->
+        </div>
+        <div class="applied_subject_container">
+            <table>
+                수강중인 강좌
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>선생님 이름</th>
+                        <th>내용</th>
+                    </tr>
+                </thead>
+                <tbody class="applied_subject_tbody">
+                    <tr>
+                        <td>d</td>
+                        <td id="teacher_name_cell">ddddddddddddddddddddddddddddddddddddd</td>
+                        <td>a</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="evaluate_teacher_container">
+            평가하기
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>선생님 이름</th>
+                        <th>내용</th>
+                        <th>점수</th>
+                        <th>확인</th>
+                    </tr>
+                </thead>
+                <tbody class="evaluate_table_tbody">
+                    <tr>
+                        <form class=evaluate_form>
+                            <td>d</td>
+                            <td id="teacher_name_cell">ddddddddddddddddddddddddddddddddddddd</td>
+                            <td><input id = "evaluate_content"type="text"placeholder="평가내용" required></td>
+                            <td><select required id="evaluate_select">
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select></td>
+                            <td><input type="submit"></td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-    </div>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/header.js"></script>
+
+
+    </section>
+    <script src="js/teacher_profile_view.js"></script>
+    <script src="js/user_profile.js"></script>
     <script src="js/init.js"></script>
 </body>
+
 </html>
