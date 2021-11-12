@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Member member = memberRepository.findByUsername(username).orElse(null);
         if(member ==null ){
-            new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다.");
+            throw new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다.");
         }
         if (!member.isActivated()) {
             throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");

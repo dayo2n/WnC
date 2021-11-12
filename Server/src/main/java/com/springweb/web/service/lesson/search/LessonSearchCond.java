@@ -15,6 +15,8 @@ public class LessonSearchCond {
     private String content;
 
     private LessonType lessonType;// ALL , PERSONAL, GROUP
+
+    private int minStudentCount;
     private int maxStudentCount;
 
 }

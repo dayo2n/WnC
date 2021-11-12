@@ -57,6 +57,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         public UnauthorizedPageDto(String requestURI,String message) {
             this.requestURI = requestURI;
 
+            if(requestURI.equals("/login")||requestURI.equals("/login/kakao")){
+                message = "아이디 또는 비밀번호가 잘못되었습니다.";
+            }
+
             if(StringUtils.hasLength(message)){
                 this.message =message;
             }

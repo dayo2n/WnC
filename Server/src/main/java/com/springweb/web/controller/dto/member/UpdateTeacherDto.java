@@ -11,5 +11,6 @@ public class UpdateTeacherDto extends UpdateStudentDto{
     private MultipartFile profileImg;//프사
     private String password;
     private String career;//경력
+    private boolean doProfileImgChange; //true면 수정
 
 }

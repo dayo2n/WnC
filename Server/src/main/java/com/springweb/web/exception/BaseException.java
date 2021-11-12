@@ -1,6 +1,6 @@
 package com.springweb.web.exception;
 
-public interface BaseException {
+public abstract class BaseException extends Exception{
 
-    BaseExceptionType getExceptionType();
+    public abstract BaseExceptionType getExceptionType();
 }

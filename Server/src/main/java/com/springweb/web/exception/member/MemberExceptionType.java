@@ -10,7 +10,9 @@ public enum MemberExceptionType implements BaseExceptionType {
     USERNAME_NOT_EXIST(601, HttpStatus.NOT_FOUND, "아이디가 존재하지 않습니다."),
     PASSWORDS_DOES_NOT_MATCH(602, HttpStatus.NOT_FOUND, "비밀번호가 일치하지 않습니다."),
     MUST_REGISTER(603, HttpStatus.UNAUTHORIZED, "회원가입을 진행해야 합니다."),
-    PLEASE_LOGIN_AGAIN(604, HttpStatus.UNAUTHORIZED, "다시 로그인 해주세요");  //왜 이런 오류가 발생했는지 모를 때
+    PLEASE_LOGIN_AGAIN(604, HttpStatus.UNAUTHORIZED, "다시 로그인 해주세요"),  //왜 이런 오류가 발생했는지 모를 때
+    CANNOT_LEAVE_BSC_GROUP_LESSON_HAS_STUDENT(605, HttpStatus.FORBIDDEN, "그룹 레슨에 가입한 학생이 있어서 탈퇴하지 못합니다. 모집을 완료 후 다시 시도해주세요."),
+    NOT_FOUND_MEMBER(606, HttpStatus.NOT_FOUND, "회원 정보가 없습니다.");
 
 
 
