@@ -36,24 +36,72 @@
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
-    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/login.css" />
 </head>
+
 <body>
+    <header>
         <div class="inner">
-            <div class="login_container">
-                <input type="text" id="login_username" placeholder="username">
-                <input type="text" id="login_password" placeholder="password">
-                <input type="button" id="login_button" value="로그인">
-                <a id="custom-login-btn" href="javascript:loginWithKakao()">
-                    <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222" />
-                </a>
-                <a href="/join/student/kakao" id="join_student">학생으로 회원가입</a>
-                <a href="/join/teacher/kakao" id="join_teacher">선생님으로 회원가입</a>
-                
+            <div class="head_container">
+                <div class="left_head_items">
+                    <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                    <h1 class="logoBox">WnC Tutoring</h1>
+                </div>
+                <div class="right_head_items">
+                    <img id="notification_icon" src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                    <div class="notification_modal">
+                        <div class="notification_modal_title">
+                            <h2>알림모달</h2>
+                        </div>
+                        <div class="notification_modal_close_area">X</div>
+                        <div class="notification_modal_content">
+                            <p>123</p>
+                        </div>
+                    </div>
+
+                    <img id="user_icon" src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                    <div class="user_modal">
+                        <div class="user_modal_title">
+                            <h2>유저모달</h2>
+                        </div>
+                        <div class="user_modal_close_area">X</div>
+                        <div class="user_modal_content">
+                            <p>123</p>
+                        </div>
+                    </div>
+                    <img src="img/login.png" class="logoBox" alt="">
+                    <div class="login_button"></div>
+                    <div class="profile"></div>
+                </div>
             </div>
         </div>
+    </header>
+    <div class="inner">
+
+        <div class="login_container">
+            <div class="login_form_container">
+                <form class="login_form">
+                    <div>아이디</div>
+                    <input type="text" id="login_username" placeholder="username" name="username">
+                    <div>비밀번호</div>
+                    <input type="password" id="login_password" placeholder="password" name="password">
+                    <input type="submit" id="login_button" value="로그인">
+
+                    <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                        <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="250" />
+                    </a>
+                    <div class="join_box">
+                        <a href="/yugyeom/student_join.html" id="join_student">학생회원가입</a>
+                        <a href="/yugyeom/teacher_join.html" id="join_teacher">선생님회원가입</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="js/login.js"></script>
 </body>
+</html>
