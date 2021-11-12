@@ -35,6 +35,7 @@ $(document).ready(function () {
     $('.user_modal_close_area').click(function(){
       $(".user_modal").css("display", "none");
     });
+  });
 
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
@@ -224,4 +225,3 @@ if (classList.clientWidth < liList.length * 270) {
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
 }
-

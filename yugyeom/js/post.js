@@ -83,7 +83,7 @@ $(document).ready(function () {
             if(editorType === "newEditor"){  // 새 글작성 모드 
                 // 새 데이터 추가 코드 구현 
             }else{ // editorType === "editEditor", 기존 글 수정 모드
-
+             // 기존 데이터 수정 후 업데이트 코드 구현
             }
         }
     });
