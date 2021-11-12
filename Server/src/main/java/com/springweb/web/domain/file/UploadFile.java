@@ -22,9 +22,6 @@ public class UploadFile extends BaseTimeEntity {
     @Column(unique = true)
     private String filePath;//UUID.jpg(확장자)
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LESSON_ID")
-    private Lesson lesson;
 
 
     protected UploadFile(String filePath) {

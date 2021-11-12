@@ -8,8 +8,11 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +31,29 @@ public class CreateLessonDto {
     @NotNull
     private LessonType lessonType; //PERSONAL, GROUP
 
-    //TODO  :lessonType이 GROUP일 경우 최소 2 이상
     private int maxStudentCount;
 
-    private LocalDateTime period;//모집기간
+    private String startPeriod;//시작기간
+    private String endPeriod;//과외 끝기간
 
+
+    public boolean isPeriodOk(){
+        LocalDateTime start = LocalDate.parse(startPeriod, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+        LocalDateTime end = LocalDate.parse(endPeriod, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+        LocalDateTime now = LocalDateTime.now();
+
+        if(start.isAfter(end) || start.isEqual(end) || start.isBefore(now) || end.isBefore(now)) {
+            return false;
+        }
+        return true;
+    }
+    public boolean isMaxStudentCountOk(){
+        //그룹이 아니거나, 그룹일 경우 2보다 크면 true
+        if(lessonType != LessonType.GROUP || maxStudentCount >= 2){
+            return true;
+        }
+        return false;
+    }
 
 
     public Lesson toEntity(){
@@ -50,12 +71,12 @@ public class CreateLessonDto {
                     .content(content)
                     .maxStudentCount(maxStudentCount)
                     .nowStudentCount(0)
-                    .period(period)
+                    .startPeriod(LocalDate.parse(startPeriod, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
+                    .endPeriod(LocalDate.parse(endPeriod, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
                     .build();
         }
 
 
-        log.error("여기까지 오면 에러가 발생해야 합니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return null;  // => 둘 다 아니면 오류 발생
 
     }

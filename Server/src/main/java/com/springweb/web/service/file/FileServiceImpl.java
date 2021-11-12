@@ -48,7 +48,7 @@ public class FileServiceImpl implements FileService {
     public String saveFile(MultipartFile file) throws UploadFileException, IOException {
         log.info("파일 저장 시작");
         if (file.isEmpty()) {
-            throw new UploadFileException(UploadFileExceptionType.FILE_COULD_NOT_BE_SAVED);
+            return null;
         }//check file exist
 
         String originalFilename = file.getOriginalFilename();//image.jpg
@@ -63,7 +63,7 @@ public class FileServiceImpl implements FileService {
     @Trace
     @Override
     public List<UploadFile> saveFiles(List<MultipartFile> multipartFiles) throws UploadFileException, IOException {
-        if (multipartFiles == null || multipartFiles.get(0).isEmpty()) {
+        if (multipartFiles == null || multipartFiles.size()==0 || multipartFiles.get(0).isEmpty()) {
             return new ArrayList<>();
         }
         log.info("파일 저장을 실햅합니다.");

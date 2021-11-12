@@ -3,7 +3,7 @@ package com.springweb.web.exception.lesson;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.BaseExceptionType;
 
-public class LessonException extends Exception implements BaseException {
+public class LessonException extends BaseException  {
 
     private BaseExceptionType exceptionType;
 

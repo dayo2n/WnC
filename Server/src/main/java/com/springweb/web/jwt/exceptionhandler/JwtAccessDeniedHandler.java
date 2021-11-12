@@ -51,6 +51,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
 
         public UnauthorizedPageDto(String requestURI) {
+
             this.requestURI = requestURI;
         }
     }

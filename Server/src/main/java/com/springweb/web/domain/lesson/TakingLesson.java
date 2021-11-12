@@ -2,15 +2,15 @@ package com.springweb.web.domain.lesson;
 
 import com.springweb.web.domain.base.BaseTimeEntity;
 import com.springweb.web.domain.member.Student;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class TakingLesson extends BaseTimeEntity {
 
     @Id
@@ -28,9 +28,11 @@ public class TakingLesson extends BaseTimeEntity {
     private Lesson lesson;
 
 
+
     private String title;//레슨 제목
     private String teacherName;//레슨하시는 선생님 이름
-    private String teacherUsername;//레슨하시는 선생님 username
+    private Long teacherId;//레슨하시는 선생님 id
+
 
 
 }
