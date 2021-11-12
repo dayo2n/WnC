@@ -13,9 +13,61 @@ $(document).ready(function () {
     console.log(editorType + " " +postType);
 
 
-        // 해당 게시글에 대한 기존 내용이 불러져와야함 ************ 여기 아직 구현 안됐어 **********
+        // 해당 게시글에 대한 기존 내용이 불러져와야함
     if(editorType ===  "editEditor" && postType === "editPost"){
+
+        var postIdx = types[2].split("=")[1];
+
+        fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
+            method: "GET",
+            headers : {"Authorization" : `Bearer ${token}` }
+            })
+            .then(response => {
+              return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                console.log(data.lessonType);
+                $('#lessonType').attr('disabled', 'true'); // true
+                $('#title').val(data.title);
+                if(data.lessonType === "PERSONAL"){
+                }else{
+                    $('#lessonType').val("GROUP").prop('selected', true); // true
+                    $('tbody tr').eq(1).after('<tr><td>모집인원</td><td><input type="text" placeholder="최대인원을 입력하세요." class="writeComponent" id="maxStudentCount" maxlength=20 style="width:100%"></td></tr>');
+                    // 최대인원 수는 숫자로만 입력 가능
+                    $('tbody tr').eq(2).after('<tr><td>과외기간</td><td><input type=" text" class="writeComponent" id="startDate" placeholder="시작일자 yyyy-mm-dd"> ~<input type="text" class="writeComponent" id="endDate" placeholder="종료일자 yyyy-mm-dd"></td></tr>');
+                    $('#maxStudentCount').val(data.maxStudentCount);
+                    $('#startDate').val(data.startPeriod.slice(0,10));
+                    $('#endDate').val(data.endPeriod.slice(0,10));
+                }
+                $('#content').val(data.content);
+
+
+                $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+                $( "#startDate" ).datepicker({ 
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
+                monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
+                dateFormat: "yy-mm-dd", minDate: 1, // 현재 이전 날짜는 선택 불가 
+                onClose: function( selectedDate ) { //시작일(startDate) datepicker가 닫힐때 
+                    //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
+                    $("#endDate").datepicker( "option", "minDate", selectedDate ); 
+                    } 
+                }); 
+                $( "#endDate" ).datepicker({ 
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
+                monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
+                dateFormat: "yy-mm-dd", minDate: 1, // 오늘 이전 날짜 선택 불가 
+                onClose: function( selectedDate ) { // 종료일(endDate) datepicker가 닫힐때 
+                    // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정 
+                    $("#startDate").datepicker( "option", "maxDate", selectedDate ); 
+                    } 
+                });
+            });
     }
+
     if(postType === "viewPost"){
         var tr = $('#table tr');
         var td = tr.children();
@@ -37,21 +89,26 @@ $(document).ready(function () {
                     $('#postViewTable tr:eq(2) td:eq(1)').text(1);
                     $('#postViewTable tr:eq(3) td:eq(1)').text("개인과외는 개인 조정");
                 }else{
-                    $('#postViewTable tr:eq(2) td:eq(1)').text(maxStudentCount);
-                    $('#postViewTable tr:eq(3) td:eq(1)').text(data.startPeriod + " ~ " + data.endPeriod);
+                    $('#postViewTable tr:eq(2) td:eq(1)').text(data.maxStudentCount);
+                    $('#postViewTable tr:eq(3) td:eq(1)').text(data.startPeriod.slice(0, 10) + " ~ " + data.endPeriod.slice(0,10));
                 }
                 $('#postViewTable tr:eq(4) td:eq(0)').text(data.content);
+
+                    // 글 수정 클릭시
+                $("#btn-editPost").click(function(){
+                    var editorType = "editEditor";
+                    var postType = "editPost";
+                    $(location).attr('href', "postEditor.html?editorType=" +  editorType + "&postType=" + postType + '&postID=' + postIdx);
+                });
+
+                // 가입 신청 시
+                $("#btn-register").click(function(){
+                    fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/apply",{
+                        method: "POST",
+                        headers : {"Authorization" : `Bearer ${token}` }
+                    })
+                });
             });
-        // $.getJSON($('#clickedPostInfo'), function(data){
-        //     var html ="";
-        //     $.each(data, function(entryIndex, entry){
-        //         html += '<table border="1" width=500 frame=void>';
-        //         html += '<tr><th colspan="4">제목</th></tr>';
-        //         html += '<tr><td width=120>lessonType</td><td>'+ entry.title +'</td><td width=120>조회수</td><td>'+ entry.views +'</td></tr>';
-        //         html += '<tr><td>모집인원</td><td></td><td width=120>모집 마감 기간</td><td></td></tr>';
-                
-        //     })
-        // })
     }
     
     $('#lessonType').change(function(){
@@ -74,7 +131,7 @@ $(document).ready(function () {
             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
             monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
             monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
-            dateFormat: "yy-mm-dd", minDate: 0, // 현재 이전 날짜는 선택 불가 
+            dateFormat: "yy-mm-dd", minDate: 1, // 현재 이전 날짜는 선택 불가 
             onClose: function( selectedDate ) { //시작일(startDate) datepicker가 닫힐때 
                 //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
                 $("#endDate").datepicker( "option", "minDate", selectedDate ); 
@@ -84,7 +141,7 @@ $(document).ready(function () {
             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
             monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
             monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], 
-            dateFormat: "yy-mm-dd", minDate: 0, // 오늘 이전 날짜 선택 불가 
+            dateFormat: "yy-mm-dd", minDate: 1, // 오늘 이전 날짜 선택 불가 
             onClose: function( selectedDate ) { // 종료일(endDate) datepicker가 닫힐때 
                 // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정 
                 $("#startDate").datepicker( "option", "maxDate", selectedDate ); 
@@ -126,7 +183,6 @@ $(document).ready(function () {
             if(postType === "editPost"){ // 에디터에서 
                 var lessonType = $('#lessonType option:selected').val();
                 var formData = new FormData();
-                console.log(lessonType);
             
                 if(editorType === "newEditor"){  // 새 글작성 모드 
                     // 새 데이터 추가 코드 구현 
@@ -176,12 +232,47 @@ $(document).ready(function () {
                         });
                         }
                     }
-                }else{ // editorType === "editEditor", 기존 글 수정 모드
-                 // 기존 데이터 수정 후 업데이트 코드 구현
-                 // 일대일 -> 그룹으로는 수정불가
+                }else{//editorType=="editEditor"
+                    if(lessonType==="PERSONAL"){
+
+                        var postIdx = types[2].split("=")[1];
+                        formData.append('title', $('#title').val());
+                        formData.append('content', $('#content').val());
+                        formData.append('lessonType', lessonType);
+                        
+                        var url = "http://219.255.114.140:8090/lesson/" + postIdx;
+                        fetch(url,{
+                            method: "PUT",
+                            headers :{
+                                // 'Content-Type': 'multipart/form-data',
+                                'Authorization' : `Bearer ${token}`,
+                            },
+                            body: formData,
+                        })
+                        // .then((response) => response.json())
+                        // .then((data) => (console.log(data)));
+                    }
+                    else{
+                        var postIdx = types[2].split("=")[1];   
+                        console.log('잘들ㅇ어왔나?');
+                        formData.append('title', $('#title').val());
+                        formData.append('content', $('#content').val());
+                        formData.append('lessonType', lessonType);
+                        formData.append('maxStudentCount', $('#maxStudentCount').val());
+                        formData.append('startPeriod', $('#startDate').val()); // 과외 시작일자
+                        formData.append('endPeriod', $('#endDate').val()); // 과외 종료일자
+                        
+                        var url = "http://219.255.114.140:8090/lesson/" + postIdx;
+                        fetch(url,{
+                            method: "PUT",
+                            headers :{
+                                // 'Content-Type': 'multipart/form-data',
+                                'Authorization' : `Bearer ${token}`,
+                            },
+                            body: formData,
+                        })
+                    }
                 }
-
-
             }
 
             // $(location).attr('href', "home.html"); response 확인하고 보내야함
@@ -189,14 +280,6 @@ $(document).ready(function () {
         }else{// 작성하지않은 부분이 있으면 :: if(!flag)
             alert(alertNotice);
         }
-    });
-
-    // 글 수정 클릭시
-    $("#btn-editPost").click(function(){
-        var editorType = "editEditor";
-        var postType = "editPost";
-        // 기존에 작성된 내용을 불러와야함
-        $(location).attr('href', "postEditor.html?editorType=" +  editorType + "&postType=" + postType);
     });
 
     $('#btn-register').click(function(){

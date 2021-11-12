@@ -4,7 +4,7 @@ var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSU
 $(document).ready(function () {
 //8080/lesson?teacherName=1
 
-fetch("http://219.255.114.140:8090/lesson",{
+    fetch("http://219.255.114.140:8090/lesson",{
         method: "GET",
         headers : {"Authorization" : `Bearer ${token}` }
         })
@@ -39,7 +39,7 @@ fetch("http://219.255.114.140:8090/lesson",{
           var teacherName = singleData.teacherName;
           var title = singleData.title;
           var views = singleData.views;
-          $('#table>tbody').prepend('<tr><td>'+ index +'</td><td id="titleCell">' + title + '</td><td>'+'여기 수정'+'</td><td>'+teacherName+'</td><td>'+createdDate.slice(0,9)+'</td><td>'+views+'</td></tr>');
+          $('#table>tbody').prepend('<tr><td>'+ index +'</td><td id="titleCell">' + title + '</td><td>'+'여기 수정'+'</td><td>'+teacherName+'</td><td>'+createdDate.slice(0,10)+'</td><td>'+views+'</td></tr>');
           }
 
           console.log("length : " + $('#table >tbody tr').length);
@@ -96,14 +96,14 @@ fetch("http://219.255.114.140:8090/lesson",{
         var id = singleData.id;
         var name = singleData.name;
         var profileImgPath = singleData.profileImgPath;
-        var starPoint = singleData.starPoint;
+        var starPoint = parseInt(singleData.starPoint);
 
         starToText = ""
-        for(i=0;i<starPoint;i++){
+        for(j=0;j<starPoint;j++){
           starToText += "⭐";
         }
 
-        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starToText+'</div><input class="chatting_button" type="button" value="채팅하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
         }
 
         $('.chatting_button').click(function(e){
