@@ -1,5 +1,4 @@
-var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSUMiLCJleHAiOjE2MzY4MTYyMjd9.12vfH1Ciy09hF2cNgJJEyZnh_V-EoDtnVDWn3B5r8UBBsZtw0sGqUckD0uRR8CuupTTLzYTVgk4WGL6AWDgCsQ';
-//날짜형식변환 yyyy-mm-dd
+var token = '';
 
 $(document).ready(function () {
 //8080/lesson?teacherName=1
@@ -139,8 +138,7 @@ fetch("http://219.255.114.140:8090/lesson",{
 
 //로그인버튼
 const login_button = document.querySelector("#login_icon");
-// login_button.addEventListener("click", e => console.log(1),window.location.href="http://127.0.0.1:5500/yugyeom/login.html");
-
+login_button.addEventListener("click", e =>location.href="http://127.0.0.1:5500/yugyeom/login.html");
 
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
@@ -329,3 +327,4 @@ if (classList.clientWidth < liList.length * 270) {
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
 }
+

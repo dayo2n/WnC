@@ -20,7 +20,9 @@ body {
   font-family: "Spoqa Han Sans Neo", "Sans-serif";
 }
 
-
+.hidden{
+  visibility: hidden;
+}
 
 /* a 링크 태그 스타일 초기화 */
 a {
