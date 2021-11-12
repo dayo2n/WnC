@@ -50,19 +50,17 @@
         </div>
     </header>
     <section>
-        <div class="inner">
-            <table border="1" width=500 frame=void>
+        <div class="inner viewPostTable">
+            <table border="1" width=500 frame=void id="postViewTable">
                 <tr>
                     <th colspan="4">
-                        제목
                     </th>
                 </tr>
                 <tr>
                     <td width=120>
-                        lessonType
+                        분류
                     </td>
                     <td>
-                        <!-- 제목 -->
                     </td>
                     <td width=120>
                         조회수
@@ -71,16 +69,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="1">
                         모집인원
                     </td>
-                    <td>
+                    <td colspan="3">
                     </td>
-                    <td width=120>
-                        모집 마감 기간
-                    </td>
-                    <td>
-                    </td>
+                    
                 </tr>
                 <tr>
                     <td>
@@ -88,9 +82,6 @@
                     </td>
                     <td colspan="3">
                     </td>
-                </tr>
-                <tr>
- 
                 </tr>
                 <tr>
                     <td colspan="4" height=400>
@@ -101,12 +92,14 @@
                         <!-- 글 수정시 작성자에게만 버튼이 보이도록 || 수정 클릭 시 비밀번호를 입력하고 확인 -->
                         <input type="button" id="btn-editPost" value="글 수정">
                          <input type="button" id="btn-backToNoticeBoard" value="목록으로">
+                        <input type="submit" id="btn-register" value="신청하기">
                     </td>
                 </tr>
             </table>
         </div>
     </section>
     <script src="js/post.js"></script>
+    <script src="js/header.js"></script>
 </body>
 
 </html>

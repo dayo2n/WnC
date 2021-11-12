@@ -191,7 +191,7 @@
     background-color: white;
   }
 
-  .notification_modal, .user_modal{
+  .notification_modal, .user_modal, .message_modal .chatting_modal{
       display: none;
       position: fixed;
       right: 20px;

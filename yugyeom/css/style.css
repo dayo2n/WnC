@@ -1,5 +1,6 @@
 @import 'newPost.css';
 @import 'home.css';
+@import 'viewPost.css';
 
 * {
   box-sizing: border-box;
@@ -117,7 +118,7 @@ button:hover{
   color: white;
 }
   
-.notification_modal {
+.notification_modal, .user_modal, .message_modal, .chatting_modal {
   background: rgba(228, 243, 255, 0.966);
   border-radius: 10px;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
@@ -129,17 +130,27 @@ button:hover{
   z-index: 10;
 display: none;
 }
-.notification_modal .notification_modal_title {
+.notification_modal .notification_modal_title ,
+.user_modal .user_modal_title,
+.message_modal .message_modal_title,
+.chatting_modal .chatting_modal_title{
   padding-left: 10px;
   display: inline;
   text-shadow: 1px 1px 2px gray;
   color: white;
   
 }
-.notification_modal .notification_modal_title h2 {
+.notification_modal .notification_modal_title h2,
+.user_modal .user_modal_title h2,
+.message_modal .message_modal_title h2,
+.chatting_modal .chatting_modal_title
+ {
   display: inline;
 }
-.notification_modal .notification_modal_close_area {
+.notification_modal .notification_modal_close_area,
+.user_modal .user_modal_close_area,
+.message_modal .message_modal_close_area,
+.chatting_modal .chatting_modal_close_area {
   display: inline;
   float: right;
   padding-right: 10px;
@@ -148,49 +159,16 @@ display: none;
   color: white;
 }
 
-.notification_modal .notification_modal_content {
+.notification_modal .notification_modal_content,
+.user_modal .user_modal_content, 
+.message_modal .message_modal_content,
+.chatting_modal .chatting_modal_content{
   margin-top: 20px;
   padding: 0px 10px;
   text-shadow: 1px 1px 2px gray;
   color: white;
 }
 
-
-
-.user_modal {
-background: rgba(228, 243, 255, 0.966);
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
-width: 400px;
-height: 500px;
-position: absolute;
-top: 200px;
-padding: 10px;
-z-index: 10;
-display: none;
-}
-.user_modal .user_modal_title {
-padding-left: 10px;
-display: inline;
-text-shadow: 1px 1px 2px gray;
-color: white;
-
-}
-.user_modal .user_modal_title h2 {
-display: inline;
-}
-.user_modal .user_modal_close_area {
-display: inline;
-float: right;
-padding-right: 10px;
-cursor: pointer;
-text-shadow: 1px 1px 2px gray;
-color: white;
-}
-
-.user_modal .user_modal_content {
-margin-top: 20px;
-padding: 0px 10px;
-text-shadow: 1px 1px 2px gray;
-color: white;
+#chattingTable{
+  margin-bottom: 0px;
 }

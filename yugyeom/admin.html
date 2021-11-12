@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <title>WnC 과외 선생님 매칭</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
@@ -36,9 +36,8 @@
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/login.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
@@ -51,7 +50,7 @@
                     <h1 class="logoBox">WnC Tutoring</h1>
                 </div>
                 <div class="right_head_items">
-                    <img id="notification_icon" src="img/notification.png" class="logoBox" alt="" style="width: 25px;">
+                    <i class="far fa-bell logoBox" id="notification_icon" style="font-size: 25px;"></i>
                     <div class="notification_modal">
                         <div class="notification_modal_title">
                             <h2>알림모달</h2>
@@ -61,8 +60,7 @@
                             <p>123</p>
                         </div>
                     </div>
-
-                    <img id="user_icon" src="img/user.png" class="logoBox" alt="" style="width: 25px;">
+                    <i class="far fa-user logoBox" id="user_icon" style="font-size: 25px;"></i>
                     <div class="user_modal">
                         <div class="user_modal_title">
                             <h2>유저모달</h2>
@@ -79,31 +77,67 @@
             </div>
         </div>
     </header>
-    <div class="inner">
-
-        <div class="login_container">
-            <div class="login_form_container">
-                <form class="login_form">
-                    <div>아이디</div>
-                    <input type="text" id="login_username" placeholder="username" name="username">
-                    <div>비밀번호</div>
-                    <input type="password" id="login_password" placeholder="password" name="password">
-                    <input type="submit" id="login_button" value="로그인">
-
-                    <a id="custom-login-btn" href="javascript:loginWithKakao()">
-                        <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="250" />
-                    </a>
-                    <div class="join_box">
-                        <a href="/yugyeom/student_join.html" id="join_student">학생회원가입</a>
-                        <a href="/yugyeom/teacher_join.html" id="join_teacher">선생님회원가입</a>
-                    </div>
-                </form>
-            </div>
+    <section>
+        <h2>신고 대상 선생님 목록</h2>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>ID</th>
+                        <th>신고자 ID</th>
+                        <th>신고사유</th>
+                        <th>접수일자</th>
+                        <!-- 기존 신고 총 건수 출력  -->
+                        <th>블랙</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>신동훈</td>
+                        <td>ShinDongHun</td>
+                        <td>dayo2n</td>
+                        <td>그냥</td>
+                        <td>2021-11-12</td>
+                        <td><input type="button" value="선정하기"></td>
+                    </tr>
+                    <tr>
+                        <td>신동훈</td>
+                        <td>ShinDongHun</td>
+                        <td>dayo2n</td>
+                        <td>그냥</td>
+                        <td>2021-11-12</td>
+                        <td><input type="button" value="선정하기"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-    </div>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="js/login.js"></script>
+    </section>
+    <section>
+        <h2>블랙리스트</h2>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>ID</th>
+                        <th>블랙 선정일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>신동훈</td>
+                        <td>ShinDongHun</td>
+                        <td>2021-11-12</td>
+                    </tr>
+                    <tr>
+                        <td>신동훈</td>
+                        <td>ShinDongHun</td>
+                        <td>2021-11-12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
     <script src="js/header.js"></script>
 </body>
-</html>

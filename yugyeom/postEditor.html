@@ -18,30 +18,30 @@
         <div class="inner">
             <div class="head_container">
                 <div class="left_head_items">
-                        <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
-                        <h1 class="logoBox">WnC Tutoring</h1>
+                    <img src="img/teaching.png" alt="" id="logo" class="logoBox" style="width: 50px;">
+                    <h1 class="logoBox">WnC Tutoring</h1>
                 </div>
                 <div class="right_head_items">
                     <i class="far fa-bell logoBox" id="notification_icon" style="font-size: 25px;"></i>
-                        <div class="notification_modal">
-                            <div class="notification_modal_title">
-                                <h2>알림모달</h2>
-                            </div>
-                            <div class="notification_modal_close_area">X</div>
-                            <div class="notification_modal_content">
-                                <p>123</p>
-                            </div>
+                    <div class="notification_modal">
+                        <div class="notification_modal_title">
+                            <h2>알림모달</h2>
                         </div>
-                  <i class="far fa-user logoBox" id="user_icon" style="font-size: 25px;"></i>
-                        <div class="user_modal">
-                            <div class="user_modal_title">
-                                <h2>유저모달</h2>
-                            </div>
-                            <div class="user_modal_close_area">X</div>
-                            <div class="user_modal_content">
-                                <p>123</p>
-                            </div>
+                        <div class="notification_modal_close_area">X</div>
+                        <div class="notification_modal_content">
+                            <p>123</p>
                         </div>
+                    </div>
+                    <i class="far fa-user logoBox" id="user_icon" style="font-size: 25px;"></i>
+                    <div class="user_modal">
+                        <div class="user_modal_title">
+                            <h2>유저모달</h2>
+                        </div>
+                        <div class="user_modal_close_area">X</div>
+                        <div class="user_modal_content">
+                            <p>123</p>
+                        </div>
+                    </div>
                     <img src="img/login.png" class="logoBox" alt="">
                     <div class="login_button"></div>
                     <div class="profile"></div>
@@ -52,57 +52,52 @@
     <!-- 새 글 작성 / 기존 글 수정 모드 구분 -->
     <section>
         <div class="inner">
-            <table border="1" width=500 frame=void>
-                <tr>
-                    <th colspan="2">
-                        글 에디터
-                    </th>
-                </tr>
-                <tr>
-                    <td width=120>
-                        <select id="lessonType">
-                            <option value="PERSONAL">일대일 과외</option>
-                            <option value="GROUP">그룹 과외</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" placeholder="제목을 입력하세요." class="writeComponent" id="title" maxlength=20
-                            style="width:100%">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        과외기간
-                    </td>
-                    <td>
-                        <input type=" text" class="writeComponent" id="startDate"
-                            placeholder="시작일자 yyyy-mm-dd"> ~
-                        <input type="text" class="writeComponent" id="endDate" placeholder="종료일자 yyyy-mm-dd">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        모집 마감 기간
-                    </td>
-                    <td>
-                        <input type="text" class="writeComponent"  id="periodDate" placeholder="마감일자 yyyy-mm-dd">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" height=400>
-                        <textarea placeholder="내용을 입력하세요." class="writeComponent"  id="content" style="width: 100%; height: 100%"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align=right>
-                        <input type="button" id="btn-postNewNotice" value="글 등록">
-                        <input type="button" id="btn-backToNoticeBoard" value="작성 취소">
-                    </td>
-                </tr>
-            </table>
+            <form action="" method="post" id="editorForm">
+                <table border="1" width=500 frame=void>
+                    <tr>
+                        <th colspan="2">
+                            글 에디터
+                        </th>
+                    </tr>
+                    <tr>
+                        <td width=120>
+                            <select id="lessonType">
+                                <option value="PERSONAL">일대일 과외</option>
+                                <option value="GROUP">그룹 과외</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" placeholder="제목을 입력하세요." class="writeComponent" id="title" maxlength=20
+                                style="width:100%">
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            과외기간
+                        </td>
+                        <td>
+                            <input type=" text" class="writeComponent" id="startDate" placeholder="시작일자 yyyy-mm-dd"> ~
+                            <input type="text" class="writeComponent" id="endDate" placeholder="종료일자 yyyy-mm-dd">
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td colspan="2" height=400>
+                            <textarea placeholder="내용을 입력하세요." class="writeComponent" id="content"
+                                style="width: 100%; height: 100%"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align=right>
+                            <input type="button" id="btn-postNewNotice" value="글 등록">
+                            <input type="button" id="btn-backToNoticeBoard" value="작성 취소">
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </section>
     <script src="js/post.js"></script>
+    <script src="js/header.js"></script>
 </body>
 
 </html>

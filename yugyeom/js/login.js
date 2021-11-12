@@ -39,7 +39,7 @@ const login_form = document.querySelector(".login_form");
 function onLoginSubmit(event) {
   event.preventDefault();
   const username = login_username.value;
-  const password = login_username.value;//login_username.name 테스트
+  const password = login_password.value;//login_username.name 테스트
 
   fetch(LOGIN_URL, {
     method: "POST",
