@@ -9,40 +9,38 @@ function postChangeInfoName(event) {
   const selectBox = teacher_list_select.value;
   const searchValue = teacher_search.value;
 
-  fetch(1, { //FormData로 보낼때 헤더설정 X
-    method: "DELETE",
-    headers: {},
+  fetch(LOGIN_URL, {
+    //수정
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      access_token: localStorage.getItem("token"),
+      selectBox: selectBox,
+      searchValue: searchValue,
     }),
   })
     .then((response) => response.json())
     .then((data) => console.log(data));
 }
-function postChangeInfoPassword(event) {}
+
 function postChangeInfoAge(event) {}
 function postChangeInfoImg(event) {}
 function postChangeInfoCareer(event) {}
 
 change_name_form.addEventListener("submit", postChangeInfoName);
-change_password_form.addEventListener("submit", postChangeInfoPassword);
 change_age_form.addEventListener("submit", postChangeInfoAge);
 change_img.addEventListener("submit", postChangeInfoImg);
 change_career_form.addEventListener("submit", postChangeInfoCareer);
-
 
 const withdrawal = document.querySelector("#withdrawal");
 
 function onWithdrawal(event){
   const password_form = document.createElement("form");
-  const password_input = document.createElement("input");
-  password_input.type="text";
-  password_input.placeholder="비밀번호를 입력하시오"
   const password_submit = document.createElement("input");
   password_submit.type="submit";
   password_submit.value="확인";
 
-  password_form.appendChild(password_input);
   password_form.appendChild(password_submit);
   withdrawal.parentElement.appendChild(password_form);
   password_form.classList.add("withdrawal_password_form");
@@ -54,23 +52,9 @@ function onWithdrawal(event){
   withdrawal_password_form.addEventListener("submit", postWithdrawal);
 }
 
-withdrawal.addEventListener("click", onWithdrawal);//카카오톡회원 탈퇴
+withdrawal.addEventListener("click", onWithdrawal);
 
-function postWithdrawal(event){
+function postWithdrawal(event){//회원탈퇴 구현 카카오톡 회원이면 
   event.preventDefault();
-
-
-    fetch(1, { //FormData로 보낼때 헤더설정 X
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          
-          access_token: authObj.access_token,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
 
 }
