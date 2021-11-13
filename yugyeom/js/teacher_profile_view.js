@@ -14,7 +14,7 @@ function getTeacherProfile(teacherID) {
     fetch(`http://219.255.114.140:8090/members/teachers/${teacherID}`, {//teacherID는 어떻게?
       method: "GET",
       headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLtlZnsg50xIiwiYXV0aCI6IlJPTEVfQkFTSUMiLCJleHAiOjE2MzY4MTM2MDR9.Mrx1DJAL7Uou9jIMX0NsGL2A6U3CJ8O6mRHMR_0UpGYEHxG6_hFMBKZ5eaE9ZNWUAI23F01hp3m8O1FpP81BQQ`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`
       },
     })
       .then((response) => response.json())
@@ -42,7 +42,7 @@ function getTeacherProfileView(){
     view_age.innerHTML = view_age_value;
     view_career.innerHTML =view_career_value;
     view_rating.innerHTML = view_rating_value;
-    view_img.src = view_img_value;
+    view_img.src = `${IMG_URL}${view_img_value}`
 }
 
 const evaluation_list_tbody = document.querySelector(".evaluation_table_tbody");

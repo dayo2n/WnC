@@ -1,0 +1,25 @@
+.teacher_profile_view_container{
+    height: 200px;
+    font-size: 1.3rem;
+    align-items: center;
+}
+
+.teacher_profile_view_box{
+    display: flex;
+    justify-content: center;
+}
+
+.img_box{
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.teacher_profile_view{
+    font-size: 1.5rem;
+    height: 100%;
+    margin:10px;
+    line-height: 30px;
+    width: 250px;
+}
