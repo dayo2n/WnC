@@ -40,6 +40,7 @@ public class JwtFilter extends GenericFilterBean {
         String requestURI = httpServletRequest.getRequestURI();//요청한 주소를 저장 -> 예외 처리시 사용
 
         log.info("들어온 토큰 정보{}",httpServletRequest.getHeader(AUTHORIZATION_HEADER));
+        log.info("들어온 요청 정보{}",httpServletRequest.getRequestURI());
 
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt,httpServletRequest)) {//토큰이 비어있지 않고 && 토큰이 유효하다면
