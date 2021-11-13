@@ -22,6 +22,7 @@ body {
 
 .hidden{
   visibility: hidden;
+  display: none;
 }
 
 /* a 링크 태그 스타일 초기화 */
@@ -131,6 +132,7 @@ button:hover{
   padding: 10px;
   z-index: 10;
 display: none;
+overflow: auto;
 }
 .notification_modal .notification_modal_title ,
 .user_modal .user_modal_title,
@@ -173,4 +175,8 @@ display: none;
 
 #chattingTable{
   margin-bottom: 0px;
+}
+
+.logoBox:hover{
+  cursor: pointer;
 }

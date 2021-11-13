@@ -10,23 +10,26 @@ join_form.addEventListener("submit", postJoin);
 //lesson
 function postJoin(event){
     event.preventDefault();
-
     const formData = new FormData();
     formData.append("username",join_username.value);
     formData.append("password", join_password.value);
     formData.append("name", join_name.value);
     formData.append("age", join_age.value);
-    formData.append("career", join_career.value);
     formData.append("profileImg",join_img.files[0]);
     if(join_img.files[0] === undefined){formData.append("profileImg", null);}
-    fetch("http://219.255.114.140:8090/join/teacher", { //FormData로 보낼때 헤더설정 X
+
+       fetch("http://219.255.114.140:8090/join/student", { //FormData로 보낼때 헤더설정 X
         method: "POST",
         body: formData
       })
-        .then((response) => response.json())
+        .then((response) => {console.log(response.status);
+          if(response.status>= 200 && response.status<300){
+          location.href="http://127.0.0.1:5500/yugyeom/login.html";
+        }
+        response.json();
+      })
         .then((data) => console.log(data));
 }//에러메세지
-
 
 
 function usernameOverlapCheck(){//아이디중복확인

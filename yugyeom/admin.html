@@ -51,26 +51,61 @@
                 </div>
                 <div class="right_head_items">
                     <i class="far fa-bell logoBox" id="notification_icon" style="font-size: 25px;"></i>
-                    <div class="notification_modal">
-                        <div class="notification_modal_title">
-                            <h2>알림모달</h2>
+                        <div class="notification_modal">
+                            <div class="notification_modal_title">
+                                <h2>알림모달</h2>
+                            </div>
+                            <div class="notification_modal_close_area">X</div>
+                            <div class="notification_modal_content">
+                                <div>
+                                    <form class="alarm_form">
+                                        <select id="alarm_select">
+                                            <option value="all">전체</option>
+                                            <option value="unread">안읽은알람</option>
+                                            <option value="read">읽은알람</option>
+                                        </select><input type="submit" value="확인">
+                                    </form>
+                                </div>
+                                <ul class="alarm_list_container">
+    
+                                    <li class="alarm_list">
+                                        <div> student 학생이 title 과외에 가입신청을 보냈습니다.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            </div>
                         </div>
-                        <div class="notification_modal_close_area">X</div>
-                        <div class="notification_modal_content">
-                            <p>123</p>
+                  <i class="far fa-user logoBox" id="user_icon" style="font-size: 25px;"></i>
+                    <i class="far fa-envelope logoBox" id="message_icon" style="font-size: 25px;"></i>
+                        <div class="message_modal">
+                            <div class="message_modal_title">
+                                <h2>Message</h2>
+                            </div>
+                            <div class="message_modal_close_area">X</div>
+                            <div class="message_modal_content">
+                                <table id="messageTable">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <i class="far fa-user logoBox" id="user_icon" style="font-size: 25px;"></i>
-                    <div class="user_modal">
-                        <div class="user_modal_title">
-                            <h2>유저모달</h2>
-                        </div>
-                        <div class="user_modal_close_area">X</div>
-                        <div class="user_modal_content">
-                            <p>123</p>
-                        </div>
-                    </div>
-                    <img src="img/login.png" class="logoBox" alt="">
+                    <div class="chatting_modal">
+                            <div class="chatting_modal_title">
+                                <h2>Chatting</h2>
+                            </div>
+                            <div class="chatting_modal_close_area">X</div>
+                            <div class="chatting_modal_content">
+                                <table id="chattingTable">
+                                    <tbody></tbody>
+                                    <tfoot >
+                                        <td colspan="2" align="center">
+                                            <input type="text" name="" id="" placeholder="메세지를 입력하세요">
+                                            <input type="button" value="전송">
+                                        </td>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>    
+                    <img src="img/login.png" id="login_icon"class="logoBox" alt="로그인">
                     <div class="login_button"></div>
                     <div class="profile"></div>
                 </div>
@@ -139,5 +174,5 @@
             </table>
         </div>
     </section>
-    <script src="js/header.js"></script>
+    <script src="js/init.js"></script>
 </body>
