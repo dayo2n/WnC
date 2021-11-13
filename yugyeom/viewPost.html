@@ -6,6 +6,7 @@
     <title>posts</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+    
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
@@ -14,6 +15,12 @@
 </head>
 
 <body>
+    <div id="dialog" title="비밀번호 입력">
+        <div class="passwordBox">
+            <input type="password" name="" id="password">
+            <input type="button" value="확인" id="btn-passwordConfirm">
+        </div>
+    </div>
     <header>
         <div class="inner">
             <div class="head_container">
@@ -23,6 +30,7 @@
                 </div>
                 <div class="right_head_items">
                     <i class="far fa-bell logoBox" id="notification_icon" style="font-size: 25px;"></i>
+
                         <div class="notification_modal">
                             <div class="notification_modal_title">
                                 <h2>알림모달</h2>
@@ -72,49 +80,55 @@
     <section>
         <div class="inner viewPostTable">
             <table border="1" width=500 frame=void id="postViewTable">
-                <tr>
-                    <th colspan="4">
-                    </th>
-                </tr>
-                <tr>
-                    <td width=120>
-                        분류
-                    </td>
-                    <td>
-                    </td>
-                    <td width=120>
-                        조회수
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1">
-                        모집인원
-                    </td>
-                    <td colspan="3">
-                    </td>
-                    
-                </tr>
-                <tr>
-                    <td>
-                        과외기간
-                    </td>
-                    <td colspan="3">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" height=400>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" align=right>
-                        <!-- 글 수정시 작성자에게만 버튼이 보이도록 || 수정 클릭 시 비밀번호를 입력하고 확인 -->
-                        <input type="button" id="btn-editPost" value="글 수정">
-                         <input type="button" id="btn-backToNoticeBoard" value="목록으로">
-                        <input type="submit" id="btn-register" value="신청하기">
-                    </td>
-                </tr>
+                <!-- <thead>
+
+                </thead> -->
+                <tbody>
+                    <tr>
+                        <td width=120>
+                            분류
+                        </td>
+                        <td>
+                        </td>
+                        <td width=120>
+                            조회수
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            모집인원
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            작성자(선생님)
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            과외기간
+                        </td>
+                        <td colspan="3">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" height=400>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align=right>
+                            <!-- 글 수정시 작성자에게만 버튼이 보이도록 || 수정 클릭 시 비밀번호를 입력하고 확인 -->
+                            <input type="button" id="btn-editPost" value="글 수정">
+                            <input type="button" id="btn-backToNoticeBoard" value="목록으로">
+                            <input type="button" id="btn-deletePost" value="글 삭제">
+
+                            <input type="submit" id="btn-register" value="신청하기">
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </section>
