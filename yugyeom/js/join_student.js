@@ -8,45 +8,49 @@ const join_form = document.querySelector(".join_form");
 
 join_form.addEventListener("submit", postJoin);
 //lesson
-function postJoin(event){
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("username",join_username.value);
-    formData.append("password", join_password.value);
-    formData.append("name", join_name.value);
-    formData.append("age", join_age.value);
-    formData.append("profileImg",join_img.files[0]);
-    if(join_img.files[0] === undefined){formData.append("profileImg", null);}
+function postJoin(event) {
+  event.preventDefault();
+  const formData = new FormData();
+  formData.append("username", join_username.value);
+  formData.append("password", join_password.value);
+  formData.append("name", join_name.value);
+  formData.append("age", join_age.value);
+  formData.append("profileImg", join_img.files[0]);
+  if (join_img.files[0] === undefined) {
+    formData.append("profileImg", null);
+  }
 
-       fetch("http://219.255.114.140:8090/join/student", { //FormData로 보낼때 헤더설정 X
-        method: "POST",
-        body: formData
-      })
-        .then((response) => {console.log(response.status);
-          if(response.status>= 200 && response.status<300){
-          location.href="http://127.0.0.1:5500/yugyeom/login.html";
-        }
-        response.json();
-      })
-        .then((data) => console.log(data));
-}//에러메세지
+  fetch("http://219.255.114.140:8090/join/student", {
+    //FormData로 보낼때 헤더설정 X
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        location.href = "http://127.0.0.1:5500/yugyeom/login.html";
+      } else {
+        return response.json();
+      }
+    })
+    .then((data) => alert(data.errorMessage));
+} //에러메세지
 
-
-function usernameOverlapCheck(){//아이디중복확인
-    const username = join_username.value;
-    fetch("http://219.255.114.140:8090/", {
+function usernameOverlapCheck() {
+  //아이디중복확인
+  const username = join_username.value;
+  fetch("http://219.255.114.140:8090/", {
     method: "POST",
     headers: {
-        "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-        username: username,
-      }),
+      username: username,
+    }),
   })
     .then((response) => {
       console.log(`response.status ${response.status}`);
       if (response.status >= 300 || response.status < 200) {
-        return response.json().then(err =>console.log(err.message));
+        return response.json().then((err) => console.log(err.message));
       }
       return response.json();
     })
@@ -54,6 +58,3 @@ function usernameOverlapCheck(){//아이디중복확인
       console.log(data);
     }); //console.log(data.status)
 }
-
-
-

@@ -113,53 +113,57 @@
         </div>
     </header>
     <section>
-        <div class="user_profile_container">
-            <div class="userprofile">
-            <div id="info_name">이름</div>
-            <div id="info_age">나이</div>
-            <div id="info_career" >경력</div>
-            <div id="info_rating" >별점</div>
-            <div id="info_img"></div>
-        </div>
-            <!-- class:teacher은 선생님일때 hidden하려고 -->
-        </div>
-        <div class="applied_subject_container">
-            <div class="table_title">수강중인 강좌</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>선생님 이름</th>
-                        <th>강의제목</th>
-                    </tr>
-                </thead>
-                <tbody class="applied_subject_tbody">
-                    <tr>
-                        <td>d</td>
-                        <td id="teacher_name_cell">ddddddddddddddddddddddddddddddddddddd</td>
-                        <td>a</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="evaluate_teacher_container">
-            <div class="table_title">평가하기</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>선생님 이름</th>
-                        <th>평가내용</th>
-                        <th>점수</th>
-                        <th>확인</th>
-                    </tr>
-                </thead>
-                <tbody class="evaluate_table_tbody">
-                    <tr>
-                        <form class=evaluate_form>
+        <div class="inner">
+            <div class="user_profile_container">
+                <div class="user_profile_box">
+                    <div class="img_container"><img id="info_img"></img></div>
+                    <div class="user_profile">
+                        <div id="info_name">이름</div>
+                        <div id="info_age">나이</div>
+                        <div id="info_career">경력</div>
+                        <div id="info_rating">별점</div>
+                    </div>
+                </div>
+                <!-- class:teacher은 선생님일때 hidden하려고 -->
+            </div>
+            <div class="applied_subject_container">
+                <div class="table_title">수강중인 강좌</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>선생님 이름</th>
+                            <th>강의제목</th>
+                        </tr>
+                    </thead>
+                    <tbody class="applied_subject_tbody">
+                        <tr>
                             <td>d</td>
                             <td id="teacher_name_cell">ddddddddddddddddddddddddddddddddddddd</td>
-                            <td><input id = "evaluate_content"type="text"placeholder="평가내용" required></td>
+                            <td>a</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="evaluate_teacher_container">
+                <div class="table_title">평가하기</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>선생님 이름</th>
+                            <th>평가내용</th>
+                            <th>현재별점</th>
+                            <th>점수</th>
+                            <th>확인</th>
+                        </tr>
+                    </thead>
+                    <tbody class="evaluate_table_tbody">
+                        <tr>
+                            <td>d</td>
+                            <td id="teacher_name_cell">ddddddddddddddddddddddddddddddddddddd</td>
+                            <td><input id="evaluate_content" type="text" placeholder="평가내용" required></td>
+                            <td></td>
                             <td><select required id="evaluate_select">
                                     <option value="5">5</option>
                                     <option value="4">4</option>
@@ -169,106 +173,106 @@
                                     <option value="0">0</option>
                                 </select></td>
                             <td><input type="submit"></td>
-                        </form>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="apply_subject_container">
-            <div class="table_title">수강신청한 강의목록(승인대기중)</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>선생님이름</th>
-                        <th>강의 제목</th>
-                        <th>강의를 신청한 시간</th>
-                    </tr>
-                </thead>
-                <tbody class="apply_subject_tbody">
-                    <tr>
-                        <td>d</td>
-                        <td >ddddddddddddddddddddddddddddddddddddd</td>
-                        <td>a</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="evaluated_subject_container">
-            <div class="table_title">내가 한 평가들 목록</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>선생님이름</th>
-                        <th>강의 제목</th>
-                        <th>강의를 신청한 시간</th>
-                    </tr>
-                </thead>
-                <tbody class="evaluated_subject_tbody">
-                    <tr>
-                        <td>d</td>
-                        <td >ddddddddddddddddddddddddddddddddddddd</td>
-                        <td>a</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- 여기부터 선생 -->
-        <div class="lesson_list_container">
-            <div class="table_title">내가 올린 강의 목록</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>만든날짜</th>
-                        <th>모집완료여부</th>
-                        <th>조회수</th>
-                        <th>과외타입</th>
-                    </tr>
-                </thead>
-                <tbody class="lesson_list_tbody">
-                    <tr>
-                        <td>d</td>
-                        <td>ddddddddddddddddddddddddddddddddddddd</td>
-                        <td></td>
-                        <td>a</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="evaluated_list_container">
-            <div class="table_title">나에대한 평가</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>평가내용</th>
-                        <th>별점</th>
-                        <th>평가한 학생 이름</th>
-                    </tr>
-                </thead>
-                <tbody class="evaluated_list_tbody">
-                    <tr>
-                        <td>d</td>
-                        <td>ddddddddddddddddddddddddddddddddddddd</td>
-                        <td>a</td>
-                        <td>1</td>
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="apply_subject_container">
+                <div class="table_title">수강신청한 강의목록(승인대기중)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>선생님이름</th>
+                            <th>강의 제목</th>
+                            <th>강의를 신청한 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody class="apply_subject_tbody">
+                        <tr>
+                            <td>d</td>
+                            <td>ddddddddddddddddddddddddddddddddddddd</td>
+                            <td>a</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="evaluated_subject_container">
+                <div class="table_title">내가 한 평가들 목록</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>선생님이름</th>
+                            <th>강의 제목</th>
+                            <th>강의를 신청한 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody class="evaluated_subject_tbody">
+                        <tr>
+                            <td>d</td>
+                            <td>ddddddddddddddddddddddddddddddddddddd</td>
+                            <td>a</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 여기부터 선생 -->
+            <div class="lesson_list_container">
+                <div class="table_title">내가 올린 강의 목록</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>만든날짜</th>
+                            <th>모집완료여부</th>
+                            <th>조회수</th>
+                            <th>과외타입</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lesson_list_tbody">
+                        <tr>
+                            <td>d</td>
+                            <td>ddddddddddddddddddddddddddddddddddddd</td>
+                            <td></td>
+                            <td>a</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="evaluated_list_container">
+                <div class="table_title">나에대한 평가</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>평가내용</th>
+                            <th>별점</th>
+                            <th>평가한 학생 이름</th>
+                        </tr>
+                    </thead>
+                    <tbody class="evaluated_list_tbody">
+                        <tr>
+                            <td>d</td>
+                            <td>ddddddddddddddddddddddddddddddddddddd</td>
+                            <td>a</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
 
     <script src="js/teacher_profile_view.js"></script>
     <script src="js/user_profile.js"></script>
-    <script src="js/init.js"></script> 
+    <script src="js/init.js"></script>
 </body>
 
 </html>
