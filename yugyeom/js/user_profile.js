@@ -6,6 +6,13 @@ let rating_value;
 let isKakaoMember;
 let count;
 
+const info_name = document.querySelector("#info_name");
+const info_age = document.querySelector("#info_age");
+const info_career = document.querySelector("#info_career");
+const info_img = document.querySelector("#info_img");
+const info_rating = document.querySelector("#info_rating");
+
+
 ////////////////////////////////////////
 //선생님일때, 학생일때
 const applied_subject_container = document.querySelector(".applied_subject_container");//학생이 등록한 강의목록
@@ -13,15 +20,21 @@ const evaluate_teacher_container = document.querySelector(".evaluate_teacher_con
 const teacher_class_list = document.getElementsByClassName("teacher");
 const lesson_list_container = document.querySelector(".lesson_list_container");
 const evaluated_list_container = document.querySelector(".evaluated_list_container");//선생님이 올린 강의목록
+const evaluated_subject_container = document.querySelector(".evaluated_subject_container"); //학생기준: 내가 평가한 목록
+const apply_subject_container = document.querySelector(".apply_subject_container");
 if(JSON.parse(localStorage.getItem("memberType")) === "TEACHER"){//선생님일때
   applied_subject_container.classList.add("hidden");
   evaluate_teacher_container.classList.add("hidden");
+  evaluated_subject_container.classList.add("hidden");
+  apply_subject_container.classList.add("hidden");
   for(let i = 0; i < teacher_class_list.length; i++){
     teacher_class_list[i].classList.add("hidden");
   }
 }else{//학생일때
   lesson_list_container.classList.add("hidden");
   evaluated_list_container.classList.add("hidden");
+  info_career.classList.add("hidden");
+  info_rating.classList.add("hidden");
 }
 
 function init() {
@@ -98,12 +111,6 @@ function init() {
 }
 init();
 
-const info_name = document.querySelector("#info_name");
-const info_age = document.querySelector("#info_age");
-const info_career = document.querySelector("#info_career");
-const info_img = document.querySelector("#info_img");
-const info_rating = document.querySelector("#info_rating");
-
 function getUserProfile() {
   info_name.innerHTML = name_value;
   info_age.innerHTML = age_value;
@@ -119,7 +126,7 @@ function appendAppliedSubjectTable(data) { //내가듣는 강의목록
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   const td3 = document.createElement("td");
-  td2.setAttribute("id", "teacher_name_cell");
+  //td2.setAttribute("id", "teacher_name_cell");
   tr.setAttribute("id", data.teacherId);
   td1.innerText = count++; //
   td2.innerText = data.teacherName; //
@@ -179,7 +186,7 @@ function appendEvaluateTable(data) {
   td5_submit.type = "submit";
   td5.appendChild(td5_submit);
   form.classList.add("evaluate_form");
-  td2.setAttribute("id", "teacher_name_cell");
+  //td2.setAttribute("id", "teacher_name_cell");
   form.setAttribute("id", data.teacherId);
 
   td1.innerText = `${count++}`; //
@@ -282,25 +289,31 @@ function postTeacherEvaluate(event) {
 //여기부터 선생
 const lesson_list_tbody = document.querySelector(".lesson_list_tbody");
 
-function appendLessonTable(data) {
+function appendLessonTable(data) {//내가올린강의목록
   const tr = document.createElement("tr");
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   const td3 = document.createElement("td");
   const td4 = document.createElement("td");
   const td5 = document.createElement("td");
+  const td6 = document.createElement("td");
+
+  let date = data.createdDate;
+  date = date.substring(0,10);
 
   td1.innerText = `${count++}`;
-  td2.innerText = `${data.createdDate}`;
-  td3.innerText = `${data.isCompleted}`;
-  td4.innerText = `${data.views}`;
-  td5.innerText = `${data.lessonType}`
+  td2.innerText = `${data.title}`;
+  td3.innerText = `${date}`;
+  td4.innerText = `${data.completed}`;
+  td5.innerText = `${data.views}`;
+  td6.innerText = `${data.lessonType}`
 
   tr.appendChild(td1);
   tr.appendChild(td2);
   tr.appendChild(td3);
   tr.appendChild(td4);
   tr.appendChild(td5);
+  tr.appendChild(td6);
 
   lesson_list_tbody.appendChild(tr);
 }

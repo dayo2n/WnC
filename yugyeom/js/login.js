@@ -55,17 +55,22 @@ function onLoginSubmit(event) {
   })
     .then((response) => response.json())
     .then(
-      (data) => (
-        console.log((data)),
-        localStorage.setItem("token", JSON.stringify(data.token)),
-        localStorage.setItem("isKakao","false"),
-        localStorage.setItem("memberType", JSON.stringify(data.memberType)),
-        localStorage.setItem("isLogin","true"),
-        localStorage.setItem("myNoReadChatCount", JSON.stringify(data.myNoReadChatCount)),
-        localStorage.setItem("myNoReadAlarm", JSON.stringify(data.myNoReadAlarm)),
-        localStorage.setItem("id", JSON.stringify(data.id)),
-        location.href="http://127.0.0.1:5500/yugyeom/home.html"
-      )
+      (data) => {
+        console.log((data));
+        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("isKakao",data.Kakao);
+        localStorage.setItem("memberType", JSON.stringify(data.memberType));
+        localStorage.setItem("isLogin",JSON.stringify(data.login));
+        localStorage.setItem("myNoReadChatCount", JSON.stringify(data.myNoReadChatCount));
+        localStorage.setItem("myNoReadAlarm", JSON.stringify(data.myNoReadAlarm));
+        localStorage.setItem("id", JSON.stringify(data.id));
+        localStorage.setItem("isBlack",JSON.stringify(data.black));
+        console.log(localStorage.getItem("isLogin"));
+        if (JSON.parse(localStorage.getItem("isLogin") === "true")) {
+          location.href="http://127.0.0.1:5500/yugyeom/home.html";
+        }
+      }
+       
     );
 }
 
