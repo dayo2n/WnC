@@ -76,16 +76,16 @@ $(document).ready(function () {
 const alarm_select = document.querySelector("#alarm_select");
 
 const alarm_form = document.querySelector(".alarm_form");
-alarm_form.addEventListener("submit",onAlarmList);
+alarm_form.addEventListener("submit", onAlarmList);
 
 notification_icon.addEventListener("click", onAlarmList);
 
 function onAlarmList(event) {
   event.preventDefault();
-  while(alarm_list_container.hasChildNodes()){
+  while (alarm_list_container.hasChildNodes()) {
     alarm_list_container.removeChild(alarm_list_container.firstChild);
   }
-  console.log("셀렉트 벨류",alarm_select.value);
+  console.log("셀렉트 벨류", alarm_select.value);
   fetch("http://219.255.114.140:8090/myInfo/myAlarms", {
     method: "GET",
     headers: {
@@ -93,12 +93,10 @@ function onAlarmList(event) {
     },
   })
     .then((response) => response.json())
-    .then(
-      (data) => (
-        data.simpleAlarmList.forEach((element) => {
-          getAlarmList(element);
-        })
-      )
+    .then((data) =>
+      data.simpleAlarmList.forEach((element) => {
+        getAlarmList(element);
+      })
     );
 }
 
@@ -108,7 +106,7 @@ function getAlarmList(data) {
     getAlarmIsreadList(data);
   } else if (alarm_select.value === "read" && data.read === true) {
     getAlarmIsreadList(data);
-  } else if(alarm_select.value ==="all"){
+  } else if (alarm_select.value === "all") {
     getAlarmIsreadList(data);
   }
   function getAlarmIsreadList(data) {
@@ -133,18 +131,26 @@ function getAlarmList(data) {
       input1.id = data.id; //알람ID를 inputid에 저장
       input2.id = data.id;
 
-      if(data.read === true){
+      if (data.read === true) {
         input1.classList.add("hidden");
         input2.classList.add("hidden");
       }
 
       input1.addEventListener(
         "click",
-        (e) => (getApproveLesson(e) ,data.read = true,input1.classList.add("hidden"),input2.classList.add("hidden")),
+        (e) => (
+          getApproveLesson(e),
+          input1.classList.add("hidden"),
+          input2.classList.add("hidden")
+        )
       ); //예를 눌렀을때
       input2.addEventListener(
         "click",
-        (e) => (getRefuseLesson(e) ,data.read = true,input1.classList.add("hidden"),input2.classList.add("hidden")),
+        (e) => (
+          getRefuseLesson(e),
+          input1.classList.add("hidden"),
+          input2.classList.add("hidden")
+        )
       ); //아니오를 눌렀을시
 
       alarm_list_container.appendChild(li);
@@ -154,14 +160,22 @@ function getAlarmList(data) {
       const span = document.createElement("span");
       const checkButton = document.createElement("span");
       checkButton.innerText = "✔";
+      checkButton.classList.add("check_button");
       span.innerText = `${data.teacherName}님이 수업하시는 ${data.title}과외에 가입되셨습니다.`;
-
       li.appendChild(span);
       li.appendChild(checkButton);
+      if (data.read === true) {
+        checkButton.classList.add("hidden");
+      }
 
+      checkButton.id = data.id;
       checkButton.addEventListener(
         "click",
-        (e) => (data.read = true,checkButton.classList.add("hidden")),
+        (e) => (
+          getApproveLesson(e),
+          console.log(data.read),
+          checkButton.classList.add("hidden")
+        )
       ); //체크했을때 read(true)
 
       alarm_list_container.appendChild(li);
@@ -172,14 +186,20 @@ function getAlarmList(data) {
       const checkButton = document.createElement("span");
 
       checkButton.innerText = "✔";
+      checkButton.classList.add("check_button");
+      checkButton.id = data.id;
+
       span.innerText = `${data.teacherName}님이 수업하시는 ${data.title}과외에 가입이 거절되었습니다.`;
 
       li.appendChild(span);
       li.appendChild(checkButton);
+      if (data.read === true) {
+        checkButton.classList.add("hidden");
+      }
 
       checkButton.addEventListener(
         "click",
-        (e) => (data.read = true,checkButton.classList.add("hidden")),
+        (e) => (getApproveLesson(e), checkButton.classList.add("hidden"))
       ); //체크했을때 read(true)
 
       alarm_list_container.appendChild(li);
@@ -190,14 +210,22 @@ function getAlarmList(data) {
       const checkButton = document.createElement("span");
 
       checkButton.innerText = "✔";
+      checkButton.classList.add("check_button");
+      checkButton.id = data.id;
       span.innerText = `${data.teacherName}님이 수업하시는 ${data.title}과외의 모집이 완료되었습니다.`;
 
       li.appendChild(span);
       li.appendChild(checkButton);
-      console.log(data.read);
+      if (data.read === true) {
+        checkButton.classList.add("hidden");
+      }
       checkButton.addEventListener(
         "click",
-        (e) => (data.read = true,checkButton.classList.add("hidden")),
+        (e) => (
+          getApproveLesson(e),
+          console.log(data.read),
+          checkButton.classList.add("hidden")
+        )
       ); //체크했을때 read(true)
 
       alarm_list_container.appendChild(li);
@@ -205,18 +233,22 @@ function getAlarmList(data) {
   }
 }
 
-function getApproveLesson(event) {
+function getApproveLesson(event) {//강의열람
   //강의수락
   const alarm_id = event.target.id;
-
   fetch(`http://219.255.114.140:8090/myInfo/myAlarms/${alarm_id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`
     },
   })
-    .then((response) => response.json())
-    .then((data) => (console.log(data), postApproveLesson(data)));
+    .then((response) =>  response.json())
+    .then((data) => {
+      if(event.target.innerText ==="✔"){
+          console.log(event.target.innerText);
+      }else{
+      (postApproveLesson(data)),console.log(event.target.innerText);}
+    });
 }
 
 function postApproveLesson(data) {
@@ -228,7 +260,7 @@ function postApproveLesson(data) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
       body: JSON.stringify({}),
     }
@@ -248,7 +280,7 @@ function getRefuseLesson(event) {
     },
   })
     .then((response) => response.json())
-    .then((data) => (postRepuseLesson(data)));
+    .then((data) => postRepuseLesson(data));
 }
 
 function postRepuseLesson(data) {
@@ -266,6 +298,6 @@ function postRepuseLesson(data) {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log("강의거절요청",data);
+      console.log("강의거절요청", data);
     });
 }

@@ -180,3 +180,17 @@ overflow: auto;
 .logoBox:hover{
   cursor: pointer;
 }
+
+.check_button{
+  font-size: 1.4rem;
+  color: rgb(179, 179, 179);
+
+}
+
+.check_button:hover{
+  cursor: pointer;
+}
+
+tr{
+  border: 1px solid;
+}
