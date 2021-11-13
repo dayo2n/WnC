@@ -8,11 +8,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class WebConfig {
 
-    //TODO : 좆대로 ObjectMappper를 쳐 만들어서 등록하지 말자^^ 이미 스프링부트가 등록해준다 이 씨발년아 ^^
-    /*@Bean
-    public ObjectMapper objectMapper(){
-        return new ObjectMapper();
-    }*/
 
     @Bean
     public RestTemplate restTemplate(){

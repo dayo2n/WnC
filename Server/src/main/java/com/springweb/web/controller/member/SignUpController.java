@@ -1,18 +1,16 @@
 package com.springweb.web.controller.member;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.kakaomemberinfo.KakaoMemberInfo;
-import com.springweb.web.controller.dto.signup.BasicSignUpStudentDto;
-import com.springweb.web.controller.dto.signup.BasicSignUpTeacherDto;
-import com.springweb.web.controller.dto.signup.KakaoSignUpStudentDto;
-import com.springweb.web.controller.dto.signup.KakaoSignUpTeacherDto;
+import com.springweb.web.dto.kakaomemberinfo.KakaoMemberInfo;
+import com.springweb.web.dto.signup.BasicSignUpStudentDto;
+import com.springweb.web.dto.signup.BasicSignUpTeacherDto;
+import com.springweb.web.dto.signup.KakaoSignUpStudentDto;
+import com.springweb.web.dto.signup.KakaoSignUpTeacherDto;
 import com.springweb.web.exception.BaseException;
-import com.springweb.web.exception.file.UploadFileException;
-import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.service.member.KakaoService;
 import com.springweb.web.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +19,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class SignUpController {
 
     private final MemberService memberService;

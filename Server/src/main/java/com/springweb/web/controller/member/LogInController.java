@@ -2,16 +2,21 @@ package com.springweb.web.controller.member;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.kakaomemberinfo.KakaoMemberInfo;
-import com.springweb.web.controller.dto.login.BasicLoginDto;
-import com.springweb.web.controller.dto.login.KakaoLoginDto;
-import com.springweb.web.controller.dto.token.TokenDto;
+import com.springweb.web.domain.member.Student;
+import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.dto.kakaomemberinfo.KakaoMemberInfo;
+import com.springweb.web.dto.login.BasicLoginDto;
+import com.springweb.web.dto.login.KakaoLoginDto;
+import com.springweb.web.dto.login.LogInMemberInfoDto;
+import com.springweb.web.dto.token.TokenDto;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.member.MemberExceptionType;
 import com.springweb.web.jwt.JwtFilter;
 import com.springweb.web.jwt.TokenProvider;
 import com.springweb.web.repository.member.MemberRepository;
+import com.springweb.web.service.alarm.AlarmService;
+import com.springweb.web.service.chat.MessageService;
 import com.springweb.web.service.member.KakaoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,16 +41,20 @@ public class LogInController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    private final MessageService messageService;
     private final KakaoService kakaoService;
     private final MemberRepository memberRepository;
+    private final AlarmService alarmService;
 
 
     /**
      * 일반 로그인 username과 password로 로그인
+     *
+     * 로그인 결과 : 나의 id, 내가 학생인지 선생인지 여부, 내 로그인 토큰, 새로운 알림이 있는지, 새로운 메세지가 있는지
      */
     @Trace
     @PostMapping("/login")//로그인 주소
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody BasicLoginDto loginDto) {
+    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody BasicLoginDto loginDto) throws MemberException {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -53,21 +62,35 @@ public class LogInController {
         String jwt = authenticationAndGeneratingToken(authenticationToken);
         HttpHeaders httpHeaders = setTokenInHeader(jwt);
 
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        Member member = memberRepository.findByUsername(loginDto.getUsername()).orElse(null);
+        LogInMemberInfoDto logInMemberInfoDto = new LogInMemberInfoDto(member.getId(),jwt);
+
+        if(member instanceof Student student){
+            logInMemberInfoDto.setStudent();
+            logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount(student));
+            logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+        }else {
+            logInMemberInfoDto.setTeacher((Teacher) member); //=> 블랙리스트인지 확인해야 하므로
+            logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount((Teacher) member));
+            logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            //블랙리스트인가?
+
+        }
+
+
+        return new ResponseEntity(logInMemberInfoDto, httpHeaders, HttpStatus.OK);
     }
 
 
 
     /**
      * 카카오 로그인 토큰을 이용하여 로그인
-     *
-     * TODO: 문제점 :  memberRepository.findByKakaoId(kakaoMemberInfo.getId()).orElse(null);에서 한번, loadUsername에서 한번 총 두번의 쿼리가 실행
      */
     @Trace
     @PostMapping("/login/kakao")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody KakaoLoginDto loginDto) throws  MemberException, JsonProcessingException {
 
-        log.info("getMemberFromKakao호출되나?");
+
         Member findMember = getMemberFromKakao(loginDto);//access token을 가지고 카카오에서 kakaoID를 받아온 후, 이를 로그인
         //이후부터는 위와 같은 로직
 
@@ -77,7 +100,21 @@ public class LogInController {
         String jwt = authenticationAndGeneratingToken(authenticationToken);
         HttpHeaders httpHeaders = setTokenInHeader(jwt);
 
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+
+        LogInMemberInfoDto logInMemberInfoDto = new LogInMemberInfoDto(findMember.getId(),jwt);
+
+        if(findMember instanceof Student student){
+            logInMemberInfoDto.setStudent();
+            logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount(student));
+            logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+        }else {
+            logInMemberInfoDto.setTeacher((Teacher) findMember);//이거 되나???????????????????????????????
+            logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount((Teacher) findMember));
+            logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+        }
+
+
+        return new ResponseEntity(logInMemberInfoDto, httpHeaders, HttpStatus.OK);
     }
 
 
@@ -119,6 +156,9 @@ public class LogInController {
         return findMember;
 
     }
+
+
+
 
 
 }

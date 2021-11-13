@@ -1086,8 +1086,9 @@
 > 	
 > 	createDate 신고날짜
 >
-> 
+> ​	createDate 신고날짜
 >
+> 
 > 	writerId     신고자 id  
 > 	
 > 	 writerName   신고자 이름,  
@@ -1265,11 +1266,13 @@
 
 ##### 내가 학생인지 선생인지는 알고있으니까, 내가 학생이라면 선생님의 데이터를 반대로 두고, 선생님이 읽은게 false라면 안읽음으로 처리 !!
 
+### 메세지 전송하기
 
+### [<span style="color:pink">/chat/insert</span>] [<span style="color:blue">POST</span>]   [ JSON ]
 
+##### => 그럼 내가 알아서  채팅 목록 가져와서  이 위에 채팅 목록 불러와서 너한테 줄거임
 
-
-
+#### 반환 데이터
 
 ### 메세지 전송하기
 
@@ -1279,6 +1282,7 @@
 
 > content => 입력할 내용
 > receiverId   => 상대 id
+
 
 ##### => 그럼 내가 알아서  채팅 목록 가져와서  이 위에 채팅 목록 불러와서 너한테 줄거임
 
@@ -1335,6 +1339,44 @@
 > #### messageList{
 >
 > 	content : 내용
+>
+> #### }
+
+
+
+### 나의 채팅방 목록 보기
+
+### [<span style="color:pink">/chat/list</span>] [<span style="color:blue"> GET</span>]  
+
+##### 전송할 데이터 없음
+
+##### 결과 데이터 => 내가 선생인 경우
+
+##### 아래 데이터가 list로 여러개 보내짐()
+
+> studentId    => 대상 학생 id
+> studentName
+> noReadMessage : 안 읽은 메세지 수
+>
+> #### messageList{
+>
+> ​	content : 내용
+>
+> #### }
+
+##### 결과 데이터 => 내가 학생
+
+##### 아래 데이터가 list로 여러개 보내짐()
+
+> 
+>
+> teacherId => 대상 선생 id
+> teacherName
+> noReadMessage : 안 읽은 메세지 수
+>
+> #### messageList{
+>
+> ​	content : 내용
 >
 > #### }
 
