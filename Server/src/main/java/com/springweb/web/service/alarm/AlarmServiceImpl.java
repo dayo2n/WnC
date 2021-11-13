@@ -1,8 +1,8 @@
 package com.springweb.web.service.alarm;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.alarm.AlarmDto;
-import com.springweb.web.controller.dto.alarm.SearchAlarmDto;
+import com.springweb.web.dto.alarm.AlarmDto;
+import com.springweb.web.dto.alarm.SearchAlarmDto;
 import com.springweb.web.domain.alarm.Alarm;
 import com.springweb.web.domain.alarm.AlarmType;
 import com.springweb.web.domain.lesson.Lesson;
@@ -20,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 
@@ -117,13 +116,35 @@ public class AlarmServiceImpl implements AlarmService{
 
 
 
-    @Trace
+
+
+
+
+    /**
+     * 로그인 시 알람 확인
+     */
+    @Override
+    public int getMyNoReadAlarm() throws MemberException {
+        List<Alarm> allByUsername = alarmRepository.findAllByUsername(getMyUsername());
+        int result = 0;
+        for (Alarm alarm : allByUsername) {
+            if(!alarm.isRead()){
+                result++;
+            }
+        }
+        return result;
+    }
+
+
+
+
+
+
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
-        if(username == null){
-            log.error("SecurityContextHolder에 있는 username을 가져오던 중 오류 발생");
-            throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
-        }
+        if(username == null)throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
         return username;
     }
+
+
 }

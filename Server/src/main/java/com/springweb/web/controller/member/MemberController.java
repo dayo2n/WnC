@@ -3,13 +3,10 @@ package com.springweb.web.controller.member;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.kakaomemberinfo.KakaoMemberInfo;
-import com.springweb.web.controller.dto.member.*;
-import com.springweb.web.domain.evaluation.Evaluation;
+import com.springweb.web.dto.kakaomemberinfo.KakaoMemberInfo;
+import com.springweb.web.dto.member.*;
 import com.springweb.web.exception.BaseException;
-import com.springweb.web.exception.alarm.AlarmException;
 import com.springweb.web.exception.member.MemberException;
-import com.springweb.web.repository.member.MemberRepository;
 import com.springweb.web.service.evaluation.EvaluationService;
 import com.springweb.web.service.member.KakaoService;
 import com.springweb.web.service.member.MemberService;
@@ -17,9 +14,7 @@ import com.springweb.web.service.member.search.TeacherSearchCond;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,17 +93,14 @@ public class MemberController {
 
 
     /**
+     * 모든 유저에게 허용!!!!!!
      * 선생님 목록 조회
      */
     @GetMapping("/members/teachers")
     public ResponseEntity searchTeacher(TeacherSearchCond cond,
-                                        @PageableDefault(page = 0, size = 12)//기본페이지0, 기본사이즈 12
-                                        //TODO : 별점이 없는 사람이면 어카지?????
-                                        @SortDefault.SortDefaults({
-                                                @SortDefault(sort = "starPoint", direction = Sort.Direction.DESC),
-                                                @SortDefault(sort = "createdDate", direction = Sort.Direction.DESC)
-                                                                         }) Pageable pageable) throws BaseException {
-
+                                        @PageableDefault(page = 0, size = 12)
+                                                Pageable pageable) throws BaseException {
+        log.info("선생님 목록을 조회합니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         SearchTeacherDto searchTeacherDto = memberService.searchTeacher(cond, pageable);
         return new ResponseEntity(searchTeacherDto, HttpStatus.OK);
     }
@@ -122,6 +114,9 @@ public class MemberController {
         TeacherDetailWithEvaluationDto teacher = evaluationService.getTeacherEvaluationList(teacherId);
         return new ResponseEntity(teacher, HttpStatus.OK);
     }
+
+
+
 
 }
 

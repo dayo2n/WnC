@@ -1,8 +1,7 @@
 package com.springweb.web.service.report;
 
-import com.springweb.web.controller.dto.report.CreateReportDto;
-import com.springweb.web.controller.dto.report.ReportDto;
-import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.dto.report.CreateReportDto;
+import com.springweb.web.dto.report.ReportDto;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.report.ReportException;
 

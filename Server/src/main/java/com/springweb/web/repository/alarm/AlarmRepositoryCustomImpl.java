@@ -38,6 +38,7 @@ public class AlarmRepositoryCustomImpl implements AlarmRepositoryCustom{
                         searchTypeEq(cond.getReadType()),
                         eqUsername(username)
                 )
+                .orderBy(alarm.createdDate.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -51,6 +52,8 @@ public class AlarmRepositoryCustomImpl implements AlarmRepositoryCustom{
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
+
+
 
     private BooleanExpression eqUsername(String username) {
         return alarm.target.username.eq(username);

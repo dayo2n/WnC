@@ -52,7 +52,6 @@ public class TokenProvider implements InitializingBean {
 
 
     //권한정보를 이용하여 토큰 생성
-    @Trace
     public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())

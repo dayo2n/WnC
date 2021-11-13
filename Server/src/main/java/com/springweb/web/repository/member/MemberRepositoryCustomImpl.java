@@ -41,6 +41,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
                         teacherNameHasStr(cond.getTeacherName()),
                         graterOrEquealStarPoint(cond.getStarPoint())
                 )
+                .orderBy(teacher.starPoint.desc())
+                .orderBy(teacher.createdDate.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

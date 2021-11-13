@@ -12,7 +12,9 @@ public enum MemberExceptionType implements BaseExceptionType {
     MUST_REGISTER(603, HttpStatus.UNAUTHORIZED, "회원가입을 진행해야 합니다."),
     PLEASE_LOGIN_AGAIN(604, HttpStatus.UNAUTHORIZED, "다시 로그인 해주세요"),  //왜 이런 오류가 발생했는지 모를 때
     CANNOT_LEAVE_BSC_GROUP_LESSON_HAS_STUDENT(605, HttpStatus.FORBIDDEN, "그룹 레슨에 가입한 학생이 있어서 탈퇴하지 못합니다. 모집을 완료 후 다시 시도해주세요."),
-    NOT_FOUND_MEMBER(606, HttpStatus.NOT_FOUND, "회원 정보가 없습니다.");
+    NOT_FOUND_MEMBER(606, HttpStatus.NOT_FOUND, "회원 정보가 없습니다."),
+    BAD_REQUEST(607,HttpStatus.BAD_REQUEST, "잘못된 요청입니다")
+    ;
 
 
 
