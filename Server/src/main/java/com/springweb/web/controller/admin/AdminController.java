@@ -1,22 +1,35 @@
 package com.springweb.web.controller.admin;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.report.ReportDto;
+import com.springweb.web.domain.member.Member;
+import com.springweb.web.dto.admin.LoginAdminDto;
+import com.springweb.web.dto.admin.LoginAdminResponse;
+import com.springweb.web.dto.admin.SignUpAdminDto;
+import com.springweb.web.dto.login.LogInMemberInfoDto;
+import com.springweb.web.dto.report.ReportDto;
+import com.springweb.web.exception.file.UploadFileException;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.report.ReportException;
+import com.springweb.web.jwt.JwtFilter;
+import com.springweb.web.jwt.TokenProvider;
+import com.springweb.web.repository.member.MemberRepository;
+import com.springweb.web.service.member.MemberService;
 import com.springweb.web.service.report.BlackTeacher;
 import com.springweb.web.service.report.ReportService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,6 +39,11 @@ import java.util.List;
 public class AdminController {
 
     private final ReportService reportService;
+    private final MemberService memberService;
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final MemberRepository memberRepository;
+
 
 
     /**
@@ -110,9 +128,55 @@ public class AdminController {
 
 
 
+    @Trace
+    @PostMapping("/admin/signUp")
+    @PreAuthorize("permitAll()")//이거되나?
+    public ResponseEntity signUp(@ModelAttribute SignUpAdminDto signUpAdminDto) throws UploadFileException, IOException, MemberException {
+        memberService.save(signUpAdminDto.toEntity(),null);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    @Trace
+    @PostMapping("/admin/login")
+    @PreAuthorize("permitAll()")//이거되나?
+    public ResponseEntity logIn(@ModelAttribute LoginAdminDto loginAdminDto) throws UploadFileException, IOException, MemberException {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginAdminDto.getUsername(), loginAdminDto.getPassword());
+
+        String jwt = authenticationAndGeneratingToken(authenticationToken);
+        HttpHeaders httpHeaders = setTokenInHeader(jwt);
+
+        Member member = memberRepository.findByUsername(loginAdminDto.getUsername()).orElse(null);
+        LoginAdminResponse loginAdminResponse =new LoginAdminResponse(jwt,member.getId(), reportService.getList());
+
+        return new ResponseEntity(loginAdminResponse, httpHeaders, HttpStatus.OK);
+    }
 
 
 
+
+
+
+
+    private HttpHeaders setTokenInHeader(String jwt) {
+        //== 토큰 전송 로직 ==//
+        //JWT를 헤더와 body에 모두 넣어준다
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);//Authorization Bearer [토큰정보]
+        log.info("전송한 토큰 정보{}", jwt);
+        return httpHeaders;
+    }
+
+
+
+    private String authenticationAndGeneratingToken(UsernamePasswordAuthenticationToken authenticationToken) {
+        //== 권한 부여 로직 => 이후 loadUserByUsername 실행 ==//
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//CustomDetailService의 loadByUsername이 실행
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //== 토큰 생성 로직 ==//
+        return tokenProvider.createToken(authentication);
+    }
 
 
 

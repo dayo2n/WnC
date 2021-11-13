@@ -1,24 +1,21 @@
 package com.springweb.web.controller.lesson;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.lesson.CreateLessonDto;
-import com.springweb.web.controller.dto.lesson.LessonDetailDto;
-import com.springweb.web.controller.dto.lesson.SearchLessonDto;
-import com.springweb.web.controller.dto.lesson.UpdateLessonDto;
+import com.springweb.web.dto.lesson.CreateLessonDto;
+import com.springweb.web.dto.lesson.LessonDetailDto;
+import com.springweb.web.dto.lesson.SearchLessonDto;
+import com.springweb.web.dto.lesson.UpdateLessonDto;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.valid.ValidException;
 import com.springweb.web.exception.valid.ValidExceptionType;
 import com.springweb.web.service.lesson.AppliedLessonService;
 import com.springweb.web.service.lesson.LessonService;
 import com.springweb.web.service.lesson.search.LessonSearchCond;
-import com.springweb.web.service.member.search.TeacherSearchCond;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -64,16 +61,19 @@ public class LessonController {
 
 
     //== 과외 게시물 검색 ==//
+
+    /**
+     *     * 모든 유저에게 허용!!!!!!
+     */
     @Trace
     @GetMapping("/lesson")
     public ResponseEntity searchLesson(LessonSearchCond cond,
                                        @PageableDefault(page = 0, size = 12)//기본페이지0, 기본사이즈 12
-                                       //TODO : 별점이 없는 사람이면 어카지?????
-                                       @SortDefault.SortDefaults({
-                                               @SortDefault(sort = "createdDate", direction = Sort.Direction.DESC)
-                                       }) Pageable pageable) throws BaseException {
+                                               Pageable pageable) throws BaseException {
+
 
         SearchLessonDto result = lessonService.search(cond, pageable);//안되면 기본생성자 추가하기
+
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ package com.springweb.web.domain.report;
  * 신고 기능
  */
 
+import com.springweb.web.domain.base.BaseTimeEntity;
 import com.springweb.web.domain.member.Admin;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
@@ -17,9 +18,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Report {
+public class Report extends BaseTimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REPORT_ID")
     private Long id;
 
@@ -50,5 +51,13 @@ public class Report {
 
     public void solve(){
         this.isSolved=true;
+    }
+
+    public void setWriter(Student writer) {
+        this.writer = writer;
+    }
+
+    public void setTarget(Teacher target) {
+        this.target = target;
     }
 }

@@ -1,5 +1,4 @@
 var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSUMiLCJleHAiOjE2MzY4MTYyMjd9.12vfH1Ciy09hF2cNgJJEyZnh_V-EoDtnVDWn3B5r8UBBsZtw0sGqUckD0uRR8CuupTTLzYTVgk4WGL6AWDgCsQ';
-//날짜형식변환 yyyy-mm-dd
 
 $(document).ready(function () {
 //8080/lesson?teacherName=1
@@ -135,8 +134,6 @@ $(document).ready(function () {
 
 
 //로그인버튼
-const login_button = document.querySelector("#login_icon");
-login_button.addEventListener("click", e =>location.href="http://127.0.0.1:5500/yugyeom/login.html");
 
 
 const teacher_list_select = document.querySelector("#teacher_list_select");

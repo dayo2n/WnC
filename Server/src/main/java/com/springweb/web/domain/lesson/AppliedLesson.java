@@ -16,7 +16,7 @@ import javax.persistence.*;
  */
 public class AppliedLesson extends BaseTimeEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "APPLIED_LESSON_ID")
     private Long id;
 

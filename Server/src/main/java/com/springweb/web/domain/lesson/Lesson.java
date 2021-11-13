@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class Lesson extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LESSON_ID")
     private Long id;
 

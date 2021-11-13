@@ -59,7 +59,7 @@ function onLoginSubmit(event) {
         console.log((data)),
         localStorage.setItem("token", JSON.stringify(data.token)),
         localStorage.setItem("isKakao","false"),
-        localStorage.setItem("memberType", data.memberType),
+        localStorage.setItem("memberType", JSON.stringify(data.memberType)),
         localStorage.setItem("isLogin","true"),
         location.href="http://127.0.0.1:5500/yugyeom/home.html"
       )
