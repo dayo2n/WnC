@@ -25,6 +25,8 @@ public enum LessonExceptionType implements BaseExceptionType {
     PERIOD_ERROR(714, HttpStatus.BAD_REQUEST, "기간은 현재보다 과거일 수 없습니다."),
     MAX_STUDENT_MUST_LARGER_THAN_TWO(716, HttpStatus.BAD_REQUEST, "그룹 과외의 경우 모집인원 수는 최소 2명 이상이어야 합니다."),
     NO_AUTHORITY_COMPLETE_LESSON(717, HttpStatus.BAD_REQUEST, "모집을 완료할 권한이 없습니다."),
+    TEACHER_IS_BLACKLIST(718, HttpStatus.BAD_REQUEST, "해당 선생님이 블랙리스트입니다"),
+
     ETC_EXCEPTION(799,HttpStatus.BAD_REQUEST, "불가능한 요청이 들어옴");
 
 

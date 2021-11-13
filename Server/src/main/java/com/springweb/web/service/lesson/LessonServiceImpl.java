@@ -1,10 +1,10 @@
 package com.springweb.web.service.lesson;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.lesson.CreateLessonDto;
-import com.springweb.web.controller.dto.lesson.LessonDetailDto;
-import com.springweb.web.controller.dto.lesson.SearchLessonDto;
-import com.springweb.web.controller.dto.lesson.UpdateLessonDto;
+import com.springweb.web.dto.lesson.CreateLessonDto;
+import com.springweb.web.dto.lesson.LessonDetailDto;
+import com.springweb.web.dto.lesson.SearchLessonDto;
+import com.springweb.web.dto.lesson.UpdateLessonDto;
 import com.springweb.web.domain.alarm.AlarmType;
 import com.springweb.web.domain.file.UploadFile;
 import com.springweb.web.domain.lesson.AppliedLesson;
@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,18 +74,23 @@ public class LessonServiceImpl implements LessonService{
         //학생은 강의 등록 불가능
         if(me instanceof Student) throw new LessonException(LessonExceptionType.NO_AUTHORITY_CREATE_LESSON);
         Teacher teacher =(Teacher) me;
+
+        //블랙리스트이면 불가능
         if(teacher.isBlack()) throw new LessonException(LessonExceptionType.NO_AUTHORITY_CREATE_LESSON);//블랙리스트인경우
 
         //기간이 과거면 안됨, 시작기간이 끝기간보다 늦으면 안됨, 그룹과외의 경우 학생수가 2보다 작은면 안됨
-        if(!createLessonDto.isPeriodOk()) throw new LessonException(LessonExceptionType.PERIOD_ERROR);
-        if(!createLessonDto.isMaxStudentCountOk()) throw new LessonException(LessonExceptionType.MAX_STUDENT_MUST_LARGER_THAN_TWO);
-
+        if(createLessonDto.getLessonType() == LessonType.GROUP) {
+            if (!createLessonDto.isPeriodOk()) throw new LessonException(LessonExceptionType.PERIOD_ERROR);
+            if (!createLessonDto.isMaxStudentCountOk()) throw new LessonException(LessonExceptionType.MAX_STUDENT_MUST_LARGER_THAN_TWO);
+        }
 
 
         Lesson lesson = createLessonDto.toEntity();
 
-        List<UploadFile> uploadedFiles = fileService.saveFiles(createLessonDto.getUploadFiles());//파일 서버에 저장
-
+        List<UploadFile> uploadedFiles = new ArrayList<>();
+        if(createLessonDto.getUploadFiles() != null) {
+             uploadedFiles = fileService.saveFiles(createLessonDto.getUploadFiles());//파일 서버에 저장
+        }
         lesson.changeUploadFiles(uploadedFiles);
 
 
@@ -99,6 +105,7 @@ public class LessonServiceImpl implements LessonService{
     @Override
     @Transactional(readOnly = true)
     public SearchLessonDto search(LessonSearchCond cond, Pageable pageable) {
+        log.info("과외 게시물을 검색했습니다!!!!!!!!!!!!!!!");
         return new SearchLessonDto(lessonRepository.search(cond, pageable));
     }
 
@@ -128,7 +135,6 @@ public class LessonServiceImpl implements LessonService{
         //== 수정할 강의가 없는경우 -> 먼가 문제;;==//
         if(findLesson == null) throw new LessonException(LessonExceptionType.NOT_FOUND_LESSON);
 
-
         Member me = memberRepository.findByUsername(getMyUsername()).orElse(null);
 
         //학생은 강의 수정 불가능
@@ -151,19 +157,25 @@ public class LessonServiceImpl implements LessonService{
             if(updateLessonDto.getLessonType() != LessonType.PERSONAL) throw new LessonException(LessonExceptionType.CAN_NOT_CHANGE_LESSON_TYPE);
         }
 
-        //기간이 과거면 안됨, 시작기간이 끝기간보다 늦으면 안됨, 그룹과외의 경우 학생수가 2보다 작은면 안됨
-        if(!updateLessonDto.isPeriodOk()) throw new LessonException(LessonExceptionType.PERIOD_ERROR);
-        if(!updateLessonDto.isMaxStudentCountOk()) throw new LessonException(LessonExceptionType.MAX_STUDENT_MUST_LARGER_THAN_TWO);
+        if(updateLessonDto.getLessonType() == LessonType.GROUP) {
+            //기간이 과거면 안됨, 시작기간이 끝기간보다 늦으면 안됨, 그룹과외의 경우 학생수가 2보다 작은면 안됨
+            if (!updateLessonDto.isPeriodOk()) throw new LessonException(LessonExceptionType.PERIOD_ERROR);
+            if (!updateLessonDto.isMaxStudentCountOk())
+                throw new LessonException(LessonExceptionType.MAX_STUDENT_MUST_LARGER_THAN_TWO);
+        }
+
 
         changeTitle(updateLessonDto, findLesson);
+
         changeContent(updateLessonDto, findLesson);
+
         changeUploadFile(updateLessonDto, findLesson);
 
 
         if(updateLessonDto.getLessonType() == LessonType.GROUP){//그룹 과외일경우 추가
             GroupLesson groupLesson = (GroupLesson) findLesson;
-            changeMaxStudentCount(updateLessonDto, groupLesson);//TODO: 현재 모집된 학생 수보다 적게 설정한다면 오류 발생
-            changePeriod(updateLessonDto, groupLesson); //TODO : 현재보다 과거로 모집기간을 정한다면 오류 발생
+            changeMaxStudentCount(updateLessonDto, groupLesson);
+            changePeriod(updateLessonDto, groupLesson);
         }
 
     }
@@ -252,13 +264,22 @@ public class LessonServiceImpl implements LessonService{
 
     @Trace
     private void changeUploadFile(UpdateLessonDto updateLessonDto, Lesson findLesson) throws IOException, BaseException {
-        if(updateLessonDto.getUploadFiles() != null || updateLessonDto.getUploadFiles().size()!=0 ||  !updateLessonDto.getUploadFiles().get(0).isEmpty()){
+
+        if(updateLessonDto.getUploadFiles() ==null){
+            if(updateLessonDto.isFileRemove()){
+                log.info("업로드한 파일을 삭제합니다");
+                fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
+                log.info("업로드한 파일을 삭제했습니다");
+            }
+        }
+        else if(updateLessonDto.getUploadFiles() != null || updateLessonDto.getUploadFiles().size()!=0 ||  !updateLessonDto.getUploadFiles().get(0).isEmpty()){
             log.info("업로드한 파일을 삭제합니다");
             fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
             log.info("업로드한 파일을 삭제했습니다");
             List<UploadFile> uploadedFiles = fileService.saveFiles(updateLessonDto.getUploadFiles());//새로 업데이트할 파일 서버에 저장
             findLesson.changeUploadFiles(uploadedFiles);
-        }else{//파일을 안 보냈을 때, 파일을 지우려 한다면 다 지워라!
+        }
+        else{//파일을 안 보냈을 때, 파일을 지우려 한다면 다 지워라!
             if(updateLessonDto.isFileRemove()){
                 log.info("업로드한 파일을 삭제합니다");
                 fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후

@@ -29,7 +29,7 @@ public class Alarm extends BaseTimeEntity {
      *
      * 과외 모집이 완료되었습니다
      */
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ALARM_ID")
     private Long id;
 

@@ -1,7 +1,7 @@
 package com.springweb.web.service.member;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.member.*;
+import com.springweb.web.dto.member.*;
 import com.springweb.web.domain.alarm.AlarmType;
 import com.springweb.web.domain.evaluation.Evaluation;
 import com.springweb.web.domain.lesson.AppliedLesson;
@@ -12,7 +12,6 @@ import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
 import com.springweb.web.exception.BaseException;
-import com.springweb.web.exception.alarm.AlarmException;
 import com.springweb.web.exception.file.UploadFileException;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.member.MemberExceptionType;
@@ -63,8 +62,7 @@ public class MemberService {
         //패스워드 인코딩 해야 함, 중요!!
         member.passwordEncode(passwordEncoder);
 
-
-        if(!profileImg.isEmpty()) {
+        if(profileImg !=null) {
             String uploadedFilePath = fileService.saveFile(profileImg);//파일 서버에 저장
             member.changeProfileImgPath(uploadedFilePath);
         }
@@ -96,6 +94,9 @@ public class MemberService {
         }
 
         Student findMember = (Student)memberRepository.findByUsername(getMyUsername()).orElse(null);
+        if(findMember == null){
+            throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
+        }
         return new MyInfoStudentDto(findMember);
     }
 
@@ -110,7 +111,9 @@ public class MemberService {
 
         changeName(updateStudentDto, student);
         if (!student.isKakaoMember()) {//카카오 멤버가 아닐때만 진행
-            changePassword(updateStudentDto, student);
+            if(!updateStudentDto.getOldPassword().equals(student.getPassword())) {
+                changePassword(updateStudentDto, student);
+            }
         }
         changeAge(updateStudentDto, student);
 
@@ -126,7 +129,9 @@ public class MemberService {
 
         changeName(updateTeacherDto, teacher);
         if (!teacher.isKakaoMember()) {//카카오 멤버가 아닐때만 진행
-            changePassword(updateTeacherDto, teacher);
+            if(!updateTeacherDto.getOldPassword().equals(teacher.getPassword())) {
+                changePassword(updateTeacherDto, teacher);
+            }
         }
         changeAge(updateTeacherDto, teacher);
 
@@ -342,8 +347,8 @@ public class MemberService {
     }
     @Trace
     private void changePassword(UpdateStudentDto updateStudentDto,  Member member) {
-        if(StringUtils.hasLength(updateStudentDto.getPassword())){
-            member.changePassword(updateStudentDto.getPassword(), passwordEncoder);
+        if(StringUtils.hasLength(updateStudentDto.getNewPassword())){
+            member.changePassword(updateStudentDto.getNewPassword(), passwordEncoder);
         }
     }
     @Trace
