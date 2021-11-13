@@ -10,6 +10,7 @@ if (JSON.parse(localStorage.getItem("isLogin")) === true) {
   message_icon.classList.remove("hidden");
 } else {
   //로그인아닌상태
+  logout_icon.classList.add("hidden");
   notification_icon.classList.add("hidden");
   user_icon.classList.add("hidden");
   message_icon.classList.add("hidden");
@@ -22,6 +23,11 @@ user_icon.addEventListener(
 login_icon.addEventListener(
   "click",
   (e) => (location.href = "http://127.0.0.1:5500/yugyeom/login.html")
+);
+logout_icon.addEventListener(
+  "click",
+  (e) => (location.href = "http://127.0.0.1:5500/yugyeom/login.html",
+  localStorage.clear())
 );
 
 const logo_img = document.querySelector("#logo");

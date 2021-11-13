@@ -7,6 +7,10 @@ $(document).ready(function () {
     var pageIdx = 0;
     // console.log(token);
     var fetchMain = function(pageIdx){
+
+      $('tbody').empty();
+      $('#pages').empty();
+
       fetch("http://219.255.114.140:8090/lesson?page="+pageIdx,{
           method: "GET",
           headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
@@ -18,62 +22,53 @@ $(document).ready(function () {
             console.log(data);
             
             // console.log(data.simpleLectureDtoList.length);
-            for(i=0;i < data.simpleLectureDtoList.length; i++){
+            for(i=data.simpleLectureDtoList.length-1 ;i >=0; i--){
               var singleData = data.simpleLectureDtoList[i];
-            // completed: false
-            // createdDate: "2021-11-12T20:38:59.1416"
-            // endPeriod: null
-            // id: 1
-            // lessonType: "PERSONAL"
-            // maxStudentCount: 1
-            // nowStudentCount: 0
-            // startPeriod: null
-            // teacherName: "선생2"
-            // title: "개인"
-            // views: 0
+              // completed: false
+              // createdDate: "2021-11-12T20:38:59.1416"
+              // endPeriod: null
+              // id: 1
+              // lessonType: "PERSONAL"
+              // maxStudentCount: 1
+              // nowStudentCount: 0
+              // startPeriod: null
+              // teacherName: "선생2"
+              // title: "개인"
+              // views: 0
 
-            var completed = singleData.completed;
-            var createdDate = singleData.createdDate;
-            var endPeriod = singleData.endPeriod;
-            var index = singleData.id;
-            var lessonType = singleData.lessonType;
-            var maxStudentCount = singleData.maxStudentCount;
-            var nowStudentCount = singleData.nowStudentCount;
-            var startPeriod = singleData.startPeriod;
-            var teacherName = singleData.teacherName;
-            var title = singleData.title;
-            var views = singleData.views;
+              var completed = singleData.completed;
+              var createdDate = singleData.createdDate;
+              var endPeriod = singleData.endPeriod;
+              var index = singleData.id;
+              var lessonType = singleData.lessonType;
+              var maxStudentCount = singleData.maxStudentCount;
+              var nowStudentCount = singleData.nowStudentCount;
+              var startPeriod = singleData.startPeriod;
+              var teacherName = singleData.teacherName;
+              var title = singleData.title;
+              var views = singleData.views;
+              console.log(singleData);
 
-            var icon = '';
-            if(completed){ // 모집 완료
-              icon = '<i class="far fa-calendar-times" style="font-size: 25px; color: lightgray"></i>';
-            }else{ // 모집 중
-              icon = '<i class="far fa-calendar-check" style="font-size: 25px; color: green"></i>';
-            }
-            $('#table>tbody').prepend('<tr><td>'+ index +'</td><td id="titleCell">' + icon  +' '+ title + '</td><td>'+'첨부파일'+'</td><td>'+teacherName+'</td><td>'+createdDate.slice(0,10)+'</td><td>'+views+'</td></tr>');
-            }
-            var idxStr = "";
-            var page_btn_str = '';
-            for(i=0; i<parseInt(data.totalPageNum);i++){
-              console.log(typeof data.totalPageNum);
-              $('#pages').append(' <input type="button" value="'+i+'" id="btn-page'+i+'> ');
-              if(i!==parseInt(data.totalPageNum)-1){
-                page_btn_str += ('btn-page' +i +', ');
-              }else{
-                page_btn_str += 'btn-page' + i;
+              var icon = '';
+              if(completed){ // 모집 완료
+                icon = '<i class="far fa-calendar-times" style="font-size: 25px; color: lightgray"></i>';
+              }else{ // 모집 중
+                icon = '<i class="far fa-calendar-check" style="font-size: 25px; color: green"></i>';
               }
-            }
-            console.log(page_btn_str);
-
-            $(page_btn_str).click(function(){
-              console.log($(this));
-              var newPage = $(this).attr("id").split("e")[1];
-              console.log(newPage);
-              // fetchMain(newPage);
-            })
+              $('#table>tbody').prepend('<tr><td>'+ index +'</td><td id="titleCell" colspan="2">' + icon  +' '+ title + '</td><td>'+teacherName+'</td><td>'+createdDate.slice(0,10)+'</td><td>'+views+'</td></tr>');
+              }
+              
+              for(i=0; i<parseInt(data.totalPageNum);i++){
+                $('#pages').append('<input type="button" value="'+i+'" class="btn-pages" id="btn-page'+i+'"> ');
+              }
+              $('.btn-pages').click(function(){
+                  var newPage = $(this).attr("id").split("e")[1];
+                  console.log("newPage" + newPage);
+                  fetchMain(newPage)
+              })
 
             // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
-            $("#table tr").click(function (e) {
+            $("#table tbody tr").click(function (e) {
               var editorType = "none";
               var postType = "viewPost";
               var rowIdx = e.target.closest("tr").rowIndex;
