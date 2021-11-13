@@ -1,10 +1,10 @@
 package com.springweb.web.service.report;
 
 import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.controller.dto.report.CreateReportDto;
-import com.springweb.web.controller.dto.report.ReportDto;
+import com.springweb.web.domain.member.Student;
+import com.springweb.web.dto.report.CreateReportDto;
+import com.springweb.web.dto.report.ReportDto;
 import com.springweb.web.domain.member.Member;
-import com.springweb.web.domain.member.Role;
 import com.springweb.web.domain.member.Teacher;
 import com.springweb.web.domain.report.Report;
 import com.springweb.web.exception.member.MemberException;
@@ -13,7 +13,6 @@ import com.springweb.web.exception.report.ReportException;
 import com.springweb.web.exception.report.ReportExceptionType;
 import com.springweb.web.repository.member.MemberRepository;
 import com.springweb.web.repository.report.ReportRepository;
-import com.springweb.web.service.member.MemberService;
 import com.springweb.web.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,6 @@ public class ReportServiceImpl implements ReportService{
 
     private final ReportRepository reportRepository;
     private final MemberRepository memberRepository;
-
 
 
     private String getMyUsername() throws MemberException {
@@ -53,7 +51,8 @@ public class ReportServiceImpl implements ReportService{
         if(member instanceof Teacher) throw new ReportException(ReportExceptionType.NO_AUTHORITY_REPORT_TEACHER);
 
         Report report = createReportDto.toEntity();
-
+        report.setWriter((Student) member);
+        report.setTarget((Teacher) memberRepository.findById(teacherId).orElse(null));
         reportRepository.save(report);
     }
 
@@ -66,10 +65,15 @@ public class ReportServiceImpl implements ReportService{
 
     //== 어드민만 가능 ==//
     @Override
+    @Trace
     public List<ReportDto> getList() {//페이징 귀차나...
-        return reportRepository.findAllWithStudentAndTeacherAndAdminById()
+        System.out.println(reportRepository.findAllWithWriterAndTargetAndSolverOrderByCreatedDate().size());
+        return reportRepository.findAllWithWriterAndTargetAndSolverOrderByCreatedDate()
                 .stream().map(ReportDto::new).toList();
     }
+
+
+
 
     @Override
     public ReportDto readReport(Long reportId) {
@@ -106,7 +110,7 @@ public class ReportServiceImpl implements ReportService{
             throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
 
-        teacher.addWarning();
+        teacher.makeBlack();
 
         report.solve();
     }

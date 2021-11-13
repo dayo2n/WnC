@@ -54,10 +54,12 @@ public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
                         maxStudentCountGraterOrEq(cond.getMinStudentCount()),
                         maxStudentCountLowerOrEq(cond.getMaxStudentCount())
                 )
+                .orderBy(lesson.createdDate.desc())//가장 최신부터
                 .leftJoin(lesson.teacher, teacher).fetchJoin() //선생님 페치조인
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
 
         JPAQuery<Lesson> countQuery = query
                 .selectFrom(lesson)
@@ -69,6 +71,7 @@ public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
                         maxStudentCountGraterOrEq(cond.getMinStudentCount()),
                         maxStudentCountLowerOrEq(cond.getMaxStudentCount())
                 );
+
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }

@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class UploadFile extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UPLOAD_FILE_ID")
     private Long id;
 

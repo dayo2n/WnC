@@ -2,10 +2,11 @@ package com.springweb.web.domain.member;
 
 import com.springweb.web.domain.alarm.Alarm;
 import com.springweb.web.domain.base.BaseTimeEntity;
-import com.springweb.web.domain.evaluation.Evaluation;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public abstract class Member extends BaseTimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
     private Long id;
 
@@ -47,6 +48,8 @@ public abstract class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "target", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alarm> alarmList = new ArrayList<>();
+
+
 
 
     //== 빌더 생성자 ==//

@@ -1,6 +1,6 @@
 package com.springweb.web.controller.report;
 
-import com.springweb.web.controller.dto.report.CreateReportDto;
+import com.springweb.web.dto.report.CreateReportDto;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.report.ReportException;
 import com.springweb.web.service.report.ReportService;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

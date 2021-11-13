@@ -1,7 +1,7 @@
 package com.springweb.web.service.alarm;
 
-import com.springweb.web.controller.dto.alarm.AlarmDto;
-import com.springweb.web.controller.dto.alarm.SearchAlarmDto;
+import com.springweb.web.dto.alarm.AlarmDto;
+import com.springweb.web.dto.alarm.SearchAlarmDto;
 import com.springweb.web.domain.alarm.AlarmType;
 import com.springweb.web.domain.lesson.Lesson;
 import com.springweb.web.domain.member.Member;
@@ -26,6 +26,9 @@ public interface AlarmService {
     AlarmDto readAlarm(Long alarmId) throws MemberException, AlarmException;
 
     SearchAlarmDto searchMyAlarms(AlarmSearchCond cond, Pageable pageable) throws MemberException;
+
+
+     int getMyNoReadAlarm() throws MemberException;
 
 
 }

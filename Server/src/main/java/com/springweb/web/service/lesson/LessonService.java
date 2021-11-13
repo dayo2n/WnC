@@ -1,15 +1,10 @@
 package com.springweb.web.service.lesson;
 
-import com.springweb.web.controller.dto.lesson.CreateLessonDto;
-import com.springweb.web.controller.dto.lesson.LessonDetailDto;
-import com.springweb.web.controller.dto.lesson.SearchLessonDto;
-import com.springweb.web.controller.dto.lesson.UpdateLessonDto;
-import com.springweb.web.domain.lesson.GroupLesson;
-import com.springweb.web.domain.lesson.PersonalLesson;
+import com.springweb.web.dto.lesson.CreateLessonDto;
+import com.springweb.web.dto.lesson.LessonDetailDto;
+import com.springweb.web.dto.lesson.SearchLessonDto;
+import com.springweb.web.dto.lesson.UpdateLessonDto;
 import com.springweb.web.exception.BaseException;
-import com.springweb.web.exception.alarm.AlarmException;
-import com.springweb.web.exception.lesson.LessonException;
-import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.service.lesson.search.LessonSearchCond;
 import org.springframework.data.domain.Pageable;
 

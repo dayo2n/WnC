@@ -1,8 +1,8 @@
 package com.springweb.web.service.evaluation;
 
-import com.springweb.web.controller.dto.evaluation.EvaluationDto;
-import com.springweb.web.controller.dto.evaluation.SearchEvaluationTeacherDto;
-import com.springweb.web.controller.dto.member.TeacherDetailWithEvaluationDto;
+import com.springweb.web.dto.evaluation.EvaluationDto;
+import com.springweb.web.dto.evaluation.SearchEvaluationTeacherDto;
+import com.springweb.web.dto.member.TeacherDetailWithEvaluationDto;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.member.MemberException;
 
