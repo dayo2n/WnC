@@ -105,6 +105,7 @@
                         </div>
                     </div>
                     <img src="img/login.png" id="login_icon" class="logoBox" alt="로그인">
+                    <img src="img/exit.png" id="logout_icon" class="logoBox" alt="로그아웃">
                     <div class="login_button"></div>
                     <div class="profile"></div>
                 </div>
@@ -137,8 +138,7 @@
                         <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>제목</th>
-                                <th>첨부</th>
+                                <th colspan="2">제목</th>
                                 <th>작성자</th>
                                 <th>등록일</th>
                                 <th>조회수</th>
@@ -148,7 +148,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" id="pages">
+                                <td colspan="6">
+                                    <div id="pages"> </div>
                                 </td>
                             </tr>
                         </tfoot>
