@@ -30,7 +30,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class AppliedLessonServiceImpl implements AppliedLessonService {
 
     private final LessonRepository lessonRepository;

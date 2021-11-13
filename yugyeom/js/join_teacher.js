@@ -19,17 +19,19 @@ function postJoin(event){
     formData.append("profileImg",join_img.files[0]);
     if(join_img.files[0] === undefined){formData.append("profileImg", null);}
 
-    fetch("http://219.255.114.140:8090/join/teacher", { //FormData로 보낼때 헤더설정 X
-        method: "POST",
-        body: formData
-      })
-        .then((response) => {console.log(response.status);
-          if(response.status>= 200 && response.status<300){
-          location.href="http://127.0.0.1:5500/yugyeom/login.html";
+    fetch("http://219.255.114.140:8090/join/teacher", {
+      //FormData로 보낼때 헤더설정 X
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          location.href = "http://127.0.0.1:5500/yugyeom/login.html";
+        } else {
+          return response.json();
         }
-        response.json();
       })
-        .then((data) => console.log(data));
+      .then((data) => alert(data.errorMessage));
 }//에러메세지
 
 

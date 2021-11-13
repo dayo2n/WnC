@@ -35,7 +35,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class LessonController {
 
     private final LessonService lessonService;
@@ -54,7 +54,7 @@ public class LessonController {
     //@Trace
     @GetMapping("/lesson/{lessonId}")
     public ResponseEntity readOne(@PathVariable("lessonId") Long lessonId) throws BaseException {
-        log.info("lessonId [{}]",lessonId);
+        //log.info("lessonId [{}]",lessonId);
         LessonDetailDto lessonInfo = lessonService.getLessonInfo(lessonId);//안되면 기본생성자 추가하기
         return new ResponseEntity(lessonInfo, HttpStatus.OK);
     }

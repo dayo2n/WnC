@@ -40,7 +40,7 @@ import java.util.List;
 
 @Service
 @Transactional
-@Slf4j
+//@Slf4j
 @RequiredArgsConstructor
 public class LessonServiceImpl implements LessonService{
 

@@ -1,9 +1,26 @@
 @import 'newPost.css';
 @import 'home.css';
 @import 'viewPost.css';
+@import url('https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap');
+/* 
+  font-family: 'Yuji Boku', serif;
+*/
+@import url('https://fonts.googleapis.com/css2?family=Road+Rage&family=Yuji+Boku&display=swap');
+/* 
+font-family: 'Road Rage', cursive;
+*/
+@import url('https://fonts.googleapis.com/css2?family=Monofett&family=Road+Rage&family=Yuji+Boku&display=swap');
+/* 
+font-family: 'Monofett', cursive;
+ */
+ @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Monofett&family=Road+Rage&family=Yuji+Boku&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Sunflower:wght@300&display=swap');
 
-* {
+
+ * {
   box-sizing: border-box;
+  font-family: 'Nanum Myeongjo', serif;
+  /* font-size: 30px; */
 }
 
 .inner {
@@ -18,6 +35,7 @@ body {
   /* margin: 0 auto; */
   color: #3f464d;
   font-family: "Spoqa Han Sans Neo", "Sans-serif";
+  font-weight: 700;
 }
 
 .hidden{
@@ -62,6 +80,15 @@ a:hover {
   .inner {
     max-width: 1150px;
   }
+}
+
+h1{
+  font-family: 'Monofett', cursive;
+  /* font-family: 'Yuji Boku', serif; */
+/* font-family: 'Road Rage', cursive; */
+
+  font-size: 60px;
+  font-weight: 200;
 }
 
 .head_container{
@@ -179,4 +206,18 @@ overflow: auto;
 
 .logoBox:hover{
   cursor: pointer;
+}
+
+.check_button{
+  font-size: 1.4rem;
+  color: rgb(179, 179, 179);
+
+}
+
+.check_button:hover{
+  cursor: pointer;
+}
+
+tr{
+  border: 1px solid;
 }

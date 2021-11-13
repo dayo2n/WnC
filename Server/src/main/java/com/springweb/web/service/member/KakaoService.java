@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.dto.kakaomemberinfo.KakaoMemberInfo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class KakaoService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;

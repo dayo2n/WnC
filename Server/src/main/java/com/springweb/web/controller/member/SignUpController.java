@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class SignUpController {
 
     private final MemberService memberService;
@@ -31,7 +31,7 @@ public class SignUpController {
     @PostMapping("/join/student")
     public ResponseEntity join(@ModelAttribute BasicSignUpStudentDto basicSignUpStudentDto) throws BaseException, IOException {
         //TODO : 파일 용량 확인해야함
-        memberService.save(basicSignUpStudentDto.toEntity(), basicSignUpStudentDto.getProfileImg());//Member 객체를 만들어서 회원가입
+        memberService.save(basicSignUpStudentDto);//Member 객체를 만들어서 회원가입
         return new ResponseEntity("환영합니다 "+ basicSignUpStudentDto.getName()+"님", HttpStatus.CREATED);
     }
 
@@ -39,7 +39,7 @@ public class SignUpController {
     //@Trace
     @PostMapping("/join/teacher")
     public ResponseEntity join(@ModelAttribute BasicSignUpTeacherDto basicSignUpTeacherDto) throws BaseException, IOException {
-        memberService.save(basicSignUpTeacherDto.toEntity(), basicSignUpTeacherDto.getProfileImg());//Member 객체를 만들어서 회원가입
+        memberService.save(basicSignUpTeacherDto);//Member 객체를 만들어서 회원가입
         return new ResponseEntity("환영합니다 "+ basicSignUpTeacherDto.getName()+"님", HttpStatus.CREATED);
     }
 
@@ -53,7 +53,7 @@ public class SignUpController {
 
         kakaoSignUpStudentDto.confirmKakaoId(kakaoMemberInfo.getId());//받아온 kakaoId를 설정해준 후
 
-        memberService.save(kakaoSignUpStudentDto.toEntity(), kakaoSignUpStudentDto.getProfileImg());//Member 객체를 만들어서 회원가입, 비밀번호는 UUID를 이용하여 생성
+        memberService.save(kakaoSignUpStudentDto);//Member 객체를 만들어서 회원가입, 비밀번호는 UUID를 이용하여 생성
 
         return new ResponseEntity("환영합니다 "+ kakaoSignUpStudentDto.getName()+"님", HttpStatus.CREATED);
     }
@@ -66,7 +66,7 @@ public class SignUpController {
 
         kakaoSignUpTeacherDto.confirmKakaoId(kakaoMemberInfo.getId());//받아온 kakaoId를 설정해준 후
 
-        memberService.save(kakaoSignUpTeacherDto.toEntity(), kakaoSignUpTeacherDto.getProfileImg());//Member 객체를 만들어서 회원가입, 비밀번호는 UUID를 이용하여 생성
+        memberService.save(kakaoSignUpTeacherDto);//Member 객체를 만들어서 회원가입, 비밀번호는 UUID를 이용하여 생성
 
         return new ResponseEntity("환영합니다 "+ kakaoSignUpTeacherDto.getName()+"님", HttpStatus.CREATED);
     }

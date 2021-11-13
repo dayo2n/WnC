@@ -3,10 +3,12 @@ package com.springweb.web.dto.member;
 import com.springweb.web.domain.evaluation.Evaluation;
 import com.springweb.web.domain.member.Teacher;
 import com.springweb.web.myconst.EvaluationConstName;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class TeacherDetailWithEvaluationDto {
     /**
      * 총 과외 수
@@ -41,6 +43,7 @@ public class TeacherDetailWithEvaluationDto {
     private List<EvaluationDto> evaluationDtos = new ArrayList<>();
 
 
+    @Data
     private class EvaluationDto {
         private Long evaluationId;//평가id
         private String content;//평가내용

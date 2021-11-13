@@ -2,9 +2,11 @@ package com.springweb.web.dto.signup;
 
 import com.springweb.web.domain.member.Role;
 import com.springweb.web.domain.member.Student;
+import com.springweb.web.myconst.EvaluationConstName;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -15,7 +17,7 @@ public class KakaoSignUpStudentDto {
     private String name;//직접 입력
     private int age; //나이
 
-    private MultipartFile profileImg;//프사 URL
+    private List<MultipartFile> profileImg;//프사 URL
 
 
     private Long kakaoId;//카카오에서 가져옴, 안보내줘도 됨
@@ -41,6 +43,7 @@ public class KakaoSignUpStudentDto {
         return Student.builder()
                 .username(username)
                 .password(UUID.randomUUID().toString().split("-")[0])//UUID를 사용
+                //.password(EvaluationConstName.DEFAULT_NAME)
                 .name(name)
                 .age(age)
                 .kakaoId(kakaoId)

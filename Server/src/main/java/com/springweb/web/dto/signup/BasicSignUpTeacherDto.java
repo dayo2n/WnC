@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class BasicSignUpTeacherDto {
     private String name;//직접 입력
     private int age; //나이
     private String career;//경력
-    private MultipartFile profileImg;//프사 URL
+    private List<MultipartFile> profileImg;//프사 URL
 
 
     //== 카카오 로그인이 아닐 경우 ==//

@@ -12,5 +12,6 @@ public class TeacherSearchCond {
 
     private String teacherName;
 
-    private int starPoint;
+    //private int starPoint;
+    private boolean isDESC;
 }

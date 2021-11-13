@@ -1,12 +1,11 @@
 package com.springweb.web.service.report;
 
-import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.domain.member.Student;
-import com.springweb.web.dto.report.CreateReportDto;
-import com.springweb.web.dto.report.ReportDto;
 import com.springweb.web.domain.member.Member;
+import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
 import com.springweb.web.domain.report.Report;
+import com.springweb.web.dto.report.CreateReportDto;
+import com.springweb.web.dto.report.ReportDto;
 import com.springweb.web.exception.member.MemberException;
 import com.springweb.web.exception.member.MemberExceptionType;
 import com.springweb.web.exception.report.ReportException;
@@ -15,14 +14,13 @@ import com.springweb.web.repository.member.MemberRepository;
 import com.springweb.web.repository.report.ReportRepository;
 import com.springweb.web.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Slf4j
+//@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class ReportServiceImpl implements ReportService{

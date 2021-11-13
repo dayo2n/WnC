@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@Slf4j
+//@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class MemberController {

@@ -1,6 +1,7 @@
 package com.springweb.web.service.member;
 
 import com.springweb.web.aop.annotation.Trace;
+import com.springweb.web.dto.admin.SignUpAdminDto;
 import com.springweb.web.dto.member.*;
 import com.springweb.web.domain.alarm.AlarmType;
 import com.springweb.web.domain.evaluation.Evaluation;
@@ -11,6 +12,10 @@ import com.springweb.web.domain.lesson.TakingLesson;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.dto.signup.BasicSignUpStudentDto;
+import com.springweb.web.dto.signup.BasicSignUpTeacherDto;
+import com.springweb.web.dto.signup.KakaoSignUpStudentDto;
+import com.springweb.web.dto.signup.KakaoSignUpTeacherDto;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.file.UploadFileException;
 import com.springweb.web.exception.member.MemberException;
@@ -53,21 +58,101 @@ public class MemberService {
 
 
     //@Trace
-    public void save(Member member, MultipartFile profileImg) throws MemberException, UploadFileException, IOException {
+    public void save(BasicSignUpStudentDto basicSignUpStudentDto) throws MemberException, UploadFileException, IOException {
 
+        Member member = basicSignUpStudentDto.toEntity();
         //== 중복 아이디 체크 로직 ==//
         checkDuplicateMember(member.getUsername());
 
         //패스워드 인코딩 해야 함, 중요!!
         member.passwordEncode(passwordEncoder);
 
-        if(profileImg !=null) {
-            String uploadedFilePath = fileService.saveFile(profileImg);//파일 서버에 저장
-            member.changeProfileImgPath(uploadedFilePath);
+        if(basicSignUpStudentDto.getProfileImg() !=null) {
+            if(!basicSignUpStudentDto.getProfileImg().isEmpty()) {
+                String uploadedFilePath = fileService.saveFile(basicSignUpStudentDto.getProfileImg().get(0));//파일 서버에 저장
+                member.changeProfileImgPath(uploadedFilePath);
+            }
         }
         //== 중복 아이디 체크 로직 종료 ==//
         memberRepository.save(member);
     }
+    public void save(KakaoSignUpStudentDto kakaoSignUpStudentDto) throws MemberException, UploadFileException, IOException {
+
+        Member member = kakaoSignUpStudentDto.toEntity();
+        //== 중복 아이디 체크 로직 ==//
+        checkDuplicateMember(member.getUsername());
+
+        //패스워드 인코딩 해야 함, 중요!!, 카카오톡은 안 해!!!!!!!!!!!
+        //member.passwordEncode(passwordEncoder);
+
+        if(kakaoSignUpStudentDto.getProfileImg() !=null) {
+            if(!kakaoSignUpStudentDto.getProfileImg().isEmpty()) {
+                String uploadedFilePath = fileService.saveFile(kakaoSignUpStudentDto.getProfileImg().get(0));//파일 서버에 저장
+                member.changeProfileImgPath(uploadedFilePath);
+            }
+        }
+        //== 중복 아이디 체크 로직 종료 ==//
+        memberRepository.save(member);
+    }
+    public void save(KakaoSignUpTeacherDto kakaoSignUpTeacherDto) throws MemberException, UploadFileException, IOException {
+
+        Member member = kakaoSignUpTeacherDto.toEntity();
+        //== 중복 아이디 체크 로직 ==//
+        checkDuplicateMember(member.getUsername());
+
+        //패스워드 인코딩 해야 함, 중요!!, 카카오톡은 안 해!!!!!!!!!!!
+        //member.passwordEncode(passwordEncoder);
+
+        if(kakaoSignUpTeacherDto.getProfileImg() !=null) {
+            if(!kakaoSignUpTeacherDto.getProfileImg().isEmpty()) {
+                String uploadedFilePath = fileService.saveFile(kakaoSignUpTeacherDto.getProfileImg().get(0));//파일 서버에 저장
+                member.changeProfileImgPath(uploadedFilePath);
+            }
+        }
+        //== 중복 아이디 체크 로직 종료 ==//
+        memberRepository.save(member);
+    }
+    public void save(BasicSignUpTeacherDto basicSignUpTeacherDto) throws MemberException, UploadFileException, IOException {
+
+        Member member = basicSignUpTeacherDto.toEntity();
+        //== 중복 아이디 체크 로직 ==//
+        checkDuplicateMember(member.getUsername());
+
+        //패스워드 인코딩 해야 함, 중요!!
+        member.passwordEncode(passwordEncoder);
+
+        if(basicSignUpTeacherDto.getProfileImg() !=null) {
+            if(!basicSignUpTeacherDto.getProfileImg().isEmpty()) {
+                String uploadedFilePath = fileService.saveFile(basicSignUpTeacherDto.getProfileImg().get(0));//파일 서버에 저장
+                member.changeProfileImgPath(uploadedFilePath);
+            }
+        }
+        //== 중복 아이디 체크 로직 종료 ==//
+        memberRepository.save(member);
+    }
+
+
+
+    public void save(SignUpAdminDto signUpAdminDto) throws MemberException, UploadFileException, IOException {
+
+        Member member = signUpAdminDto.toEntity();
+        //== 중복 아이디 체크 로직 ==//
+        checkDuplicateMember(member.getUsername());
+
+        //패스워드 인코딩 해야 함, 중요!!
+        member.passwordEncode(passwordEncoder);
+
+        //== 중복 아이디 체크 로직 종료 ==//
+        memberRepository.save(member);
+    }
+
+
+
+
+
+
+
+
 
     //@Trace
     private void checkDuplicateMember(String username) throws MemberException {
@@ -79,7 +164,7 @@ public class MemberService {
 
     //@Trace
     @Transactional(readOnly = true)
-    public Object getMyInfo() throws MemberException {//TODO Object로 해도 될까..?
+    public Object getMyInfo() throws MemberException {
         Member member = memberRepository.findByUsername(getMyUsername()).orElse(null);
 
         if(member instanceof Student student){
@@ -106,8 +191,11 @@ public class MemberService {
 
         changeName(updateStudentDto, student);
         if (!student.isKakaoMember()) {//카카오 멤버가 아닐때만 진행
-            if(!updateStudentDto.getOldPassword().equals(student.getPassword())) {
-                changePassword(updateStudentDto, student);
+            if (updateStudentDto.getOldPassword() != null) {
+
+                if (!updateStudentDto.getOldPassword().equals(student.getPassword())) {
+                    changePassword(updateStudentDto, student);
+                }
             }
         }
         changeAge(updateStudentDto, student);
@@ -317,6 +405,7 @@ public class MemberService {
 
     //@Trace
     private void changeProfileImg(UpdateStudentDto updateStudentDto, Member member) throws IOException, UploadFileException {
+        if(updateStudentDto.getProfileImg() ==null) return;
         if(!updateStudentDto.getProfileImg().isEmpty()){//비어있지 않은 경우
             fileService.deleteFile(member.getProfileImgPath());//원래 저장한 프사 삭제
             String saveFilePath = fileService.saveFile(updateStudentDto.getProfileImg());//새로운 프사 저장

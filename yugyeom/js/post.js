@@ -2,8 +2,12 @@
 // edior 타입은 두 개. 글 수정용 에디터 : "editEditor", 새 글 작성용 데이터 : "newEditor"
 // ---------- for postEditor.html ----------
 
+var file = null;
+
 $(document).ready(function () {
 
+    var fileFlag = false;
+    const IMG_URL = "https://wnc-bucket.s3.ap-northeast-2.amazonaws.com/";
 
     $('#dialog').dialog({
         autoOpen:false,
@@ -79,13 +83,45 @@ $(document).ready(function () {
                         fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/complete",{
                         method: "POST",
                         headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
-                        })
+                        }).then(response => {
+                            if(response.status == 200){
+                                $(location).attr('href', "home.html");
+                            }
+                        });
                     }
                 });
             });
-    }
+    }else if(editorType ===  "newEditor" && postType === "editPost"){ // newEditor 모드
+        lessonType = $('#lessonType option:selected').val();
+        if(lessonType === "PERSONAL"){
+            $('tbody tr').eq(1).after('<tr><td>파일 첨부</td><td><input type="file" id="uploadFile" accept=".png, .jpg, .jpeg"></td></tr>');
+        }
 
-    if(postType === "viewPost"){
+        console.log(typeof $('#uploadFile').files);
+        $('#uploadFile').on('change', function(e){
+            if(!$(this).val()) return;
+            var f = this.files[0];
+            console.log(f);
+            var size = f.size || f.fileSize;
+             
+            var limit = 2000000;
+                         
+            if( size > limit )
+            {
+                alert( '파일용량은 2mb 를 넘을수 없습니다.' );
+                $(this).val('');
+                fileFlag = false;
+                file = null;
+                return;
+            }
+            
+            fileFlag = true;
+            file = f;
+            console.log(file);
+            $(this).parent().find('input[type=text]').val( $(this).val() );
+        })
+
+    }else if(postType === "viewPost"){
         var tr = $('#table tr');
         var td = tr.children();
         var postIdx = types[2].split("=")[1];
@@ -97,8 +133,6 @@ $(document).ready(function () {
               return response.json();
             })
             .then(data => {
-                console.log(data);
-                console.log(data.completed);
 
                 var icon = '';
                 if(data.completed){ // true면 모집완료
@@ -109,13 +143,19 @@ $(document).ready(function () {
                 }else{ // 모집 중
                     icon = '<i class="far fa-calendar-check" style="font-size: 25px; color: green"> 모집 중 </i>';
                 }
-                console.log(icon);
                 // $('#postViewTable tr:eq(0) th:eq(0)').innerHTML(icon);
                 $('#postViewTable>tbody').prepend('<tr><th colspan="1">'+icon+'</th><th colspan="3"></th></tr>');
                 $('#postViewTable tr:eq(0) th:eq(1)').text(data.title);
                 $("#postViewTable tr:eq(1) td:eq(1)").text(data.lessonType);
                 $('#postViewTable tr:eq(1) td:eq(3)').text(data.views);
                 $('#postViewTable tr:eq(2) td:eq(3)').text(data.teacher.name+' ( '+data.teacher.teacherId+' )');
+                if(data.uploadFiles.length !== 0){
+                    $('#postViewTable tr:eq(4) td:eq(1)').text(IMG_URL + data.uploadFiles[0].filePath);
+                    $('#img').attr('src', IMG_URL+ data.uploadFiles[0].filePath);
+                }else{
+                    $('#postViewTable tr:eq(4) td:eq(1)').text("-");
+                }
+
                 if(data.lessonType === "PERSONAL"){
                     $('#postViewTable tr:eq(2) td:eq(1)').text(1);
                     $('#postViewTable tr:eq(3) td:eq(1)').text("개인과외는 개인적으로 시간 조정");
@@ -123,7 +163,7 @@ $(document).ready(function () {
                     $('#postViewTable tr:eq(2) td:eq(1)').text(data.maxStudentCount);
                     $('#postViewTable tr:eq(3) td:eq(1)').text(data.startPeriod.slice(0, 10) + " ~ " + data.endPeriod.slice(0,10));
                 }
-                $('#postViewTable tr:eq(4) td:eq(0)').text(data.content);
+                $('#postViewTable tr:eq(5) td:eq(0)').text(data.content);
 
                     // 글 수정 클릭시
                 $("#btn-editPost").click(function(){
@@ -153,20 +193,21 @@ $(document).ready(function () {
                     $('#btn-passwordConfirm').click(function(){
                         if(presentLoginUserId === data.teacher.teacherId){
 
-                            console.log()
                             var formData = new FormData();
                             formData.append('password', $('#password').val());
 
-                            var url ="http://219.255.114.140:8090/lesson/"+postIdx
 
-                            fetch(url,{
+                            fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
                                 method: "DELETE",
                                 headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
                                 body: formData,
-                                redirect: 'follow'
                             }).then(response => {
-                                response.redirect(url);
-                                // $(location).attr('href', "home.html");
+                                if(response.status==200){
+                                    $(location).attr('href', "home.html");
+                                }
+                                else if(response.status==403){
+                                    alert("모집이 완료된 과외글은 삭제할 수 없습니다.");
+                                }
                               })
                         }else{
                             alert("권한이 없습니다");
@@ -179,7 +220,7 @@ $(document).ready(function () {
     $('#lessonType').change(function(){
         if($(this).val()==='PERSONAL'){
             $('tbody tr').eq(2).remove();
-            $('tbody tr').eq(3).remove();
+            $('tbody tr').eq(2).remove();
         }else{
             $('tbody tr').eq(1).after('<tr><td>모집인원</td><td><input type="text" placeholder="최대인원을 입력하세요." class="writeComponent" id="maxStudentCount" maxlength=20 style="width:100%"></td></tr>');
                     // 최대인원 수는 숫자로만 입력 가능
@@ -216,18 +257,12 @@ $(document).ready(function () {
         }
     });
 
-    $("#btn-backToNoticeBoard").click(function(){
-
-        if(postType==="editPost"){
-            var flag = confirm('작성한 내용은 저장되지 않습니다. 글 작성을 취소하시겠습니까?');
-            console.log(flag);
-            if(flag){
-                $(location).attr('href', "home.html");
-            }
-        }else{ // postType === "viewPost"
-            $(location).attr('href', "home.html");
+    $('#content').on('keyup', function(){
+        if($(this).val().length > 200){
+            alert("최대 200글자를 초과할 수 없습니다");
+            $(this).val($(this).val().substring(0, 200));
         }
-    });
+    })
 
     // "글 등록" 버튼 클릭 액션
     $("#btn-postNewNotice").click(function(){
@@ -251,12 +286,16 @@ $(document).ready(function () {
             
                 if(editorType === "newEditor"){  // 새 글작성 모드 
                     // 새 데이터 추가 코드 구현 
-                    console.log("hihi");
                     if(lessonType === "PERSONAL"){
 
                         formData.append('lessonType', lessonType)
                         formData.append('title', $('#title').val());
                         formData.append('content', $('#content').val());
+
+                        if(fileFlag){
+                            console.log(file);
+                            formData.append('uploadFiles', file);
+                        }
 
                         fetch("http://219.255.114.140:8090/lesson",{
                             method: "POST",
@@ -265,13 +304,12 @@ $(document).ready(function () {
                                 'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
+                        }).then(response => {
+                            console.log(response);
+                            if(response.status == 200){
+                                $(location).attr('href', "home.html");
+                            }
                         })
-                        // .then((response) => response.json())
-                        //                             .then(
-                        //                               (data) => (
-                        //                                 console.log((token = data)),
-                        //                                 localStorage.setItem("token", JSON.stringify(data.token))
-                        //                               ));
 
                     }else{ // lessonType === "GROUP"
                         if($('#maxStudentCount').val() === ""){
@@ -288,6 +326,10 @@ $(document).ready(function () {
                             formData.append('endPeriod', $('#endDate').val()); // 과외 종료일자
                             formData.append('content', $('#content').val());
 
+                            if(fileFlag){
+                                formData.append('uploadFiles', file);
+                            }
+
                             fetch("http://219.255.114.140:8090/lesson",{
                             method: "POST",
                             headers :{
@@ -295,16 +337,25 @@ $(document).ready(function () {
                                 'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
+                        }).then(response => {
+                            if(response.status == 200){
+                                $(location).attr('href', "home.html");
+                            }else if(response.status == 400){
+                                alert("그룹 과외의 모집 인원은 최소 두 명 이상이여야 합니다.");
+                            }
                         });
                         }
                     }
-                }else{//editorType=="editEditor"
-                    if(lessonType==="PERSONAL"){
+                }
+                
+                else{//editorType=="editEditor"
+                    if(lessonType==="PERSONAL"){ // 개인 과외 게시물 수정시
 
                         var postIdx = types[2].split("=")[1];
                         formData.append('title', $('#title').val());
                         formData.append('content', $('#content').val());
                         formData.append('lessonType', lessonType);
+                        formData.append('fileRemove', false);
                         
                         var url = "http://219.255.114.140:8090/lesson/" + postIdx;
                         fetch(url,{
@@ -314,19 +365,22 @@ $(document).ready(function () {
                                 'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
-                        })
-                        // .then((response) => response.json())
-                        // .then((data) => (console.log(data)));
+                        }).then(response => {
+                            console.log(response);
+                            if(response.status == 201){
+                                $(location).attr('href', "home.html");
+                            }
+                        });
                     }
-                    else{
+                    else{ // 그룹 과외 게시물 수정 시
                         var postIdx = types[2].split("=")[1];   
-                        console.log('잘들ㅇ어왔나?');
                         formData.append('title', $('#title').val());
                         formData.append('content', $('#content').val());
                         formData.append('lessonType', lessonType);
                         formData.append('maxStudentCount', $('#maxStudentCount').val());
                         formData.append('startPeriod', $('#startDate').val()); // 과외 시작일자
                         formData.append('endPeriod', $('#endDate').val()); // 과외 종료일자
+                        formData.append('fileRemove', false);
                         
                         var url = "http://219.255.114.140:8090/lesson/" + postIdx;
                         fetch(url,{
@@ -336,7 +390,11 @@ $(document).ready(function () {
                                 'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
-                        })
+                        }).then(response => {
+                            if(response.status == 201){
+                                $(location).attr('href', "home.html");
+                            }
+                        });
                     }
                 }
             }

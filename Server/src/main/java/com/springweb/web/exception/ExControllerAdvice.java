@@ -1,22 +1,15 @@
 package com.springweb.web.exception;
 
-import com.springweb.web.exception.lesson.LessonException;
-import com.springweb.web.exception.member.MemberException;
-import com.springweb.web.exception.valid.ValidException;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.io.IOException;
-import java.net.BindException;
 import java.util.Locale;
 
 @RestControllerAdvice
-@Slf4j
+//@Slf4j
 @RequiredArgsConstructor
 public class ExControllerAdvice {
 
@@ -25,7 +18,7 @@ public class ExControllerAdvice {
     @ExceptionHandler
     public ResponseEntity ExHandler(BaseException e, Locale locale){
 
-        log.error("오류 발생{}" ,e.getExceptionType().getErrorMessage());
+        //log.error("오류 발생{}" ,e.getExceptionType().getErrorMessage());
 
         return makeResponseEntity(e,locale);
     }
