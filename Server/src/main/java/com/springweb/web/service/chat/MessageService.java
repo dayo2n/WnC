@@ -186,7 +186,7 @@ public class MessageService {
         }
         return result;
     }
-    @Trace
+
     public int getMyNoReadChatCount(Teacher teacher) throws MemberException {
         int result = 0;
         //선생

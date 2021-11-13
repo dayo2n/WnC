@@ -24,7 +24,7 @@ public class EvaluationController {
     /**
      * 평가 가능한 선생님 보여주기
      */
-    @Trace
+    //@Trace
     @GetMapping("/myInfo/evaluation/teachers")
     public ResponseEntity getTeacherList() throws BaseException {
         SearchEvaluationTeacherDto result = evaluationService.getEvaluatedTeacherList();
@@ -32,7 +32,7 @@ public class EvaluationController {
     }
 
 
-    @Trace
+    //@Trace
     @PostMapping("/myInfo/evaluation/teachers/{teacherId}")
     public ResponseEntity evaluate(@PathVariable("teacherId") Long teacherId, EvaluationDto evaluationDto) throws BaseException {
         evaluationService.evaluate(teacherId,evaluationDto);

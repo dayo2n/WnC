@@ -52,7 +52,7 @@ public class LogInController {
      *
      * 로그인 결과 : 나의 id, 내가 학생인지 선생인지 여부, 내 로그인 토큰, 새로운 알림이 있는지, 새로운 메세지가 있는지
      */
-    @Trace
+    //@Trace
     @PostMapping("/login")//로그인 주소
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody BasicLoginDto loginDto) throws MemberException {
 
@@ -69,11 +69,12 @@ public class LogInController {
             logInMemberInfoDto.setStudent();
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount(student));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            logInMemberInfoDto.setBasic();//일반 회원
         }else {
-            logInMemberInfoDto.setTeacher((Teacher) member); //=> 블랙리스트인지 확인해야 하므로
+            logInMemberInfoDto.setTeacher((Teacher) member); //=> 블랙리스트인지 확인
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount((Teacher) member));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
-            //블랙리스트인가?
+            logInMemberInfoDto.setBasic();//일반 회원
 
         }
 
@@ -86,7 +87,7 @@ public class LogInController {
     /**
      * 카카오 로그인 토큰을 이용하여 로그인
      */
-    @Trace
+    //@Trace
     @PostMapping("/login/kakao")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody KakaoLoginDto loginDto) throws  MemberException, JsonProcessingException {
 
@@ -107,10 +108,12 @@ public class LogInController {
             logInMemberInfoDto.setStudent();
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount(student));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            logInMemberInfoDto.setKakao();//카카오 회원
         }else {
-            logInMemberInfoDto.setTeacher((Teacher) findMember);//이거 되나???????????????????????????????
+            logInMemberInfoDto.setTeacher((Teacher) findMember);//=> 블랙리스트인지 확인
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount((Teacher) findMember));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            logInMemberInfoDto.setKakao();//카카오 회원
         }
 
 

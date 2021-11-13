@@ -47,7 +47,6 @@ public class KakaoSignUpStudentDto {
                 .isKakaoMember(isKakaoMember)//true
                 .role(role)
                 .activated(activated)
-                //.profileImgPath(profileImgPath)
                 .build();
     }
 }

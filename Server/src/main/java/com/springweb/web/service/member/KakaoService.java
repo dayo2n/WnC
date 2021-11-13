@@ -36,9 +36,8 @@ public class KakaoService {
      * accessToken 을 이용한 유저정보 받기
      * 아이디를 반환
      */
-    @Trace
+    //@Trace
     public KakaoMemberInfo getKakaoInfoUsingAccessToken(String accessToken) throws JsonProcessingException {
-        log.info("토큰을 가지고 회원 정보를 가져옵니다. 토큰 정보[{}] ",accessToken);
         HttpHeaders headers = new HttpHeaders();
 
         headers.set("Authorization", "Bearer " + accessToken);
@@ -48,14 +47,11 @@ public class KakaoService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         try {
-            log.info("카카오에 요청을 보냅니다");
             ResponseEntity<String> response = restTemplate.postForEntity(MEMBER_INFO_URL, request, String.class);///v2/user/me
-            log.info("카카오에서 요청을 성공적으로 받아왔습니다[{}]",response.getBody());
 
             return objectMapper.readValue(response.getBody(), KakaoMemberInfo.class);//받오온 요청을 읽어서
 
         } catch (Exception e) {
-            log.error("파싱중에 에러가 발생했습니다. {}",e.getCause());
             throw e;
         }
     }
@@ -67,7 +63,6 @@ public class KakaoService {
      */
     @Trace
     public KakaoMemberInfo leave(String accessToken) throws JsonProcessingException {
-        log.info("토큰을 가지고 회원 탈퇴를 시작합니다. 토큰 정보[{}] ",accessToken);
         HttpHeaders headers = new HttpHeaders();
 
         headers.set("Authorization", "Bearer " + accessToken);
@@ -77,14 +72,11 @@ public class KakaoService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         try {
-            log.info("카카오에 탈퇴 요청을 보냅니다");
             ResponseEntity<String> response = restTemplate.postForEntity(MEMBER_LEAVE_URL, request, String.class);///v2/user/me
-            log.info("카카오에서 탈퇴 요청을 성공적으로 받아왔습니다[{}]",response.getBody());
 
             return objectMapper.readValue(response.getBody(), KakaoMemberInfo.class);//받오온 요청을 읽어서
 
         } catch (Exception e) {
-            log.error("파싱중에 에러가 발생했습니다. {}",e.getCause());
             throw e;
         }
     }

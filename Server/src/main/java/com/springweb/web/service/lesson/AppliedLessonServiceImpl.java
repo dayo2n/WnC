@@ -40,11 +40,10 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
     private final TakingLessonRepository takingLessonRepository;
     private final AppliedLessonRepository appliedLessonRepository;
 
-    @Trace
+    //@Trace
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
         if(username == null){
-            log.error("SecurityContextHolder에 있는 username을 가져오던 중 오류 발생");
             throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
         }
         return username;
@@ -60,7 +59,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
      *
      * 해당 과외의 선생님이 블랙리스트 인 경우 -> 신청 불가능
      */
-    @Trace
+    //@Trace
     @Override
     public void apply(Long lessonId) throws BaseException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
@@ -312,7 +311,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
      *
      *  중요!!! 알람의 타입이 SEND_APPLY 이어야 하며, 이때 read를 여기서 처리한다!
      */
-    @Trace
+    //@Trace
     @Override
     public void refuse(Long lessonId,Long alarmId) throws BaseException{
         Alarm alarm = alarmRepository.findWithAllById(alarmId).orElse(null);//페치조인 사용
@@ -351,7 +350,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
      * 모집 완료할 강의가 내가 올린 강의여야 함
      */
     //== 모집완료 ==//
-    @Trace
+    //@Trace
     @Override
     public void applyCompleted(Long lessonId) throws BaseException{
 

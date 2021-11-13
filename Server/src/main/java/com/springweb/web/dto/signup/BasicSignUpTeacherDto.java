@@ -36,7 +36,6 @@ public class BasicSignUpTeacherDto {
                 .isKakaoMember(isKakaoMember)
                 .role(role)
                 .activated(activated)
-                //TODO .profileImgPath(profileImgPath)
                 .career(career)
                 .build();
     }

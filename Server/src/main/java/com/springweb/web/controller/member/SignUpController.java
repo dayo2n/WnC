@@ -27,7 +27,7 @@ public class SignUpController {
 
 
     //== 일반 회원가입 [학생]==//
-    @Trace
+    //@Trace
     @PostMapping("/join/student")
     public ResponseEntity join(@ModelAttribute BasicSignUpStudentDto basicSignUpStudentDto) throws BaseException, IOException {
         //TODO : 파일 용량 확인해야함
@@ -36,7 +36,7 @@ public class SignUpController {
     }
 
     //== 일반 회원가입 [선생]==//
-    @Trace
+    //@Trace
     @PostMapping("/join/teacher")
     public ResponseEntity join(@ModelAttribute BasicSignUpTeacherDto basicSignUpTeacherDto) throws BaseException, IOException {
         memberService.save(basicSignUpTeacherDto.toEntity(), basicSignUpTeacherDto.getProfileImg());//Member 객체를 만들어서 회원가입

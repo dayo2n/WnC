@@ -50,10 +50,9 @@ public class MemberService {
     private final AppliedLessonRepository appliedLessonRepository;
     private final AlarmService alarmService;
     private final TakingLessonRepository takingLessonRepository;
-    private final EvaluationRepository evaluationRepository;
 
 
-    @Trace
+    //@Trace
     public void save(Member member, MultipartFile profileImg) throws MemberException, UploadFileException, IOException {
 
         //== 중복 아이디 체크 로직 ==//
@@ -70,20 +69,17 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    @Trace
+    //@Trace
     private void checkDuplicateMember(String username) throws MemberException {
-        log.info("아이디 중복 검사 시작");
         if (memberRepository.findByUsername(username).orElse(null) != null) {
-            log.error("아이디가 중복되었습니다.");
             throw new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME);
         }
     }
 
 
-    @Trace
+    //@Trace
     @Transactional(readOnly = true)
     public Object getMyInfo() throws MemberException {//TODO Object로 해도 될까..?
-        log.info("내 정보 가져오기 시작");
         Member member = memberRepository.findByUsername(getMyUsername()).orElse(null);
 
         if(member instanceof Student student){
@@ -102,11 +98,10 @@ public class MemberService {
 
 
 
-    //TODO 이거 되는지 확인해야 함, 메소드에 student를 넘겼는데 영속성 컨텍스트에서 계속 관리되려나.,.?
-    //TODO 카카오톡 회원가입인 경우 비번 변경 불가능!
-    @Trace
+
+    //@Trace
     public void update(UpdateStudentDto updateStudentDto) throws BaseException, IOException  {
-        log.info("내 정보 수정 시작 => 학생");
+
         Student student = (Student)memberRepository.findByUsername(getMyUsername()).orElse(null);
 
         changeName(updateStudentDto, student);
@@ -122,9 +117,9 @@ public class MemberService {
     }
 
 
-    @Trace
+    //@Trace
     public void update(UpdateTeacherDto updateTeacherDto) throws BaseException, IOException {
-        log.info("내 정보 수정 시작 => 선생님");
+
         Teacher teacher = (Teacher)memberRepository.findByUsername(getMyUsername()).orElse(null);
 
         changeName(updateTeacherDto, teacher);
@@ -154,9 +149,8 @@ public class MemberService {
      * 어차피 강의정보를 눌렀을때 회원정보는 안나오므로, 그냥 다 지워버리면 된다!
      *
      */
-    @Trace
+    //@Trace
     public void delete(String password) throws BaseException {
-        log.info("회원 탈퇴 시작");
         Member findMember = memberRepository.findByUsername(getMyUsername()).orElse(null);
         checkPasswordEq(password, findMember);
 
@@ -206,12 +200,10 @@ public class MemberService {
 
         fileService.deleteFile(findMember.getProfileImgPath());//원래 저장한 프사 삭제
         memberRepository.delete(findMember);
-        log.info("회원 탈퇴 성공");
     }
 
-    @Trace
+    //@Trace
     public void kakaoDelete(Long kakaoId) throws BaseException {
-        log.info("카카오 회원 탈퇴 시작");
         Member findMember = memberRepository.findByKakaoId(kakaoId).orElse(null);
         //== 여기부터 일반회원과 동일==//
 
@@ -262,13 +254,12 @@ public class MemberService {
 
         fileService.deleteFile(findMember.getProfileImgPath());//원래 저장한 프사 삭제
         memberRepository.delete(findMember);
-        log.info("회원 탈퇴 성공");
     }
 
 
 
 
-    @Trace
+    //@Trace
     @Transactional(readOnly = true)
     public SearchTeacherDto searchTeacher(TeacherSearchCond cond, Pageable pageable) throws BaseException{
 
@@ -312,11 +303,10 @@ public class MemberService {
 
 
 
-    @Trace
+    //@Trace
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
         if(username == null){
-            log.error("SecurityContextHolder에 있는 username을 가져오던 중 오류 발생");
             throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
         }
         return username;
@@ -325,7 +315,7 @@ public class MemberService {
 
 
 
-    @Trace
+    //@Trace
     private void changeProfileImg(UpdateStudentDto updateStudentDto, Member member) throws IOException, UploadFileException {
         if(!updateStudentDto.getProfileImg().isEmpty()){//비어있지 않은 경우
             fileService.deleteFile(member.getProfileImgPath());//원래 저장한 프사 삭제
@@ -334,31 +324,32 @@ public class MemberService {
         }else{//비어있을 때, 프로필 사진을 바꾸려 한다 => 기존에 사진 지우고 기본 이미지로 변경
 
             if(updateStudentDto.isDoProfileImgChange()){//기본 이미지로 변경
+                System.out.println("!!!"+member.getProfileImgPath());
                 fileService.deleteFile(member.getProfileImgPath());//원래 저장한 프사 삭제
             }
 
         }
     }//상속받아 구현
-    @Trace
+    //@Trace
     private void changeAge(UpdateStudentDto updateStudentDto,  Member member) {
         if(updateStudentDto.getAge() != 0){
             member.changeAge(updateStudentDto.getAge());
         }
     }
-    @Trace
+    //@Trace
     private void changePassword(UpdateStudentDto updateStudentDto,  Member member) {
         if(StringUtils.hasLength(updateStudentDto.getNewPassword())){
             member.changePassword(updateStudentDto.getNewPassword(), passwordEncoder);
         }
     }
-    @Trace
+    //@Trace
     private void changeName(UpdateStudentDto updateStudentDto,  Member member) {
         if(StringUtils.hasLength(updateStudentDto.getName())){
             member.changeName(updateStudentDto.getName());
         }
     }
 
-    @Trace
+    //@Trace
     private void changeCareer(UpdateTeacherDto updateTeacherDto, Teacher teacher) {
         if(StringUtils.hasLength(updateTeacherDto.getCareer())){
             teacher.changeCareer(updateTeacherDto.getCareer());

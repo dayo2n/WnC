@@ -34,7 +34,6 @@ public class ReportServiceImpl implements ReportService{
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
         if(username == null){
-            log.error("SecurityContextHolder에 있는 username을 가져오던 중 오류 발생");
             throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
         }
         return username;
@@ -65,7 +64,7 @@ public class ReportServiceImpl implements ReportService{
 
     //== 어드민만 가능 ==//
     @Override
-    @Trace
+    //@Trace
     public List<ReportDto> getList() {//페이징 귀차나...
         System.out.println(reportRepository.findAllWithWriterAndTargetAndSolverOrderByCreatedDate().size());
         return reportRepository.findAllWithWriterAndTargetAndSolverOrderByCreatedDate()

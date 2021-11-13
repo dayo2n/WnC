@@ -28,7 +28,7 @@ public class JwtFilter extends GenericFilterBean {
     /**
      * JWT 토큰의 인증정보를 Security Context에 저장
      */
-    @Trace
+    //@Trace
     @SneakyThrows
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

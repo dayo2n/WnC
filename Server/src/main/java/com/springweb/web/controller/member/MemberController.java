@@ -37,7 +37,7 @@ public class MemberController {
     /**
      * 내정보보기
      */
-    @Trace
+    //@Trace
     @GetMapping("/myInfo")
     public ResponseEntity getMyInfo() throws MemberException {
         Object myInfo = memberService.getMyInfo();
@@ -54,7 +54,7 @@ public class MemberController {
     /**
      * 내정보 수정
      */
-    @Trace
+    //@Trace
     @PutMapping("/members/student")
     public ResponseEntity update(@ModelAttribute UpdateStudentDto updateStudentDto) throws IOException, BaseException {
         memberService.update(updateStudentDto);
@@ -62,7 +62,7 @@ public class MemberController {
         return new ResponseEntity("회원 정보를 수정하였습니다.", HttpStatus.CREATED);
     }
 
-    @Trace
+    //@Trace
     @PutMapping("/members/teacher")
     public ResponseEntity update(@ModelAttribute UpdateTeacherDto updateTeacherDto) throws IOException, BaseException {
         memberService.update(updateTeacherDto);
@@ -100,7 +100,6 @@ public class MemberController {
     public ResponseEntity searchTeacher(TeacherSearchCond cond,
                                         @PageableDefault(page = 0, size = 12)
                                                 Pageable pageable) throws BaseException {
-        log.info("선생님 목록을 조회합니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         SearchTeacherDto searchTeacherDto = memberService.searchTeacher(cond, pageable);
         return new ResponseEntity(searchTeacherDto, HttpStatus.OK);
     }

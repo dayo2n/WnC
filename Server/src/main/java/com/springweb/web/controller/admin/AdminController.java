@@ -49,7 +49,7 @@ public class AdminController {
     /**
      * 신고목록 보기
      */
-    @Trace
+    //@Trace
     @GetMapping("/reports")
     public ResponseEntity getReportList() throws ReportException, MemberException {
         List<ReportDto> list = reportService.getList();
@@ -60,7 +60,7 @@ public class AdminController {
     /**
      * 신고내용 보기
      */
-    @Trace
+    //@Trace
     @GetMapping("/reports/{reportId}")
     public ResponseEntity getReport(@PathVariable("reportId")Long reportId) throws ReportException, MemberException {
         ReportDto reportDto = reportService.readReport(reportId);
@@ -72,7 +72,7 @@ public class AdminController {
     /**
      * 신고 무시하기 -> 읽었으나 아무 처리 X
      */
-    @Trace
+    //@Trace
     @PostMapping("/reports/{reportId}/ignore")
     public ResponseEntity ignore(@PathVariable("reportId")Long reportId) throws ReportException, MemberException {
         reportService.ignore(reportId);
@@ -83,7 +83,7 @@ public class AdminController {
     /**
      * 경고 주기
      */
-    @Trace
+    //@Trace
     @PostMapping("/reports/{reportId}/warn")
     public ResponseEntity addWarning(@PathVariable("reportId")Long reportId ) throws ReportException, MemberException {
         reportService.addWarning(reportId);
@@ -94,7 +94,7 @@ public class AdminController {
     /**
      * 블랙리스트 만들기
      */
-    @Trace
+    //@Trace
     @PostMapping("/reports/{reportId}/black")
     public ResponseEntity makeBlack(@PathVariable("reportId")Long reportId ) throws ReportException, MemberException {
         reportService.makeBlack(reportId);
@@ -105,7 +105,7 @@ public class AdminController {
     /**
      * 블랙리스트에서 원상복구히키기
      */
-    @Trace
+    //@Trace
     @PostMapping("/reports/white/{teacherId}")
     public ResponseEntity makeWhite(@PathVariable("teacherId")Long teacherId) throws ReportException, MemberException {
         reportService.makeWhite(teacherId);
@@ -117,7 +117,7 @@ public class AdminController {
     /**
      * 블랙리스트 목록 조회
      */
-    @Trace
+    //@Trace
     @GetMapping("/reports/blacklist")
     public ResponseEntity showBlackList() throws ReportException, MemberException {
         List<BlackTeacher> blackTeachers = reportService.showBlackList();
@@ -128,7 +128,7 @@ public class AdminController {
 
 
 
-    @Trace
+    //@Trace
     @PostMapping("/admin/signUp")
     @PreAuthorize("permitAll()")//이거되나?
     public ResponseEntity signUp(@ModelAttribute SignUpAdminDto signUpAdminDto) throws UploadFileException, IOException, MemberException {
@@ -137,7 +137,7 @@ public class AdminController {
     }
 
 
-    @Trace
+    //@Trace
     @PostMapping("/admin/login")
     @PreAuthorize("permitAll()")//이거되나?
     public ResponseEntity logIn(@ModelAttribute LoginAdminDto loginAdminDto) throws UploadFileException, IOException, MemberException {
