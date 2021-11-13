@@ -39,10 +39,16 @@ $(document).ready(function () {
           var teacherName = singleData.teacherName;
           var title = singleData.title;
           var views = singleData.views;
-          $('#table>tbody').prepend('<tr><td>'+ index +'</td><td id="titleCell">' + title + '</td><td>'+'여기 수정'+'</td><td>'+teacherName+'</td><td>'+createdDate.slice(0,10)+'</td><td>'+views+'</td></tr>');
+
+          var icon = '';
+          if(completed){ // 모집 완료
+            icon = '<i class="far fa-calendar-times" style="font-size: 25px; color: lightgray"></i>';
+          }else{ // 모집 중
+            icon = '<i class="far fa-calendar-check" style="font-size: 25px; color: green"></i>';
+          }
+          $('#table>tbody').prepend('<tr><td>'+ index +'</td><td id="titleCell">' + icon  +' '+ title + '</td><td>'+'여기 수정'+'</td><td>'+teacherName+'</td><td>'+createdDate.slice(0,10)+'</td><td>'+views+'</td></tr>');
           }
 
-          console.log("length : " + $('#table >tbody tr').length);
           // 테이블 셀 클릭시 해당 게시글을 조회하는 뷰로 이동하는 부분
           $("#table tr").click(function (e) {
             var editorType = "none";

@@ -5,6 +5,12 @@ var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSU
 
 $(document).ready(function () {
 
+    $('#dialog').dialog({
+        autoOpen:false,
+        resizable:false,
+        width: '330px',
+    });
+
     // viewPost /  editPost 모드 구분
     var data = location.href.split("?")[1];
     var types = data.split("&");
@@ -31,12 +37,14 @@ $(document).ready(function () {
                 $('#lessonType').attr('disabled', 'true'); // true
                 $('#title').val(data.title);
                 if(data.lessonType === "PERSONAL"){
+                    $('tbody tr').eq(1).after('<tr><td>모집 상태 변경</td><td><input type="button" id="btn-changeComplete" value="모집완료"></td></tr>');
                 }else{
                     $('#lessonType').val("GROUP").prop('selected', true); // true
                     $('tbody tr').eq(1).after('<tr><td>모집인원</td><td><input type="text" placeholder="최대인원을 입력하세요." class="writeComponent" id="maxStudentCount" maxlength=20 style="width:100%"></td></tr>');
                     // 최대인원 수는 숫자로만 입력 가능
-                    $('tbody tr').eq(2).after('<tr><td>과외기간</td><td><input type=" text" class="writeComponent" id="startDate" placeholder="시작일자 yyyy-mm-dd"> ~<input type="text" class="writeComponent" id="endDate" placeholder="종료일자 yyyy-mm-dd"></td></tr>');
-                    $('#maxStudentCount').val(data.maxStudentCount);
+                    $('tbody tr').eq(2).after('<tr><td>과외기간</td><td><input type="text" class="writeComponent" id="startDate" placeholder="시작일자 yyyy-mm-dd"> ~<input type="text" class="writeComponent" id="endDate" placeholder="종료일자 yyyy-mm-dd"></td></tr>');
+                    $('tbody tr').eq(3).after('<tr><td>모집 상태 변경</td><td><input type="button" id="btn-changeComplete" value="모집완료"></td></tr>');
+                    ;$('#maxStudentCount').val(data.maxStudentCount);
                     $('#startDate').val(data.startPeriod.slice(0,10));
                     $('#endDate').val(data.endPeriod.slice(0,10));
                 }
@@ -65,6 +73,15 @@ $(document).ready(function () {
                     $("#startDate").datepicker( "option", "maxDate", selectedDate ); 
                     } 
                 });
+
+                $('#btn-changeComplete').click(function(){
+                    if(confirm("완료상태로 확정하면 다시는 변경할 수 없습니다. 진행하시겠습니까?")){
+                        fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/complete",{
+                        method: "POST",
+                        headers : {"Authorization" : `Bearer ${token}` }
+                        })
+                    }
+                });
             });
     }
 
@@ -81,13 +98,27 @@ $(document).ready(function () {
             })
             .then(data => {
                 console.log(data);
-                console.log(data.lessonType);
-                $('#postViewTable tr:eq(0) th:eq(0)').text(data.title);
+                console.log(data.isCompleted);
+
+                var icon = '';
+                if(data.isCompleted){ // true면 모집완료
+                    $('#btn-editPost').attr('disabled', true); // 모집 완료된 강의는 내용 수정 불가능
+                    $('#btn-register').attr('disabled', true); // 모집 완료된 강의는 신청불가능
+
+                    icon = '<i class="far fa-calendar-times" style="font-size: 25px; color: lightgray"> 모집 완료 </i>';
+                }else{ // 모집 중
+                    icon = '<i class="far fa-calendar-check" style="font-size: 25px; color: green"> 모집 중 </i>';
+                }
+                console.log(icon);
+                // $('#postViewTable tr:eq(0) th:eq(0)').innerHTML(icon);
+                $('#postViewTable>tbody').prepend('<tr><th colspan="1">'+icon+'</th><th colspan="3"></th></tr>');
+                $('#postViewTable tr:eq(0) th:eq(1)').text(data.title);
                 $("#postViewTable tr:eq(1) td:eq(1)").text(data.lessonType);
                 $('#postViewTable tr:eq(1) td:eq(3)').text(data.views);
+                $('#postViewTable tr:eq(2) td:eq(3)').text(data.teacher.name+' ( '+data.teacher.teacherId+' )');
                 if(data.lessonType === "PERSONAL"){
                     $('#postViewTable tr:eq(2) td:eq(1)').text(1);
-                    $('#postViewTable tr:eq(3) td:eq(1)').text("개인과외는 개인 조정");
+                    $('#postViewTable tr:eq(3) td:eq(1)').text("개인과외는 개인적으로 시간 조정");
                 }else{
                     $('#postViewTable tr:eq(2) td:eq(1)').text(data.maxStudentCount);
                     $('#postViewTable tr:eq(3) td:eq(1)').text(data.startPeriod.slice(0, 10) + " ~ " + data.endPeriod.slice(0,10));
@@ -98,7 +129,12 @@ $(document).ready(function () {
                 $("#btn-editPost").click(function(){
                     var editorType = "editEditor";
                     var postType = "editPost";
-                    $(location).attr('href', "postEditor.html?editorType=" +  editorType + "&postType=" + postType + '&postID=' + postIdx);
+                    var presentLoginUserId = JSON.parse(localStorage.getItem("id")); //  현재 로그인되어있는 유저의 아이디(pk)
+                    if(presentLoginUserId === data.teacher.teacherId){
+                        $(location).attr('href', "postEditor.html?editorType=" +  editorType + "&postType=" + postType + '&postID=' + postIdx);
+                    }else{
+                        alert("권한이 없습니다.");
+                    }
                 });
 
                 // 가입 신청 시
@@ -107,6 +143,34 @@ $(document).ready(function () {
                         method: "POST",
                         headers : {"Authorization" : `Bearer ${token}` }
                     })
+                });
+
+                // 글 삭제 요청시
+                $("#btn-deletePost").click(function(){
+                    var presentLoginUserId = JSON.parse(localStorage.getItem("id")); //  현재 로그인되어있는 유저의 아이디(pk)
+
+                    $('#dialog').dialog('open');
+                    $('#btn-passwordConfirm').click(function(){
+                        if(presentLoginUserId === data.teacher.teacherId){
+                            fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
+                                method: "DELETE",
+                                headers : {"Authorization" : `Bearer ${token}` },
+                                body: JSON.stringify({"password":  $('#password').val()})
+                            }).then(response => {
+                                return response.json();
+                              })
+                              .then(data => {
+                                  console.log(data);
+                                // 비밀번호 맞으면 
+                                // $(location).attr('href', "home.html"); home으로 돌아가야돼
+
+                                // 틀리면 
+                                // alert("비밀번호가 틀렸습니다.");
+                              })
+                        }else{
+                            alert("권한이 없습니다");
+                        }
+                    });
                 });
             });
     }
@@ -282,22 +346,4 @@ $(document).ready(function () {
         }
     });
 
-    $('#btn-register').click(function(){
-        // 이미 신청한 강의인지 확인하는 과정 필요
-        $.ajax({
-            type:"POST",
-            url:"",
-            data:{
-                // 현재 로그인 중인 회원 정보
-            }, dataType:"json",
-            success:function(json){
-                if(json){
-                    alert("신청 성공");
-                }else{
-                    alert("오류");
-                }
-                return;
-            }
-        });
-    });
 });
