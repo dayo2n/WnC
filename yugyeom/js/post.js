@@ -1,9 +1,9 @@
 
-var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSUMiLCJleHAiOjE2MzY4MTYyMjd9.12vfH1Ciy09hF2cNgJJEyZnh_V-EoDtnVDWn3B5r8UBBsZtw0sGqUckD0uRR8CuupTTLzYTVgk4WGL6AWDgCsQ';
 // edior 타입은 두 개. 글 수정용 에디터 : "editEditor", 새 글 작성용 데이터 : "newEditor"
 // ---------- for postEditor.html ----------
 
 $(document).ready(function () {
+
 
     $('#dialog').dialog({
         autoOpen:false,
@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
             method: "GET",
-            headers : {"Authorization" : `Bearer ${token}` }
+            headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
             })
             .then(response => {
               return response.json();
@@ -78,7 +78,7 @@ $(document).ready(function () {
                     if(confirm("완료상태로 확정하면 다시는 변경할 수 없습니다. 진행하시겠습니까?")){
                         fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/complete",{
                         method: "POST",
-                        headers : {"Authorization" : `Bearer ${token}` }
+                        headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
                         })
                     }
                 });
@@ -91,17 +91,17 @@ $(document).ready(function () {
         var postIdx = types[2].split("=")[1];
         fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
             method: "GET",
-            headers : {"Authorization" : `Bearer ${token}` }
+            headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
             })
             .then(response => {
               return response.json();
             })
             .then(data => {
                 console.log(data);
-                console.log(data.isCompleted);
+                console.log(data.completed);
 
                 var icon = '';
-                if(data.isCompleted){ // true면 모집완료
+                if(data.completed){ // true면 모집완료
                     $('#btn-editPost').attr('disabled', true); // 모집 완료된 강의는 내용 수정 불가능
                     $('#btn-register').attr('disabled', true); // 모집 완료된 강의는 신청불가능
 
@@ -141,7 +141,7 @@ $(document).ready(function () {
                 $("#btn-register").click(function(){
                     fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/apply",{
                         method: "POST",
-                        headers : {"Authorization" : `Bearer ${token}` }
+                        headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
                     })
                 });
 
@@ -152,20 +152,21 @@ $(document).ready(function () {
                     $('#dialog').dialog('open');
                     $('#btn-passwordConfirm').click(function(){
                         if(presentLoginUserId === data.teacher.teacherId){
-                            fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
-                                method: "DELETE",
-                                headers : {"Authorization" : `Bearer ${token}` },
-                                body: JSON.stringify({"password":  $('#password').val()})
-                            }).then(response => {
-                                return response.json();
-                              })
-                              .then(data => {
-                                  console.log(data);
-                                // 비밀번호 맞으면 
-                                // $(location).attr('href', "home.html"); home으로 돌아가야돼
 
-                                // 틀리면 
-                                // alert("비밀번호가 틀렸습니다.");
+                            console.log()
+                            var formData = new FormData();
+                            formData.append('password', $('#password').val());
+
+                            var url ="http://219.255.114.140:8090/lesson/"+postIdx
+
+                            fetch(url,{
+                                method: "DELETE",
+                                headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+                                body: formData,
+                                redirect: 'follow'
+                            }).then(response => {
+                                response.redirect(url);
+                                // $(location).attr('href', "home.html");
                               })
                         }else{
                             alert("권한이 없습니다");
@@ -250,6 +251,7 @@ $(document).ready(function () {
             
                 if(editorType === "newEditor"){  // 새 글작성 모드 
                     // 새 데이터 추가 코드 구현 
+                    console.log("hihi");
                     if(lessonType === "PERSONAL"){
 
                         formData.append('lessonType', lessonType)
@@ -260,7 +262,7 @@ $(document).ready(function () {
                             method: "POST",
                             headers :{
                                 // 'Content-Type': 'multipart/form-data',
-                                'Authorization' : `Bearer ${token}`,
+                                'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
                         })
@@ -290,7 +292,7 @@ $(document).ready(function () {
                             method: "POST",
                             headers :{
                                 // 'Content-Type': 'multipart/form-data',
-                                'Authorization' : `Bearer ${token}`,
+                                'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
                         });
@@ -309,7 +311,7 @@ $(document).ready(function () {
                             method: "PUT",
                             headers :{
                                 // 'Content-Type': 'multipart/form-data',
-                                'Authorization' : `Bearer ${token}`,
+                                'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
                         })
@@ -331,7 +333,7 @@ $(document).ready(function () {
                             method: "PUT",
                             headers :{
                                 // 'Content-Type': 'multipart/form-data',
-                                'Authorization' : `Bearer ${token}`,
+                                'Authorization' : `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
                             body: formData,
                         })
