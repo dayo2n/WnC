@@ -17,7 +17,8 @@ function postJoin(event){
     formData.append("age", join_age.value);
     formData.append("profileImg",join_img.files[0]);
     if(join_img.files[0] === undefined){formData.append("profileImg", null);}
-    fetch("http://219.255.114.140:8090/join/student", { //FormData로 보낼때 헤더설정 X
+
+       fetch("http://219.255.114.140:8090/join/student", { //FormData로 보낼때 헤더설정 X
         method: "POST",
         body: formData
       })

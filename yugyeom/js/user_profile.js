@@ -48,12 +48,20 @@ function init() {
           getUserProfile(),
           (count = 1),
           data.takingLessonList.forEach((element) => {
-            appendSubjectTable(element); //듣고있는 강의리스트 학생
+            appendAppliedSubjectTable(element); //듣고있는 강의리스트 학생
           }),
           console.log(data.takingLessonList),
           (count = 1),
           data.takingLessonList.forEach((element) => {
             appendEvaluateTable(element); //평가테이블 학생
+          }),
+          (count = 1),
+          data.appliedLessonList.forEach((element)=> {
+            appendApplySubjectTable(element);//내가 신청한 강의 목록(아직 승인X)
+          }),
+          (count = 1),
+          data.evaluationList.forEach((element)=> {
+            appendMyEvaluateTable(element); //내가 한 평가들 목록
           })
         )
       );
@@ -106,7 +114,7 @@ function getUserProfile() {
 
 const applied_subject_tbody = document.querySelector(".applied_subject_tbody");
 
-function appendSubjectTable(data) {
+function appendAppliedSubjectTable(data) { //내가듣는 강의목록
   const tr = document.createElement("tr");
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
@@ -122,7 +130,33 @@ function appendSubjectTable(data) {
   applied_subject_tbody.appendChild(tr);
   tr.addEventListener("click", teacherIdSubmit);
 }
+
+const apply_subject_tbody = document.querySelector(".apply_subject_tbody");
+
+function appendApplySubjectTable(data){//신청한 강의목록(아직승인X)
+  const tr = document.createElement("tr");
+  const td1 = document.createElement("td");
+  const td2 = document.createElement("td");
+  const td3 = document.createElement("td");
+  const td4 = document.createElement("td");
+
+  td1.innerText = count++; //
+  td2.innerText = data.teacherName; //
+  td3.innerText = data.title; //DB
+  td4.innerText = data.createdDate;
+
+  tr.setAttribute("id", data.teacherId);
+  tr.appendChild(td1);
+  tr.appendChild(td2);
+  tr.appendChild(td3);
+  tr.appendChild(td4);
+  apply_subject_tbody.appendChild(tr);
+
+  tr.addEventListener("click", teacherIdSubmit);
+}
+
 function teacherIdSubmit() {
+  const id = document.querySelector(".applied_subject_tbody").querySelector("tr").id;
   getTeacherProfile(tr.id);
   location.href = "http://127.0.0.1:5500/yugyeom/teacher_profile_view.html";
 }
@@ -195,6 +229,30 @@ function appendEvaluateTable(data) {
   form.addEventListener("submit", postTeacherEvaluate);
 }
 
+const evaluated_subject_tbody = document.querySelector(".evaluated_subject_tbody");
+
+function appendMyEvaluateTable(data){//내가 한 평가들 목록
+  const tr = document.createElement("tr");
+  const td1 = document.createElement("td");
+  const td2 = document.createElement("td");
+  const td3 = document.createElement("td");
+  const td4 = document.createElement("td");
+
+  td1.innerText = count++; //
+  td2.innerText = data.teacherName; //
+  td3.innerText = data.title; //DB
+  td4.innerText = data.createdDate;
+
+  tr.setAttribute("id", data.teacherId);
+  tr.appendChild(td1);
+  tr.appendChild(td2);
+  tr.appendChild(td3);
+  tr.appendChild(td4);
+
+  evaluated_subject_tbody.appendChild(tr);
+}
+
+
 function postTeacherEvaluate(event) {
   event.preventDefault();
   const form = event.taget;
@@ -205,6 +263,7 @@ function postTeacherEvaluate(event) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
     body: JSON.stringify({
       content: input.value,
@@ -216,6 +275,11 @@ function postTeacherEvaluate(event) {
     .then((data) => console.log(data));
 }
 
+
+
+
+
+//여기부터 선생
 const lesson_list_tbody = document.querySelector(".lesson_list_tbody");
 
 function appendLessonTable(data) {

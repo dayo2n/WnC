@@ -1,252 +1,3 @@
-## <span style="color:orange">DATABASE</span>
-
-##### 공통 
-
-```
-CREATED_DATE  		=> 생성일
-LAST_MODIFIED_DATE  => 마지막 수정일
-```
-
-<br/>
-
-- ##### ALARM(알림) 
-
-  ```
-  ALARM_ID  	 		=> PK, 식별값
-  
-  ALARM_TYPE  		=> 알람의 타입(SEND_APPLY, APPROVED, REFUSE,COMPLETION)
-  IS_READ  			=> 알람을 확인했는지 여부
-  
-  APPLICATNT_MEMBER_ID 
-  => FK, XX학생이 강의를 요청했습니다에서, XX를 맡는 역할(nullabe)
-  
-  LESSON_ID  	=> FK	=> 관련된 강의(null 불가능)
-  
-  MEMBER_ID  => FK  => 누구에게 전달되는 알림인지 (null 불가능)
-  
-  ```
-
-  <br/>
-
-- ##### APPLIED_LESSON(신청한 과외(<span style="color:orange">가입이 수락되지 않은 상태</span>))
-
-```
-APPLIED_LESSON_ID  	=> PK 식별값
-
-TEACHER_ID  	  => 신청한 과외를 담당하는 선생님의 id
-TEACHER_NAME  	  => 신청한 과외를 담당하는 선생님의 이름
-TITLE  	          => 신청한 과외의 제목
-LESSON_ID  		 => FK, 신청한 과외의 id
-STUDENT_ID  	=> FK, 신청한 학생의 id
-```
-
-<br/>
-
-- ##### EVALUATION(평가)
-
-```
-EVALUATION_ID  	=> PK, 식별값
-
-CONTENT  	    => 선생님 평가의 내용(String)
-STAR_POINT  	=> 별점(0~5점, double)
-STUDENT_ID  	=> FK , 해당 평가를 작성한 학생
-TEACHER_ID  	=> FK , 해당 평가의 대상 선생님
-```
-
-<br/>
-
-- ##### LESSON(과외(정확히는 과외 정보를 담은게시물))
-
-```
-DTYPE  		=> 개인과외인 경우 PERSONAL, 그룹과외인 경우 GROUP
-
-LESSON_ID  	=> PK, 식별값
-
-CONTENT  	      => 과외의 내용
-IS_COMPLETED  	  => 모집완료된 과외인지 여부(true이면 모집완료)
-MAX_STUDENT_COUNT => 모집학생 수, (개인과외일 경우 1, 그룹과외일 경우 2이상)
-TITLE  	          => 과외의 제목(게시물 쫘르륵 나열할 때 게시물만 보임)
-VIEWS  			  => 조회수
-NOW_STUDENT_COUNT => 현재 모집한 학생 수(신청한 학생 수 아니라, 수락을 눌러 가입확인을 한 학생 수, 개인과외일 경우 항상 0)
-START_PERIOD		=> (그룹과외일 경우) 과외 시작일
-END_PERIOD  	     => (그룹과외일 경우) 과외 종료일(형식(2021-11-11))
-TEACHER_ID        => FK, 과외를 담당하는 선생님의 id
-
-
-```
-
-<br/>
-
-- ##### MEMBER(회원)
-
-```
-DTYPE  	 => 학생이면 S, 선생님이면 T
-
-MEMBER_ID  	=> PK, 식별값
-
-ACTIVATED  	=> 계정 활성화 여부(시큐리티때메 어쩔 수 없이 만들어둠)
-AGE  	   => 나이
-IS_KAKAO_MEMBER  	=> 카카오톡으로 가입한 멤버인지
-KAKAO_ID  			=> kakaoId, 카카오톡으로 로그인 시 사용
-NAME  	            => 이름
-PASSWORD  	        => 비밀번호(카카오톡 로그인 시, UUID로 랜덤하게 생성하여 인코딩)
-PROFILE_IMG_PATH  	=> 프로필 사진을 업호드 한 주소
-ROLE  	 			=> 역할(BAISC, ADMIN)
-USERNAME  	        => 아이디
-CAREER  	        => 선생님일 경우에만 사용, 경력
-STAR_POINT         => 선생님일 경우에만 사용 ,별점
-
-```
-
-<br/>
-
-- ##### TAKING_LESSON(가입된 과외, 아직 모집완료가 되지 않았을 수도 있다.)
-
-```
-TAKING_LESSON_ID  	 => PK, 식별값
-	
-TEACHER_NAME  	      => 선생님 이름
-TEACHER_ID            => 선생님 id
-TITLE  				  => 제목
-LESSON_ID  			  => FK, 과외의 id
-STUDENT_ID  		  => FK, 학생의 id
-
-```
-
-<br/>
-
-- ##### UPLOAD_FILE(업로드한 파일, 첨부파일)(프사에 올린건 X)
-
-```
-UPLOAD_FILE_ID  	 => PK, 식별값
-	
-FILE_PATH  	          => 사진이 저장된 주소, 
-ex) www.naver.com/imgage/ddhiu128ddqw.png
-
-LESSON_ID   => FK, 파일이 저장된 게시물의 id
-```
-
-
-
-<br/>
-
-<br/>
-
-# <span style="color:orange">기능 설명</span>
-
-### 회원 관련
-
-##### 회원가입/로그인
-
-- 일반 회원가입과 카카오톡 API를 사용하여 회원가입 & 로그인 할 수 있다.
-- 회원 가입 시 학생으로 가입할지, 선생님으로 가입할지 선택할 수 있다.
-
-<br/>
-
-##### 회원 정보 수정
-
-- 회원 정보를 수정할 수 있으며, 이름, 나이, 프로필 이미지와, 비밀번호를 변경할 수 있다.(추가로 선생님은 경력도 변경이 가능하다)
-
-<br/>
-
-##### 회원 탈퇴하기
-
-- 비밀번호를 재입력하여, 본인확인을 한 후 탈퇴가 가능하다, 
-
-- ##### <span style="color:red">카카오톡으로 회원가입한 경우, 탈퇴 시 자동으로 연동된 서비스에서도 삭제시키고 싶은데 아직 구현하지 못했다</span>
-
-<br/>
-
-##### 내정보 보기
-
-- 학생의 경우 나의 id(식별값), 이름, 나이, 프로필 사진, 내가 듣는 강의의 목록, 내가 신청한 강의의 목록,  내가 작성한 평가를 확인할 수 있다.
-- 선생님의 경우 id, 이름. 나이, 프사, 경력, 별점과, 내가 올린 강의(강의구인게시물), 나에게 작성된 평가를 확인할 수 있다.
-
-<br/>
-
-##### 선생님 정보 검색
-
-- 검색조건 : 선생님 이름, 별점(해당 별점 이상인 선생님들만 검색)
-
-<br/>
-
-=============================회원 관련 기능 종료 ==========================
-
-<br/>
-
-<br/>
-
-### 과외 관련
-
-##### 게시물 등록, 수정
-
-- 선생님만 가능, 개인과외와 그룹과외로 설정해서 등록할 수 있다.
-- 그룹과외 모집 게시물을 등록할 경우 모집 인원, 과외 기간 등을 설정할 수 있습니다.
-
-- ##### <span style="color:red">과외 기간이 지금보다 과거로 설정되었을 경우 예외를 발생시켜야 한다.(아직 미구현)</span>
-
-<br/>
-
-##### 게시물 삭제
-
-- ##### 모집이 완료되었거나, 그룹과외의 경우 현재 가입한 학생이 존재한다면 삭제가 불가능합니다
-
-<br/>
-
-##### 게시물 조회
-
-- ##### 게시물을 클릭하면 게시물의 내용을 볼 수 있습니다. 동시에 조회수가 올라갑니다.
-
-<br/>
-
-##### 과외 신청&신청취소&수락&거절&모집완료
-
-- 학생은 과외를 신청할 수 있습니다.
-- 또한 신청한 과외를 취소할 수 있으나, 이미 모집완료된 상태라면 취소하지 못합니다.
-- 가입을 수락할 수 있습니다. 그러나 모집완료된 경우 수락하지 못합니다.
-- 선생님은 가입을 거절할 수 있습니다
-- 선생님은 임의로 과외를 모집완료 할 수 있습니다.(인원수가 다 채워지지 않아도 모집완료가 가능합니다)
-
-<br/>
-
-##### 게시물 검색
-
-- 제목, 선생님의 이름, 내용, 과외의 타입, 모집인원으로 검색할 수 있습니다.
-
-<br/>
-
-===================과외 관련 종료========================
-
-<br/>
-
-<br/>
-
-### 알람 기능
-
-- 과외에 가입신청을 보내거나, 가입된 과외가 모집완료된 경우, 가입이 승인되었거나 거절된 경우 알림이 갑니다.
-- 알림은 클릭해서 읽을 수 있고, 삭제할 수는 없습니다.
-
-- 알람 버튼을 클릭하면 내 알람 정보들의 나옵니다
-
-<br/>
-
-<br/>
-
-### 평가 기능
-
-- 강의 평가하기 버튼을 누르면 내가 평가할 수 있는 선생님들의 목록이 주어집니다.
-- 평가내용과 별점을 입력할 수 있습니다.
-
-<br/>
-
-================================================================
-
-<br/>
-
-<br/>
-
-<br/>
-
 # <span style="color:orange">REST API 통신</span>
 
 ### 일반 회원가입 - 학생
@@ -349,6 +100,21 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > password
 
+
+
+#### 결과 데이터
+
+> memberType = // STUDENT, TEACHER
+>
+> token = 로그인토큰
+>
+> id = 내 식별값
+>
+> myNoReadChatCount   => 내가 안 읽은 메세지 수, 0이면 다 읽은거
+> myNoReadAlarm          => 내가 안 읽은 알람 수, 0이면 다 읽은거
+
+
+
 <br/>
 
 <br/>
@@ -360,6 +126,17 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 ##### 너네가 나한테 줄 데이터
 
 > accessToken
+
+#### 결과 데이터
+
+> memberType = // STUDENT, TEACHER
+>
+> token = 로그인토큰
+>
+> id = 내 식별값
+>
+> myNoReadChatCount   => 내가 안 읽은 메세지 수, 0이면 다 읽은거
+> myNoReadAlarm          => 내가 안 읽은 알람 수, 0이면 다 읽은거
 
 <br/>
 
@@ -393,15 +170,15 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### takingLessonList(내가 듣는 강의 목록, 여러개가 나옴){
 >
-> ​		lessonId (Long 타입) : 강의의 id
->
-> ​		title  :강의의 제목
->
-> ​		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
->
-> ​		teacherId => (Long타입) 선생님의 id(id로 식별가능,  버튼 클릭 시 해당 선생님의 정보를 조								회할 수 있게끔 구현해!! )
->
-> ​		teacherName => 선생님의 이름
+> 		lessonId (Long 타입) : 강의의 id
+> 	
+> 		title  :강의의 제목
+> 	
+> 		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
+> 	
+> 		teacherId => (Long타입) 선생님의 id(id로 식별가능,  버튼 클릭 시 해당 선생님의 정보를 조								회할 수 있게끔 구현해!! )
+> 	
+> 		teacherName => 선생님의 이름
 >
 > #### }
 >
@@ -409,15 +186,15 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### appliedLessonList(내가 신청한 강의 목록(아직 승인받지 않은 강의들)){
 >
-> ​		lessonId (Long 타입) : 강의의 id
->
-> ​		title  :강의의 제목
->
-> ​		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
->
-> ​		teacherId => (Long타입) 선생님의 id
->
-> ​		teacherName => 선생님의 이름
+> 		lessonId (Long 타입) : 강의의 id
+> 	
+> 		title  :강의의 제목
+> 	
+> 		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
+> 	
+> 		teacherId => (Long타입) 선생님의 id
+> 	
+> 		teacherName => 선생님의 이름
 >
 > #### }
 >
@@ -425,11 +202,11 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### evaluationList(내가 한 평가들 목록){
 >
-> ​	evaluationId : 평가 id(식별값)
-> ​	content  : 평가내용
-> ​	starPoint : 별점
-> ​	teacherId : 평가한 선생님 id
-> ​	teacherName : 평가한 선생님 이름
+> 	evaluationId : 평가 id(식별값)
+> 	content  : 평가내용
+> 	starPoint : 별점
+> 	teacherId : 평가한 선생님 id
+> 	teacherName : 평가한 선생님 이름
 >
 > #### }
 
@@ -473,17 +250,17 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### lessonList(내가 올린 강의 목록, 여러개){
 >
-> ​		lessonId (Long 타입) : 강의의 id
->
-> ​		title  :강의의 제목
->
-> ​		createdDate (XXXX-XX-XX 형식),내가 강의를 생성한 날짜
->
-> ​		isCompleted=> 모집완료 여부
->
-> ​		views =>조회수
->
-> ​		lessonType => 과외 타입 개인과외면 PERSONAL, 그룹과외면 GROUP
+> 		lessonId (Long 타입) : 강의의 id
+> 	
+> 		title  :강의의 제목
+> 	
+> 		createdDate (XXXX-XX-XX 형식),내가 강의를 생성한 날짜
+> 	
+> 		isCompleted=> 모집완료 여부
+> 	
+> 		views =>조회수
+> 	
+> 		lessonType => 과외 타입 개인과외면 PERSONAL, 그룹과외면 GROUP
 >
 > #####  <span style="color:red">maxStudentCount</span>=>최대 인원 수, (개인과외일 경우 표시하지 말아줘!!!, 알아서 처리 부탁)
 >
@@ -495,11 +272,11 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### evaluationList(나에 대한 평가 목록){
 >
-> ​	evaluationId : 평가 id(식별값)
->
-> ​	content  : 평가내용
-> ​	starPoint : 별점
-> ​	studentName: 평가한 학생 이름. id는 신분 보호를 위해 비밀 + 만약 이름이 없다면 "귀욤둥이 								동훈이"로 통일
+> 	evaluationId : 평가 id(식별값)
+> 	
+> 	content  : 평가내용
+> 	starPoint : 별점
+> 	studentName: 평가한 학생 이름. id는 신분 보호를 위해 비밀 + 만약 이름이 없다면 "귀욤둥이 								동훈이"로 통일
 >
 > #### }
 >
@@ -652,16 +429,16 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > currentPageElementCount = 현재 페이지에 존재하는 선생님의 수
 >
->  
+> 
 >
 > ####  teacherProfiles(선생님 정보 리스트){
 >
-> ​	id => 선생님 id(식별값으로, 클릭하면 선생님 볼 수 있도록 구현해!, 이 밑에서 소개할 선생님 1		명 정보 조회하기로 요청 보내면 돼!)
-> ​	name  => 선생님 이름
-> ​	age => 
-> ​	profileImgPath => 선생님 프사 주소
-> ​	career => 선생님 경력
-> ​	starPoint => 선생님 별점
+> 	id => 선생님 id(식별값으로, 클릭하면 선생님 볼 수 있도록 구현해!, 이 밑에서 소개할 선생님 1		명 정보 조회하기로 요청 보내면 돼!)
+> 	name  => 선생님 이름
+> 	age => 
+> 	profileImgPath => 선생님 프사 주소
+> 	career => 선생님 경력
+> 	starPoint => 선생님 별점
 >
 > #### }
 
@@ -705,10 +482,10 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > ##### evaluationDtos(평가 목록 여러개!){
 >
-> ​	evaluationId => 평가의 식별값
-> ​	content =>  내용
-> ​	starPoint =>별점
-> ​	studentName => 평가한 학생 이름(학생이 회원탈퇴했다면 "귀욤둥이 동훈이"로 통일)
+> 	evaluationId => 평가의 식별값
+> 	content =>  내용
+> 	starPoint =>별점
+> 	studentName => 평가한 학생 이름(학생이 회원탈퇴했다면 "귀욤둥이 동훈이"로 통일)
 >
 > ##### }
 
@@ -748,15 +525,15 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 >  content   게시물 내용
 >
-> #####  uploadFiles   게시물에 첨부할 파일, 여러개의 파일을 첨부할 수 있으며 각각의 파일은 크기가 1MB 이하, 첨부할 모든 파일의 크기는 5MB 이하여야 함
+>  #####  uploadFiles   게시물에 첨부할 파일, 여러개의 파일을 첨부할 수 있으며 각각의 파일은 크기가 1MB 이하, 첨부할 모든 파일의 크기는 5MB 이하여야 함
 >
-> #####  lessonType => 개인과외면 PERSONAL, 그룹과외면 GROUP
+>  #####  lessonType => 개인과외면 PERSONAL, 그룹과외면 GROUP
 >
-> #####  maxStudentCount => 개인과외일 경우 입력하지 마(사실 입력해도 에러는 안나게 처리했는데 그래도 그냥 프론트단에서 개인과외일 경우 선택지를 아예 없애버리면 더 이쁠 거 같아) 
+>  #####  maxStudentCount => 개인과외일 경우 입력하지 마(사실 입력해도 에러는 안나게 처리했는데 그래도 그냥 프론트단에서 개인과외일 경우 선택지를 아예 없애버리면 더 이쁠 거 같아) 
 >
-> #####  startPeriod =>    형식 XXXX-XX-XX ,마찬가지로 개인과외일 경우 입력 X
+>  #####  startPeriod =>    형식 XXXX-XX-XX ,마찬가지로 개인과외일 경우 입력 X
 >
-> #####  endPeriod =>    형식 XXXX-XX-XX  ,마찬가지로 개인과외일 경우 입력 X
+>  #####  endPeriod =>    형식 XXXX-XX-XX  ,마찬가지로 개인과외일 경우 입력 X
 
 <br/>
 
@@ -800,9 +577,9 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > ##### teacher     {
 >
-> ​	teacherId =>  선생님 id(식별값)
->
-> ​	name =>   선생님 이름
+> 	teacherId =>  선생님 id(식별값)
+> 	
+> 	name =>   선생님 이름
 >
 > ##### }    
 >
@@ -810,7 +587,7 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #####  uploadFiles{
 >
-> ​	filePath =  업로드한 파일의 경로
+> 	filePath =  업로드한 파일의 경로
 >
 > ##### }
 >
@@ -844,17 +621,17 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### simpleLectureDtoList{
 >
-> ​	id                        과외 id
->
-> ​	title
->
-> ​	views          -> 조회수
->
-> ​	 teacherName => 작성자 이름
->
-> ​	createdDate => 작성일
->
-> ​	isCompleted    => 모집완료된 강의인지 여부(모집완료됐으면 true)
+> 	id                        과외 id
+> 	
+> 	title
+> 	
+> 	views          -> 조회수
+> 	
+> 	 teacherName => 작성자 이름
+> 	
+> 	createdDate => 작성일
+> 	
+> 	isCompleted    => 모집완료된 강의인지 여부(모집완료됐으면 true)
 >
 > ##### 	lessonType       타입-> PERSONAL, GROUP 
 >
@@ -870,7 +647,7 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > 
 >
->  
+> 
 
 =========================================================================
 
@@ -879,6 +656,8 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 ### 과외 수정 
 
 ### [<span style="color:pink">/lesson</span>/{lessonId}] [<span style="color:blue">PUT</span>]   [<span style="color:skyblue">multipart/form-data</span>]
+
+#### 블랙리스트이면 불가능 =>예외처리 해줘!
 
 ##### 보내줄 데이터
 
@@ -1043,13 +822,13 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > #### simpleAlarmList(목록 -> 여러개){
 >
-> ​		id		=>  알람 id
->
-> ​		alarmType  	=>  알람타입 (SEND_APPLY, APPROVED, REFUSED, COMPLETION)
->
-> ​		isRead	=>  읽은 알람이면 ture,아니면 false
->
-> ​		createdDate	=>  알람이 온 날짜
+> 		id		=>  알람 id
+> 	
+> 		alarmType  	=>  알람타입 (SEND_APPLY, APPROVED, REFUSED, COMPLETION)
+> 	
+> 		isRead	=>  읽은 알람이면 ture,아니면 false
+> 	
+> 		createdDate	=>  알람이 온 날짜
 >
 > 
 >
@@ -1215,21 +994,21 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > ##### totalElementCount -> 선생님 수, (이전과는 다르게 총 수밖에 없는데, 이건 페이징이 너무 힘들어서 포기,, 어차피 수업 그렇게 많이 안 들을거니까 이렇게 하자 ㅎㅎ)
 >
->  
+> 
 >
 > #### evaluationTeacherDtoList (평가 가능한 선생님 정보){
 >
-> ​	id    => 선생님 id
->
-> ​	name   => 선생님 이름
->
-> ​	age  
->
-> ​	profileImgPath    =>선생님 프사 url
->
-> ​	career
->
-> ​	starPoint
+> 	id    => 선생님 id
+> 	
+> 	name   => 선생님 이름
+> 	
+> 	age  
+> 	
+> 	profileImgPath    =>선생님 프사 url
+> 	
+> 	career
+> 	
+> 	starPoint
 >
 > #### }
 
@@ -1297,39 +1076,41 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 >
 > ##### totalReportCount  =>  신고의 개수
 >
->  
+> 
 >
 > ####  reportDtos(신고 정보) {
 >
-> ​	 reportId   신고 id(식별값)
->
-> ​	 content     신고내용
->
-> 
->
->  	writerId     신고자 id  
->
-> ​	 writerName   신고자 이름,  
->
-> ​	 writerUsername   신고자 username
+> 	 reportId   신고 id(식별값)
+> 	
+> 	 content     신고내용
+> 	
+> 	createDate 신고날짜
 >
 > 
 >
-> ​	 targetTeacherId    신고당한 선생님 id
->
-> ​	 targetTeacherName  신고당한 선생님 이름
->
-> ​	 targetTeacherUsername   신고당한 선생님 username
->
-> 
->
-> ​	 isSolved     해결된 신고인가? 
+> 	writerId     신고자 id  
+> 	
+> 	 writerName   신고자 이름,  
+> 	
+> 	 writerUsername   신고자 username
 >
 > 
 >
-> ​	 solverAdminId    해결한 관리자의 id
+> 	 targetTeacherId    신고당한 선생님 id
+> 	
+> 	 targetTeacherName  신고당한 선생님 이름
+> 	
+> 	 targetTeacherUsername   신고당한 선생님 username
 >
-> ​	solverAdminName   해결한 관리자의 이름
+> 
+>
+> 	 isSolved     해결된 신고인가? 
+>
+> 
+>
+> 	 solverAdminId    해결한 관리자의 id
+> 	
+> 	solverAdminName   해결한 관리자의 이름
 >
 > #### }
 
@@ -1345,33 +1126,33 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 
 #### 결과 데이터
 
-> ​	 reportId   신고 id(식별값)
+> 	 	 reportId   신고 id(식별값)
+> 	 	
+> 	 	 content     신고내용
+> 	 	
+> 	 	createDate 신고날짜
+> 	 	
+> 	 	writerId     신고자 id  
+> 	 	
+> 	 	 writerName   신고자 이름,  
+> 	 	
+> 	 	 writerUsername   신고자 아이디
 >
-> ​	 content     신고내용
+> 	 
 >
-> 
+> 	 	 targetTeacherId    신고당한 선생님 id
+> 	 	
+> 	 	 targetTeacherName  신고당한 선생님 이름
+> 	 	
+> 	 	 targetTeacherUsername   신고당한 선생님 username
 >
->  	writerId     신고자 id  
+> 	 
 >
-> ​	 writerName   신고자 이름,  
->
-> ​	 writerUsername   신고자 아이디
->
-> 
->
-> ​	 targetTeacherId    신고당한 선생님 id
->
-> ​	 targetTeacherName  신고당한 선생님 이름
->
-> ​	 targetTeacherUsername   신고당한 선생님 username
->
-> 
->
-> ​	 isSolved     해결된 신고인가? true, false
->
-> ​	 solverAdminId    해결한 관리자의 id
->
-> ​	solverAdminName   해결한 관리자의 이름
+> 	 	 isSolved     해결된 신고인가? true, false
+> 	 	
+> 	 	 solverAdminId    해결한 관리자의 id
+> 	 	
+> 	 	solverAdminName   해결한 관리자의 이름
 
 
 
@@ -1457,23 +1238,105 @@ LESSON_ID   => FK, 파일이 저장된 게시물의 id
 
 
 
+# 채팅
+
+### 선생님의 정보를 검색 -> 채팅하기 버튼을 누를 경우
+
+### 혹은 내 채팅 목록-> 채팅방으로 입장한 경우
+
+### [<span style="color:pink">/chat/list/{receiverId}</span>] [<span style="color:blue">GET</span>]  
+
+#### 이곳에서 receiverId에 선생님의 id값을 입력 -> 채팅 시작 or 이미 한 채팅이 있으면 그 채팅 목록을 보여줌
+
+#### 반환 데이터
+
+##### 하나의 메세지당 아래 형식으로, 메세지를 주고받은 개수만큼 list로 나옴!, 만약 채팅을 한 적이 없다면 아무것도 안나옴
+
+> id      => 메세지의 id
+> studentName  => 학생의 이름
+> studentId       => 학생의 아이디
+> teacherName    -> 선생님의 이름
+> teacherId           -> 선생님의 id
+> writeTime        -> 메세지 쓴 시간
+> content             -> 메세지 내용
+>
+> isStudentRead -> 학생이 읽었는지 여부
+> isTeacherRead ->  선생님이 읽었는지 여부
+
+##### 내가 학생인지 선생인지는 알고있으니까, 내가 학생이라면 선생님의 데이터를 반대로 두고, 선생님이 읽은게 false라면 안읽음으로 처리 !!
 
 
 
 
 
 
-# 미구현 목록
 
-- ##### 채팅 기능
+### 메세지 전송하기
+
+### [<span style="color:pink">/chat/insert</span>] [<span style="color:blue">POST</span>]   [ JSON ]
+
+##### 줄 데이터
+
+> content => 입력할 내용
+> receiverId   => 상대 id
+
+##### => 그럼 내가 알아서  채팅 목록 가져와서  이 위에 채팅 목록 불러와서 너한테 줄거임
+
+#### 반환 데이터
+
+### 하나의 메세지당 아래 형식으로, 메세지를 주고받은 개수만큼 list로 나옴!
+
+##### , 만약 채팅을 한 적이 없다면 아무것도 안나옴 
+
+##### => 바로바로 채팅창 업데이트
+
+> id      => 메세지의 id
+> studentName  => 학생의 이름
+> studentId       => 학생의 아이디
+> teacherName    -> 선생님의 이름
+> teacherId           -> 선생님의 id
+> writeTime        -> 메세지 쓴 시간
+> content             -> 메세지 내용
 
 
 
 
 
+### 나의 채팅방 목록 보기
 
+### [<span style="color:pink">/chat/list</span>] [<span style="color:blue"> GET</span>]  
 
+##### 전송할 데이터 없음
 
+##### 결과 데이터 => 내가 선생인 경우
+
+##### 아래 데이터가 list로 여러개 보내짐()
+
+> studentId    => 대상 학생 id
+> studentName
+> noReadMessage : 안 읽은 메세지 수
+>
+> #### messageList{
+>
+> 	content : 내용
+>
+> #### }
+
+##### 결과 데이터 => 내가 학생
+
+##### 아래 데이터가 list로 여러개 보내짐()
+
+> 
+>
+> teacherId => 대상 선생 id
+> teacherName
+> noReadMessage : 안 읽은 메세지 수
+>
+> #### messageList{
+>
+> 	content : 내용
+>
+> #### }
 
 
 
