@@ -101,6 +101,7 @@ function init() {
           (img_value = data.profileImgPath),
           (rating_value = data.starPoint),
           (career_value = data.career),
+          count =1,
           data.evaluationTeacherDtoList.forEach((element) => {
             appendEvaluateTable(element); //평가하기테이블 학생
           })
@@ -182,7 +183,10 @@ function appendApplySubjectTable(data) {
   td1.innerText = count++; //
   td2.innerText = data.teacherName; //
   td3.innerText = data.title; //DB
-  td4.innerText = data.createdDate;
+
+  let date = data.createdDate.split("T");
+
+  td4.innerText = `${date[0]}  ${date[1]} `;
 
   tr.setAttribute("id", data.teacherId);
   tr.appendChild(td1);
@@ -219,15 +223,16 @@ function appendEvaluateTable(data) {
   const td6_button = document.createElement("input");
   td3_text.type = "text";
   td3_text.placeholder = "평가내용";
-  td3_text.required = true;
+  td3_text.required = "true";
   td3.appendChild(td3_text);
-  //let starNum;
-  //(let i = 0; i < data.rating_value; i++){
-  //  starNum += "⭐";
-  // }
-  //td4.innerText = `${starNum}`;
+  let starNum = 0;
+  for(let i = 0; i < data.rating_value; i++){
+    starNum += "⭐";
+   }
+  td4.innerText = `${starNum}`;
 
   td6_button.type = "button";
+  td6_button.value = "제출";
   td6.appendChild(td6_button);
   //td2.setAttribute("id", "teacher_name_cell");
   td6_button.setAttribute("id", data.id);
@@ -311,10 +316,12 @@ function appendMyEvaluateTable(data) {
 function postTeacherEvaluate(event) {
   event.preventDefault();
   console.log(event.target);
-  const button = event.taget;
+  const button = event.target;
   const id = button.id;
-  const input = document.querySelector(`#${id} #evaluate_content`);
-  const select = docuemnt.querySelector(`#${id} #evaluate_select`);
+  const input = document.querySelector(`#evaluate_content`);
+  const select = document.querySelector(`#evaluate_select`);
+  console.log(input.value);
+  console.log(select.value);
   fetch(`http://219.255.114.140:8090/myInfo/evaluation/teachers/${id}`, {
     method: "POST",
     headers: {
@@ -384,4 +391,17 @@ function appendEvaluatedTable(data) {
   tr.appendChild(td4);
 
   evaluated_list_tbody.appendChild(tr);
+}
+
+
+const change_info = document.querySelector("#change_info");
+
+change_info.addEventListener("click",moveChangeInfo)
+function moveChangeInfo(event) {
+  event.preventDefault();
+  if(JSON.parse(localStorage.getItem("memberType")) === "STUDENT"){
+    location.href = "http://127.0.0.1:5500/yugyeom/student_change_info.html";
+  }else{
+    location.href = "http://127.0.0.1:5500/yugyeom/teacher_change_info.html";
+  }
 }
