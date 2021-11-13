@@ -4,6 +4,7 @@
 
 $(document).ready(function () {
 
+
     $('#dialog').dialog({
         autoOpen:false,
         resizable:false,
@@ -97,10 +98,10 @@ $(document).ready(function () {
             })
             .then(data => {
                 console.log(data);
-                console.log(data.isCompleted);
+                console.log(data.completed);
 
                 var icon = '';
-                if(data.isCompleted){ // true면 모집완료
+                if(data.completed){ // true면 모집완료
                     $('#btn-editPost').attr('disabled', true); // 모집 완료된 강의는 내용 수정 불가능
                     $('#btn-register').attr('disabled', true); // 모집 완료된 강의는 신청불가능
 
@@ -151,20 +152,21 @@ $(document).ready(function () {
                     $('#dialog').dialog('open');
                     $('#btn-passwordConfirm').click(function(){
                         if(presentLoginUserId === data.teacher.teacherId){
-                            fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
+
+                            console.log()
+                            var formData = new FormData();
+                            formData.append('password', $('#password').val());
+
+                            var url ="http://219.255.114.140:8090/lesson/"+postIdx
+
+                            fetch(url,{
                                 method: "DELETE",
                                 headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
-                                body: JSON.stringify({"password":  $('#password').val()})
+                                body: formData,
+                                redirect: 'follow'
                             }).then(response => {
-                                return response.json();
-                              })
-                              .then(data => {
-                                  console.log(data);
-                                // 비밀번호 맞으면 
-                                // $(location).attr('href', "home.html"); home으로 돌아가야돼
-
-                                // 틀리면 
-                                // alert("비밀번호가 틀렸습니다.");
+                                response.redirect(url);
+                                // $(location).attr('href', "home.html");
                               })
                         }else{
                             alert("권한이 없습니다");
@@ -249,6 +251,7 @@ $(document).ready(function () {
             
                 if(editorType === "newEditor"){  // 새 글작성 모드 
                     // 새 데이터 추가 코드 구현 
+                    console.log("hihi");
                     if(lessonType === "PERSONAL"){
 
                         formData.append('lessonType', lessonType)
