@@ -1,14 +1,15 @@
-var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLshKDsg50xIiwiYXV0aCI6IlJPTEVfQkFTSUMiLCJleHAiOjE2MzY4MTYyMjd9.12vfH1Ciy09hF2cNgJJEyZnh_V-EoDtnVDWn3B5r8UBBsZtw0sGqUckD0uRR8CuupTTLzYTVgk4WGL6AWDgCsQ';
 
 $(document).ready(function () {
+
+  // var token = JSON.parse(localStorage.getItem("token"));
+
 //8080/lesson?teacherName=
-
     var pageIdx = 0;
-
+    // console.log(token);
     var fetchMain = function(pageIdx){
       fetch("http://219.255.114.140:8090/lesson?page="+pageIdx,{
           method: "GET",
-          headers : {"Authorization" : `Bearer ${token}` }
+          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
           })
           .then(response => {
             return response.json();
@@ -53,9 +54,10 @@ $(document).ready(function () {
             }
             var idxStr = "";
             var page_btn_str = '';
-            for(i=0; i<data.totalPageNum;i++){
+            for(i=0; i<parseInt(data.totalPageNum);i++){
+              console.log(typeof data.totalPageNum);
               $('#pages').append(' <input type="button" value="'+i+'" id="btn-page'+i+'> ');
-              if(i!==data.totalPageNum-1){
+              if(i!==parseInt(data.totalPageNum)-1){
                 page_btn_str += ('btn-page' +i +', ');
               }else{
                 page_btn_str += 'btn-page' + i;
@@ -88,6 +90,8 @@ $(document).ready(function () {
       });
     }
 
+    fetchMain(pageIdx);
+
     $("#btn-createNewPost").click(function (e) {
       var editorType = "newEditor";
       var postType = "editPost";
@@ -106,12 +110,12 @@ $(document).ready(function () {
 
         fetch("http://219.255.114.140:8090/lesson/",{
           method: "GET",
-          headers : {"Authorization" : `Bearer ${token}` }
+          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
           }).then(response => {
             return response.json();
           }).then(data => {
             console.log(data);
-
+            
           });
         }
     });
@@ -119,7 +123,7 @@ $(document).ready(function () {
   /// 여기부터는 선생님 정보 조회
   fetch("http://219.255.114.140:8090/members/teachers",{
     method: "GET",
-    headers : {"Authorization" : `Bearer ${token}` }
+    headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
     })
     .then(response => {
       return response.json();
