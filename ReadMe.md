@@ -170,15 +170,15 @@
 >
 > #### takingLessonList(내가 듣는 강의 목록, 여러개가 나옴){
 >
-> ​		lessonId (Long 타입) : 강의의 id
->
-> ​		title  :강의의 제목
->
-> ​		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
->
-> ​		teacherId => (Long타입) 선생님의 id(id로 식별가능,  버튼 클릭 시 해당 선생님의 정보를 조								회할 수 있게끔 구현해!! )
->
-> ​		teacherName => 선생님의 이름
+> 		lessonId (Long 타입) : 강의의 id
+> 	
+> 		title  :강의의 제목
+> 	
+> 		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
+> 	
+> 		teacherId => (Long타입) 선생님의 id(id로 식별가능,  버튼 클릭 시 해당 선생님의 정보를 조								회할 수 있게끔 구현해!! )
+> 	
+> 		teacherName => 선생님의 이름
 >
 > #### }
 >
@@ -186,15 +186,15 @@
 >
 > #### appliedLessonList(내가 신청한 강의 목록(아직 승인받지 않은 강의들)){
 >
-> ​		lessonId (Long 타입) : 강의의 id
->
-> ​		title  :강의의 제목
->
-> ​		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
->
-> ​		teacherId => (Long타입) 선생님의 id
->
-> ​		teacherName => 선생님의 이름
+> 		lessonId (Long 타입) : 강의의 id
+> 	
+> 		title  :강의의 제목
+> 	
+> 		createdDate (XXXX-XX-XX 형식),내가 강의에 가입된 시간
+> 	
+> 		teacherId => (Long타입) 선생님의 id
+> 	
+> 		teacherName => 선생님의 이름
 >
 > #### }
 >
@@ -202,11 +202,11 @@
 >
 > #### evaluationList(내가 한 평가들 목록){
 >
-> ​	evaluationId : 평가 id(식별값)
-> ​	content  : 평가내용
-> ​	starPoint : 별점
-> ​	teacherId : 평가한 선생님 id
-> ​	teacherName : 평가한 선생님 이름
+> 	evaluationId : 평가 id(식별값)
+> 	content  : 평가내용
+> 	starPoint : 별점
+> 	teacherId : 평가한 선생님 id
+> 	teacherName : 평가한 선생님 이름
 >
 > #### }
 
@@ -250,17 +250,17 @@
 >
 > #### lessonList(내가 올린 강의 목록, 여러개){
 >
-> ​		lessonId (Long 타입) : 강의의 id
->
-> ​		title  :강의의 제목
->
-> ​		createdDate (XXXX-XX-XX 형식),내가 강의를 생성한 날짜
->
-> ​		isCompleted=> 모집완료 여부
->
-> ​		views =>조회수
->
-> ​		lessonType => 과외 타입 개인과외면 PERSONAL, 그룹과외면 GROUP
+> 		lessonId (Long 타입) : 강의의 id
+> 	
+> 		title  :강의의 제목
+> 	
+> 		createdDate (XXXX-XX-XX 형식),내가 강의를 생성한 날짜
+> 	
+> 		isCompleted=> 모집완료 여부
+> 	
+> 		views =>조회수
+> 	
+> 		lessonType => 과외 타입 개인과외면 PERSONAL, 그룹과외면 GROUP
 >
 > #####  <span style="color:red">maxStudentCount</span>=>최대 인원 수, (개인과외일 경우 표시하지 말아줘!!!, 알아서 처리 부탁)
 >
@@ -272,11 +272,11 @@
 >
 > #### evaluationList(나에 대한 평가 목록){
 >
-> ​	evaluationId : 평가 id(식별값)
->
-> ​	content  : 평가내용
-> ​	starPoint : 별점
-> ​	studentName: 평가한 학생 이름. id는 신분 보호를 위해 비밀 + 만약 이름이 없다면 "귀욤둥이 								동훈이"로 통일
+> 	evaluationId : 평가 id(식별값)
+> 	
+> 	content  : 평가내용
+> 	starPoint : 별점
+> 	studentName: 평가한 학생 이름. id는 신분 보호를 위해 비밀 + 만약 이름이 없다면 "귀욤둥이 								동훈이"로 통일
 >
 > #### }
 >
@@ -429,16 +429,16 @@
 >
 > currentPageElementCount = 현재 페이지에 존재하는 선생님의 수
 >
->  
+> 
 >
 > ####  teacherProfiles(선생님 정보 리스트){
 >
-> ​	id => 선생님 id(식별값으로, 클릭하면 선생님 볼 수 있도록 구현해!, 이 밑에서 소개할 선생님 1		명 정보 조회하기로 요청 보내면 돼!)
-> ​	name  => 선생님 이름
-> ​	age => 
-> ​	profileImgPath => 선생님 프사 주소
-> ​	career => 선생님 경력
-> ​	starPoint => 선생님 별점
+> 	id => 선생님 id(식별값으로, 클릭하면 선생님 볼 수 있도록 구현해!, 이 밑에서 소개할 선생님 1		명 정보 조회하기로 요청 보내면 돼!)
+> 	name  => 선생님 이름
+> 	age => 
+> 	profileImgPath => 선생님 프사 주소
+> 	career => 선생님 경력
+> 	starPoint => 선생님 별점
 >
 > #### }
 
@@ -482,10 +482,10 @@
 >
 > ##### evaluationDtos(평가 목록 여러개!){
 >
-> ​	evaluationId => 평가의 식별값
-> ​	content =>  내용
-> ​	starPoint =>별점
-> ​	studentName => 평가한 학생 이름(학생이 회원탈퇴했다면 "귀욤둥이 동훈이"로 통일)
+> 	evaluationId => 평가의 식별값
+> 	content =>  내용
+> 	starPoint =>별점
+> 	studentName => 평가한 학생 이름(학생이 회원탈퇴했다면 "귀욤둥이 동훈이"로 통일)
 >
 > ##### }
 
@@ -525,15 +525,15 @@
 >
 >  content   게시물 내용
 >
-> #####  uploadFiles   게시물에 첨부할 파일, 여러개의 파일을 첨부할 수 있으며 각각의 파일은 크기가 1MB 이하, 첨부할 모든 파일의 크기는 5MB 이하여야 함
+>  #####  uploadFiles   게시물에 첨부할 파일, 여러개의 파일을 첨부할 수 있으며 각각의 파일은 크기가 1MB 이하, 첨부할 모든 파일의 크기는 5MB 이하여야 함
 >
-> #####  lessonType => 개인과외면 PERSONAL, 그룹과외면 GROUP
+>  #####  lessonType => 개인과외면 PERSONAL, 그룹과외면 GROUP
 >
-> #####  maxStudentCount => 개인과외일 경우 입력하지 마(사실 입력해도 에러는 안나게 처리했는데 그래도 그냥 프론트단에서 개인과외일 경우 선택지를 아예 없애버리면 더 이쁠 거 같아) 
+>  #####  maxStudentCount => 개인과외일 경우 입력하지 마(사실 입력해도 에러는 안나게 처리했는데 그래도 그냥 프론트단에서 개인과외일 경우 선택지를 아예 없애버리면 더 이쁠 거 같아) 
 >
-> #####  startPeriod =>    형식 XXXX-XX-XX ,마찬가지로 개인과외일 경우 입력 X
+>  #####  startPeriod =>    형식 XXXX-XX-XX ,마찬가지로 개인과외일 경우 입력 X
 >
-> #####  endPeriod =>    형식 XXXX-XX-XX  ,마찬가지로 개인과외일 경우 입력 X
+>  #####  endPeriod =>    형식 XXXX-XX-XX  ,마찬가지로 개인과외일 경우 입력 X
 
 <br/>
 
@@ -577,9 +577,9 @@
 >
 > ##### teacher     {
 >
-> ​	teacherId =>  선생님 id(식별값)
->
-> ​	name =>   선생님 이름
+> 	teacherId =>  선생님 id(식별값)
+> 	
+> 	name =>   선생님 이름
 >
 > ##### }    
 >
@@ -587,7 +587,7 @@
 >
 > #####  uploadFiles{
 >
-> ​	filePath =  업로드한 파일의 경로
+> 	filePath =  업로드한 파일의 경로
 >
 > ##### }
 >
@@ -621,17 +621,17 @@
 >
 > #### simpleLectureDtoList{
 >
-> ​	id                        과외 id
->
-> ​	title
->
-> ​	views          -> 조회수
->
-> ​	 teacherName => 작성자 이름
->
-> ​	createdDate => 작성일
->
-> ​	isCompleted    => 모집완료된 강의인지 여부(모집완료됐으면 true)
+> 	id                        과외 id
+> 	
+> 	title
+> 	
+> 	views          -> 조회수
+> 	
+> 	 teacherName => 작성자 이름
+> 	
+> 	createdDate => 작성일
+> 	
+> 	isCompleted    => 모집완료된 강의인지 여부(모집완료됐으면 true)
 >
 > ##### 	lessonType       타입-> PERSONAL, GROUP 
 >
@@ -647,7 +647,7 @@
 >
 > 
 >
->  
+> 
 
 =========================================================================
 
@@ -822,13 +822,13 @@
 >
 > #### simpleAlarmList(목록 -> 여러개){
 >
-> ​		id		=>  알람 id
->
-> ​		alarmType  	=>  알람타입 (SEND_APPLY, APPROVED, REFUSED, COMPLETION)
->
-> ​		isRead	=>  읽은 알람이면 ture,아니면 false
->
-> ​		createdDate	=>  알람이 온 날짜
+> 		id		=>  알람 id
+> 	
+> 		alarmType  	=>  알람타입 (SEND_APPLY, APPROVED, REFUSED, COMPLETION)
+> 	
+> 		isRead	=>  읽은 알람이면 ture,아니면 false
+> 	
+> 		createdDate	=>  알람이 온 날짜
 >
 > 
 >
@@ -994,21 +994,21 @@
 >
 > ##### totalElementCount -> 선생님 수, (이전과는 다르게 총 수밖에 없는데, 이건 페이징이 너무 힘들어서 포기,, 어차피 수업 그렇게 많이 안 들을거니까 이렇게 하자 ㅎㅎ)
 >
->  
+> 
 >
 > #### evaluationTeacherDtoList (평가 가능한 선생님 정보){
 >
-> ​	id    => 선생님 id
->
-> ​	name   => 선생님 이름
->
-> ​	age  
->
-> ​	profileImgPath    =>선생님 프사 url
->
-> ​	career
->
-> ​	starPoint
+> 	id    => 선생님 id
+> 	
+> 	name   => 선생님 이름
+> 	
+> 	age  
+> 	
+> 	profileImgPath    =>선생님 프사 url
+> 	
+> 	career
+> 	
+> 	starPoint
 >
 > #### }
 
@@ -1080,37 +1080,38 @@
 >
 > ####  reportDtos(신고 정보) {
 >
-> ​	 reportId   신고 id(식별값)
->
-> ​	 content     신고내용
+> 	 reportId   신고 id(식별값)
+> 	
+> 	 content     신고내용
+> 	
+> 	createDate 신고날짜
 >
 > ​	createDate 신고날짜
 >
 > 
->
-> ​	writerId     신고자 id  
->
-> ​	 writerName   신고자 이름,  
->
-> ​	 writerUsername   신고자 username
->
-> 
->
-> ​	 targetTeacherId    신고당한 선생님 id
->
-> ​	 targetTeacherName  신고당한 선생님 이름
->
-> ​	 targetTeacherUsername   신고당한 선생님 username
+> 	writerId     신고자 id  
+> 	
+> 	 writerName   신고자 이름,  
+> 	
+> 	 writerUsername   신고자 username
 >
 > 
 >
-> ​	 isSolved     해결된 신고인가? 
+> 	 targetTeacherId    신고당한 선생님 id
+> 	
+> 	 targetTeacherName  신고당한 선생님 이름
+> 	
+> 	 targetTeacherUsername   신고당한 선생님 username
 >
 > 
 >
-> ​	 solverAdminId    해결한 관리자의 id
+> 	 isSolved     해결된 신고인가? 
 >
-> ​	solverAdminName   해결한 관리자의 이름
+> 
+>
+> 	 solverAdminId    해결한 관리자의 id
+> 	
+> 	solverAdminName   해결한 관리자의 이름
 >
 > #### }
 
@@ -1126,33 +1127,33 @@
 
 #### 결과 데이터
 
-> ​	 reportId   신고 id(식별값)
+> 	 	 reportId   신고 id(식별값)
+> 	 	
+> 	 	 content     신고내용
+> 	 	
+> 	 	createDate 신고날짜
+> 	 	
+> 	 	writerId     신고자 id  
+> 	 	
+> 	 	 writerName   신고자 이름,  
+> 	 	
+> 	 	 writerUsername   신고자 아이디
 >
-> ​	 content     신고내용
+> 	 
 >
-> ​	createDate 신고날짜
+> 	 	 targetTeacherId    신고당한 선생님 id
+> 	 	
+> 	 	 targetTeacherName  신고당한 선생님 이름
+> 	 	
+> 	 	 targetTeacherUsername   신고당한 선생님 username
 >
->  ​	writerId     신고자 id  
+> 	 
 >
-> ​	 writerName   신고자 이름,  
->
-> ​	 writerUsername   신고자 아이디
->
-> 
->
-> ​	 targetTeacherId    신고당한 선생님 id
->
-> ​	 targetTeacherName  신고당한 선생님 이름
->
-> ​	 targetTeacherUsername   신고당한 선생님 username
->
-> 
->
-> ​	 isSolved     해결된 신고인가? true, false
->
-> ​	 solverAdminId    해결한 관리자의 id
->
-> ​	solverAdminName   해결한 관리자의 이름
+> 	 	 isSolved     해결된 신고인가? true, false
+> 	 	
+> 	 	 solverAdminId    해결한 관리자의 id
+> 	 	
+> 	 	solverAdminName   해결한 관리자의 이름
 
 
 
@@ -1265,11 +1266,13 @@
 
 ##### 내가 학생인지 선생인지는 알고있으니까, 내가 학생이라면 선생님의 데이터를 반대로 두고, 선생님이 읽은게 false라면 안읽음으로 처리 !!
 
+### 메세지 전송하기
 
+### [<span style="color:pink">/chat/insert</span>] [<span style="color:blue">POST</span>]   [ JSON ]
 
+##### => 그럼 내가 알아서  채팅 목록 가져와서  이 위에 채팅 목록 불러와서 너한테 줄거임
 
-
-
+#### 반환 데이터
 
 ### 메세지 전송하기
 
@@ -1279,6 +1282,7 @@
 
 > content => 입력할 내용
 > receiverId   => 상대 id
+
 
 ##### => 그럼 내가 알아서  채팅 목록 가져와서  이 위에 채팅 목록 불러와서 너한테 줄거임
 
@@ -1299,6 +1303,44 @@
 > content             -> 메세지 내용
 
 
+
+
+
+### 나의 채팅방 목록 보기
+
+### [<span style="color:pink">/chat/list</span>] [<span style="color:blue"> GET</span>]  
+
+##### 전송할 데이터 없음
+
+##### 결과 데이터 => 내가 선생인 경우
+
+##### 아래 데이터가 list로 여러개 보내짐()
+
+> studentId    => 대상 학생 id
+> studentName
+> noReadMessage : 안 읽은 메세지 수
+>
+> #### messageList{
+>
+> 	content : 내용
+>
+> #### }
+
+##### 결과 데이터 => 내가 학생
+
+##### 아래 데이터가 list로 여러개 보내짐()
+
+> 
+>
+> teacherId => 대상 선생 id
+> teacherName
+> noReadMessage : 안 읽은 메세지 수
+>
+> #### messageList{
+>
+> 	content : 내용
+>
+> #### }
 
 
 

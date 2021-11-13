@@ -10,3 +10,21 @@
     display: flex;
     justify-content: space-around;
 }
+
+.table_title{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.5rem;
+}
+
+.user_profile_container{
+    width: 100%;
+    height: 100px;
+    text-align: center;;
+    font-size: 1.3rem;
+}
+
+
+.user_profile{
+    font-size: 1.3rem;
+}

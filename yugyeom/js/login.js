@@ -61,6 +61,9 @@ function onLoginSubmit(event) {
         localStorage.setItem("isKakao","false"),
         localStorage.setItem("memberType", JSON.stringify(data.memberType)),
         localStorage.setItem("isLogin","true"),
+        localStorage.setItem("myNoReadChatCount", JSON.stringify(data.myNoReadChatCount)),
+        localStorage.setItem("myNoReadAlarm", JSON.stringify(data.myNoReadAlarm)),
+        localStorage.setItem("id", JSON.stringify(data.id)),
         location.href="http://127.0.0.1:5500/yugyeom/home.html"
       )
     );
