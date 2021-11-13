@@ -6,7 +6,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.springweb.web.domain.alarm.Alarm;
 import com.springweb.web.service.alarm.AlarmSearchCond;
 import com.springweb.web.service.alarm.ReadType;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -18,7 +17,6 @@ import java.util.List;
 import static com.springweb.web.domain.alarm.QAlarm.alarm;
 
 @Repository
-@Slf4j
 public class AlarmRepositoryCustomImpl implements AlarmRepositoryCustom{
     private final EntityManager em;
     private final JPAQueryFactory query;

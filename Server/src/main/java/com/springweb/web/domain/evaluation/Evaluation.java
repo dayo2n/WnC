@@ -16,11 +16,17 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "EVALUATION")
 public class Evaluation extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EVALUATION_ID")
     private Long id;
+
+
+    private String content; //평가내용
+
+    private double starPoint; //별점 (1~5)
 
     @ManyToOne
     @JoinColumn(name = "TEACHER_ID")
@@ -30,9 +36,9 @@ public class Evaluation extends BaseTimeEntity {
     @JoinColumn(name = "STUDENT_ID")
     private Student student;
 
-    private String content; //평가내용
 
-    private double starPoint; //별점 (1~5)
+
+
 
     public Evaluation(String content, double starPoint) {
         this.content = content;

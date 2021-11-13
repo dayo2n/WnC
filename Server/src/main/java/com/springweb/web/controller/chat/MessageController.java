@@ -25,7 +25,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class MessageController {
 
     private final MessageService messageService;

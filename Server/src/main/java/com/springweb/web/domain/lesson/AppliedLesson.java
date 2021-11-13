@@ -14,6 +14,7 @@ import javax.persistence.*;
 /**
  * 가입 신청을 보낸 강의
  */
+@Table(name = "APPLIED_LESSON")
 public class AppliedLesson extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

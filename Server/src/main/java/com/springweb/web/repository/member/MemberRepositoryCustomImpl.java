@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.springweb.web.domain.lesson.QLesson.lesson;
@@ -35,39 +36,46 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
     @Override
     public Page<Teacher> search(TeacherSearchCond cond, Pageable pageable) {
 
-        List<Teacher> content = query
-                .selectFrom(teacher)
-                .where(
-                        teacherNameHasStr(cond.getTeacherName()),
-                        graterOrEquealStarPoint(cond.getStarPoint())
-                )
-                .orderBy(teacher.starPoint.desc())
-                .orderBy(teacher.createdDate.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+        List<Teacher> content= new ArrayList<>();
+        if(cond.isDESC()){
+             content = query
+                    .selectFrom(teacher)
+                    .where(
+                            teacherNameHasStr(cond.getTeacherName())
+                            )
+                    .orderBy(teacher.starPoint.desc())
+                    .orderBy(teacher.createdDate.desc())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
+        }else {
+            content = query
+                    .selectFrom(teacher)
+                    .where(
+                            teacherNameHasStr(cond.getTeacherName())
+                            )
+                    .orderBy(teacher.starPoint.asc())
+                    .orderBy(teacher.createdDate.desc())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
+        }
+
 
         JPAQuery<Teacher> countQuery = query
                 .selectFrom(teacher)
                 .where(
-                        teacherNameHasStr(cond.getTeacherName()),
-                        graterOrEquealStarPoint(cond.getStarPoint())
+                        teacherNameHasStr(cond.getTeacherName())
                 );
 
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
-    //TODO :largerThanStarPoint 메소드 잘 실행되는지 확인
-    private Predicate graterOrEquealStarPoint(int startPoint) {
-        if(startPoint == 0){
-            return null;
-        }
-        return lesson.maxStudentCount.goe(startPoint);
-    }
+
 
     private BooleanExpression teacherNameHasStr(String teacherName) {
-        return StringUtils.hasLength(teacherName) ? lesson.teacher.name.contains(teacherName) : null;
+        return StringUtils.hasLength(teacherName) ? teacher.name.contains(teacherName) : null;
     }
 
 

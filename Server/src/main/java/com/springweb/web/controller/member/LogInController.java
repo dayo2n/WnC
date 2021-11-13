@@ -52,9 +52,16 @@ public class LogInController {
      *
      * 로그인 결과 : 나의 id, 내가 학생인지 선생인지 여부, 내 로그인 토큰, 새로운 알림이 있는지, 새로운 메세지가 있는지
      */
-    @Trace
+    //@Trace
     @PostMapping("/login")//로그인 주소
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody BasicLoginDto loginDto) throws MemberException {
+        Member member = memberRepository.findByUsername(loginDto.getUsername()).orElse(null);
+        if(member != null){
+            if(member.isKakaoMember()){//카톡회원인데 일반회원가입 한 경우
+                throw new MemberException(MemberExceptionType.BAD_REQUEST);
+            }
+        }
+
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -62,18 +69,19 @@ public class LogInController {
         String jwt = authenticationAndGeneratingToken(authenticationToken);
         HttpHeaders httpHeaders = setTokenInHeader(jwt);
 
-        Member member = memberRepository.findByUsername(loginDto.getUsername()).orElse(null);
+
         LogInMemberInfoDto logInMemberInfoDto = new LogInMemberInfoDto(member.getId(),jwt);
 
         if(member instanceof Student student){
             logInMemberInfoDto.setStudent();
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount(student));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            logInMemberInfoDto.setBasic();//일반 회원
         }else {
-            logInMemberInfoDto.setTeacher((Teacher) member); //=> 블랙리스트인지 확인해야 하므로
+            logInMemberInfoDto.setTeacher((Teacher) member); //=> 블랙리스트인지 확인
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount((Teacher) member));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
-            //블랙리스트인가?
+            logInMemberInfoDto.setBasic();//일반 회원
 
         }
 
@@ -90,16 +98,20 @@ public class LogInController {
     @PostMapping("/login/kakao")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody KakaoLoginDto loginDto) throws  MemberException, JsonProcessingException {
 
-
         Member findMember = getMemberFromKakao(loginDto);//access token을 가지고 카카오에서 kakaoID를 받아온 후, 이를 로그인
         //이후부터는 위와 같은 로직
+
+
+
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(findMember.getUsername(), findMember.getPassword());
 
+
+
+
         String jwt = authenticationAndGeneratingToken(authenticationToken);
         HttpHeaders httpHeaders = setTokenInHeader(jwt);
-
 
         LogInMemberInfoDto logInMemberInfoDto = new LogInMemberInfoDto(findMember.getId(),jwt);
 
@@ -107,12 +119,13 @@ public class LogInController {
             logInMemberInfoDto.setStudent();
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount(student));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            logInMemberInfoDto.setKakao();//카카오 회원
         }else {
-            logInMemberInfoDto.setTeacher((Teacher) findMember);//이거 되나???????????????????????????????
+            logInMemberInfoDto.setTeacher((Teacher) findMember);//=> 블랙리스트인지 확인
             logInMemberInfoDto.setMyNoReadChatCount(messageService.getMyNoReadChatCount((Teacher) findMember));
             logInMemberInfoDto.setMyNoReadAlarm(alarmService.getMyNoReadAlarm());
+            logInMemberInfoDto.setKakao();//카카오 회원
         }
-
 
         return new ResponseEntity(logInMemberInfoDto, httpHeaders, HttpStatus.OK);
     }
@@ -120,21 +133,27 @@ public class LogInController {
 
 
 
+    @Trace
     private HttpHeaders setTokenInHeader(String jwt) {
         //== 토큰 전송 로직 ==//
         //JWT를 헤더와 body에 모두 넣어준다
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);//Authorization Bearer [토큰정보]
-        log.info("전송한 토큰 정보{}", jwt);
+
         return httpHeaders;
     }
 
 
 
+    @Trace
     private String authenticationAndGeneratingToken(UsernamePasswordAuthenticationToken authenticationToken) {
         //== 권한 부여 로직 => 이후 loadUserByUsername 실행 ==//
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//CustomDetailService의 loadByUsername이 실행
+        log.info("?????????????????????{}",authenticationToken);
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//TODO 이게 안돼 씨빨!!!!!!!!!!!!CustomDetailService의 loadByUsername이 실행
+        log.info("?????????????????????");
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info("?????????????????????");
         //== 토큰 생성 로직 ==//
         return tokenProvider.createToken(authentication);
     }

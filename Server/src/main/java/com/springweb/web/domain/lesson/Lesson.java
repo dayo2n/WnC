@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "LESSON")
 public abstract class Lesson extends BaseTimeEntity {
 
     @Id

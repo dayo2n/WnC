@@ -1,3 +1,4 @@
+/*
 package com.springweb.web.service.file;
 
 import com.springweb.web.aop.annotation.Trace;
@@ -21,7 +22,6 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
@@ -46,7 +46,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String saveFile(MultipartFile file) throws UploadFileException, IOException {
-        log.info("파일 저장 시작");
         if (file.isEmpty()) {
             return null;
         }//check file exist
@@ -56,7 +55,6 @@ public class FileServiceImpl implements FileService {
 
         file.transferTo(new File(getFullPath(storeFileName)));//save file in computer
 
-        log.info("파일 저장에 성공했습니다 저장위치:[{}]",storeFileName);
         return getFullPath(storeFileName);
     }
 
@@ -66,7 +64,6 @@ public class FileServiceImpl implements FileService {
         if (multipartFiles == null || multipartFiles.size()==0 || multipartFiles.get(0).isEmpty()) {
             return new ArrayList<>();
         }
-        log.info("파일 저장을 실햅합니다.");
         List<String> uploadedFilePathList = new ArrayList<>();
 
         try {
@@ -79,7 +76,6 @@ public class FileServiceImpl implements FileService {
 
             return uploadFiles;
         } catch (Exception e) {
-            log.error("파일 저장 과정에서 에러 발생 {}", e.getMessage());
             e.getStackTrace();
             for (String filePath : uploadedFilePathList) {
                 deleteFile(filePath);
@@ -89,28 +85,16 @@ public class FileServiceImpl implements FileService {
     }
 
 
-    /**
-     * @param id -> File's ID
-     * @return-> D:/uploads/UUID.jpg
-     */
-    @Override
-    public String getFullPathById(Long id) throws UploadFileException {
-        UploadFile uploadFile = fileRepository.findById(id).orElse(null);
-
-        if (uploadFile == null) {
-            throw new UploadFileException(UploadFileExceptionType.FILE_NOT_FOUND);
-        }
-
-        return fileDir + uploadFile.getFilePath();
-    }
 
 
 
-    /**
+    */
+/**
      * @param filename -> UUID.jpg [UUID + 확장자를 가져와야 함]
      * @return-> D:/uploads/UUID.jpg
-     */
-    @Override
+     *//*
+
+
     public String getFullPath(String filename) {
         return fileDir + filename;
     }
@@ -119,25 +103,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteFile(String fullPath) {
-        System.out.println("파일 삭제 실행");
+
 
         File file = new File(fullPath);
 
         if (file.exists()) {//파일을 삭제
-            if (file.delete()) {
-                log.info("파일 삭제 성공");
-            } else {
-                log.error("파일 삭제 실패");
-            }
-        } else {
-            log.error("파일 삭제 실패 -> 에러 발생시켜야 함");
-        }
+            file.delete();
 
+        }
     }
 
-    @Trace
+    //@Trace
     @Override
     public void deleteFiles(List<UploadFile> uploadFiles) {//UUID 받아서 삭제하기
         uploadFiles.forEach(uploadFile -> deleteFile(uploadFile.getFilePath()));
     }
-}
+}*/

@@ -21,7 +21,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
     //필요한 권한이 없이 접근하려 할때 403
     @Override
-    @Trace
+    //@Trace
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
 
         String requestURI = request.getRequestURI();

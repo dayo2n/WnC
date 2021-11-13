@@ -4,6 +4,7 @@ import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +26,8 @@ import org.springframework.stereotype.Service;
  *
  * 이것만 하면 인증이 되느냐? X ->
  */
+
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
@@ -41,7 +44,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (!member.isActivated()) {
             throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");
         }
-
 
 
         return User.builder()//스프링 시큐리티의 user
