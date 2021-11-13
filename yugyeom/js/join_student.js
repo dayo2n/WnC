@@ -22,7 +22,12 @@ function postJoin(event){
         method: "POST",
         body: formData
       })
-        .then((response) => response.json())
+        .then((response) => {console.log(response.status);
+          if(response.status>= 200 && response.status<300){
+          location.href="http://127.0.0.1:5500/yugyeom/login.html";
+        }
+        response.json();
+      })
         .then((data) => console.log(data));
 }//에러메세지
 
