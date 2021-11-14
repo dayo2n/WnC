@@ -10,11 +10,13 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 
 # 🍯 꿀단지
 
-- 🐝  [김유겸](https://github.com/rladbrua0207)
+- Frontend
+  - 🐝  [김유겸](https://github.com/rladbrua0207)
 
-- 🐝  [문다연](https://github.com/dayo2n)
+  - 🐝  [문다연](https://github.com/dayo2n)
 
-- 🐝  [신동훈](https://github.com/Shindonghun1)
+- Backend
+  - 🐝  [신동훈](https://github.com/Shindonghun1)
 
 
 # 주의사항
