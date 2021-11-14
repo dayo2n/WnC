@@ -179,33 +179,34 @@ $(document).ready(function () {
 const teacher_list_select = document.querySelector("#teacher_list_select");
 const teacher_search = document.querySelector("#teacher_search");
 
-function getTeacherList(event) {
+
+
+teacher_list_search_form.addEventListener("submit", getTeacherList1);
+
+function getTeacherList1(event) {
   event.preventDefault();
-  const selectBox = teacher_list_select.value;
-  const searchValue = teacher_search.value;
-
-  fetch(LOGIN_URL, {
-    //수정
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      selectBox: selectBox,
-      searchValue: searchValue,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+  
 }
-
-// teacher_list_search_form.addEventListener("submit", getTeacherList2);
 
 const teacher_list = document.querySelector(".teacher_list");
 function getTeacherList2(event) {
+  event.preventDefault();
+  fetch("http://219.255.114.140:8090/members/teachers",{
+    method: "GET",
+    headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(data.totalElementCount);
+    })
+
+
   // getTeacherList에 넣을거
   //받아올 데이터: 사진, 선생님이름, 담당과목, 별점, 채팅하기??, 경력
-  event.preventDefault();
+  
   console.log(1);
 
   const card = document.createElement("li");
@@ -362,4 +363,10 @@ if (classList.clientWidth < liList.length * 270) {
   const arrowContainer = slideNext_btn.parentElement;
   arrowContainer.removeChild(slidePrev_btn.nextElementSibling);
   arrowContainer.removeChild(slidePrev_btn);
+}
+
+const btn_createNewPost = document.querySelector("#btn-createNewPost");
+
+if(JSON.parse(localStorage.getItem("memberType")) === "STUDENT"){
+  btn_createNewPost.classList.add("hidden");
 }

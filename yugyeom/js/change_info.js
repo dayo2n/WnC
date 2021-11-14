@@ -16,87 +16,150 @@ const change_career = document.querySelector("#career");
 function postChangeInfoName(event) {
   event.preventDefault();
 
-  fetch("http://219.255.114.140:8090/members/teacher", {//선생일때
-    //중복검사 후 보내기
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      password: change_name.value,
-      //access_token: authObj.access_token,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-  
-}
+  const formData = new FormData();
+  formData.append("name",change_name.value);
 
-function postChangeInfoPassword(event) {
-  event.preventDefault();
-  if (new_password.value === check_new_password.value) {
-    console.log(new_password.value);
-    console.log(check_new_password.value);
-    console.log(current_password.value);
-    fetch("http://219.255.114.140:8090/members/teacher", {//선생일때
+
+
+  if (JSON.parse(localStorage.getItem("memberType")) === "STUDENT") {
+    fetch("http://219.255.114.140:8090/members/student", {
+      //선생일때
       //중복검사 후 보내기
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
-      body: JSON.stringify({
-        oldPassword: current_password.value,
-        newPassword: new_password.value,
-      }),
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => console.log(data));
   } else {
-    alert("새 비밀번호값이 다릅니다.");
+    fetch("http://219.255.114.140:8090/members/teacher", {
+      //선생일때
+      //중복검사 후 보내기
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   }
+}
+
+function postChangeInfoPassword(event) {
+  event.preventDefault();
+
+  const formData = new FormData();
+
+  formData.append("password",check_new_password.value);
+  formData.append("oldPassword",current_password.value);
+
+  if(JSON.parse(localStorage.getItem("memberType")) === "STUDENT"){
+    if (new_password.value === check_new_password.value) {
+
+      fetch("http://219.255.114.140:8090/members/student", {
+        //선생일때
+        //중복검사 후 보내기
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+  }else{
+    if (new_password.value === check_new_password.value) {
+
+  
+      fetch("http://219.255.114.140:8090/members/teacher", {
+        //선생일때
+        //중복검사 후 보내기
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+  }
+
+  
 }
 
 function postChangeInfoAge(event) {
   event.preventDefault();
-
-  fetch("http://219.255.114.140:8090/members/teacher", {//선생일때
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      password: change_age.value,
-      //access_token: authObj.access_token,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+  const formData = new FormData();
+  formData.append("age",info_age.value);
+  if (JSON.parse(localStorage.getItem("memberType")) === "STUDENT") {
+    fetch("http://219.255.114.140:8090/members/student", {
+      //학생일때
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  } else {
+    fetch("http://219.255.114.140:8090/members/teacher", {
+      //선생일때
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }
 }
 function postChangeInfoImg(event) {
   event.preventDefault();
-
   const formData = new FormData();
-  formData.append("profileImg", null);
-    
-  fetch("http://219.255.114.140:8090/members/teacher", {//선생일때
-    method: "PUT",
-    body: formData
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+  formData.append("profileImg",change_img.files[0]);
+
+  if (JSON.parse(localStorage.getItem("memberType")) === "STUDENT") {
+    fetch("http://219.255.114.140:8090/members/student", {
+      //학생일때
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+      method: "PUT",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  } else {
+    fetch("http://219.255.114.140:8090/members/teacher", {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }
 }
 function postChangeInfoCareer(event) {
   event.preventDefault();
 
-  fetch("http://219.255.114.140:8090/members/teacher", {//선생일때
+  const formData = new FormData();
+  formData.append("career",change_career.value);
+
+  fetch("http://219.255.114.140:8090/members/teacher", {
+    //선생일때
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
-    body: JSON.stringify({
-      password: change_career.value,
-      //access_token: authObj.access_token,
-    }),
+    body: formData,
   })
     .then((response) => response.json())
     .then((data) => console.log(data));
@@ -138,15 +201,13 @@ withdrawal.addEventListener("click", onWithdrawal); //카카오톡회원 탈퇴
 function postWithdrawal(event) {
   event.preventDefault();
 
-  fetch(1, {
+  fetch("http://219.255.114.140:8090/members", {
     //FormData로 보낼때 헤더설정 X
-    method: "POST",
+    method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
-    body: JSON.stringify({
-      access_token: authObj.access_token,
-    }),
+    body: formData,
   })
     .then((response) => response.json())
     .then((data) => console.log(data));

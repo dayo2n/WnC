@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>WnC 과외 선생님 매칭</title>
+    <title></title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
@@ -36,8 +36,9 @@
     <!-- Spoca Han Sans Neo: https://spoqa.github.io/spoqa-han-sans/ko-KR/ -->
     <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
     <!-- 웹 폰트-->
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/change_info.css"/>
+    <link rel="stylesheet" href="css/join.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
@@ -112,33 +113,38 @@
             </div>
         </div>
     </header>
-    <section>
-        <div class="inner">
-            <div class="change_info_container">
-                <form class="change_info_name">
+    <div class="inner">
+        <div class="kakao_join_container">
+            <div class="kakao_join_form_container">
+                <form class="kakao_join_form">
+                    <div>아이디</div>
+                    <input type="text" id="kakao_join_username" placeholder="username" required>
                     <div>이름</div>
-                    <input id="name" type="text" placeholder="변경할 이름" required>
-                    <input id="name_submit" type="submit" value="저장하기"> 
-                </form>
-                <form class="change_info_age">
+                    <input type="text" id="kakao_join_name" placeholder="name" required>
                     <div>나이</div>
-                    <input type="text" id="age" placeholder="변경할 나이" required>
-                    <input type="submit" id="age_submit" value="저장하기">
+                    <input type="text" id="kakao_join_age" placeholder="age"  required>
+                    <div class="kakao_join_img">
+                        <label for="kakao_join_img">사진추가</label>
+                        <br>
+                        <input type="file" id="kakao_join_img" accept="image/*" name="file">
+                    </div>
+                    <div class="kakao_career_box" class="hidden">
+                        <div>경력</div>
+                        <textarea id="kakao_join_career" placeholder="경력" ></textarea>
+                    </div>
+                    <div class="kakao_join_box">
+                        <label><input id="kakao_join_student" type="radio" name="join_kakao"  value="student" required> 학생회원가입</label>
+                        <label><input id="kakao_join_teacher" type="radio" name="join_kakao" value="teacher" required> 선생님회원가입</label>
+                    </div>
+                    <input type="submit" id="kakao_join_button" value="카카오톡 회원가입">
                 </form>
-                <div class="change_info_img"> 
-                    <label for="info_img">사진변경</label>
-                    <br> 
-                    <input type="file" id="info_img"> 
-                </div>
-                <form class="change_info_career">
-                    <div>경력</div>
-                    <input type="text" id="career" placeholder="변경할 경력" required>
-                    <input type="submit" id="career_submit" value="저장하기">
-                </form>
-                <input type="button" id="withdrawal" value="회원탈퇴"></input>
             </div>
         </div>
-    </section>
-    <script src="js/chansge_info_kakao"></script>
+
+    </div>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="js/kakao_join.js"></script>
     <script src="js/init.js"></script>
 </body>
+
+</html>
