@@ -21,6 +21,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(name = "ALARM")
 public class Alarm extends BaseTimeEntity {
     /**
      * 과외 관련 =>
@@ -57,13 +58,13 @@ public class Alarm extends BaseTimeEntity {
     private AlarmType alarmType;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
-    private Member target; //알람을 받는 사람
 
 
     private String applicantMemberName;
     private Long applicantMemberId;
+
+    private boolean isRead; //읽었으면 true, 안읽었으면 false
+    //쪽지 온 시간은 baseTimeEntity를 상속받아 해결
 
     private String lessonTitle;
     private Long lessonId;
@@ -72,8 +73,9 @@ public class Alarm extends BaseTimeEntity {
 
 
 
-    private boolean isRead; //읽었으면 true, 안읽었으면 false
-    //쪽지 온 시간은 baseTimeEntity를 상속받아 해결
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    private Member target; //알람을 받는 사람
 
 
     public void read(){

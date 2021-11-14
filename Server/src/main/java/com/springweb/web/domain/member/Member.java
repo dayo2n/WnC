@@ -17,18 +17,27 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table(name = "MEMBER")
 public abstract class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
     private Long id;
+    private boolean activated;//활성화 여부
+
+    private int age; //나이
+    private boolean isKakaoMember;
+
+    @Column(unique = true)
+    private Long kakaoId;
 
     @Column(unique = true)
     private String username;//카카오로 로그인 하는 경우에도 아이디는 입력
 
+    @Column(name="MEMBER_PASSWORD")
     private String password;//카카오로 로그인 안했을때 사용, 카카오 로그인 시에는 random UUID의 첫마디 사용
+    @Column(name="MEMBER_NAME")
     private String name;//직접 입력
-    private int age; //나이
 
     private String profileImgPath;//프사 URL, 풀 경로 저장
 
@@ -36,14 +45,9 @@ public abstract class Member extends BaseTimeEntity {
     private Role role = Role.BASIC;  //BASIC, ADMIN,관리자가 아니면 다 BASIC
 
 
-    @Column(unique = true)
-    private Long kakaoId;
-
-    private boolean isKakaoMember;
 
 
-    @Column(name = "activated")
-    private boolean activated;//활성화 여부
+
 
 
     @OneToMany(mappedBy = "target", cascade = CascadeType.ALL, orphanRemoval = true)

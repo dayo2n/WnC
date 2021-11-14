@@ -19,6 +19,7 @@ import java.util.Comparator;
 @DynamicUpdate
 @NoArgsConstructor
 @Setter
+@Table(name = "MESSAGE")
 public class Message implements Comparator<Message> {
     /**
      * 쪽지
@@ -28,8 +29,12 @@ public class Message implements Comparator<Message> {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MESSAGE_ID")
     private Long id;
-    private Timestamp writeTime;
     private String content;
+    private boolean isTeacherRead;
+    private boolean isStudentRead;
+
+
+    private Timestamp writeTime;
 
 
 
@@ -42,8 +47,7 @@ public class Message implements Comparator<Message> {
     private Teacher teacher;
 
 
-    private boolean isTeacherRead;
-    private boolean isStudentRead;
+
 
 
 

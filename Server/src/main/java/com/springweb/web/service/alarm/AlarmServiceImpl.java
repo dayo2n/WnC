@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Slf4j
+//@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class AlarmServiceImpl implements AlarmService{

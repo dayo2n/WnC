@@ -18,6 +18,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "REPORT")
 public class Report extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +26,7 @@ public class Report extends BaseTimeEntity {
     private Long id;
 
     private String content;
+    private boolean isSolved; //해결되었는지 여부
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WRITER_ID")
@@ -36,7 +38,6 @@ public class Report extends BaseTimeEntity {
     private Teacher target;
 
 
-    private boolean isSolved; //해결되었는지 여부
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ADMIN_ID")

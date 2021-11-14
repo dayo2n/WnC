@@ -40,7 +40,7 @@ import java.util.List;
 
 @Service
 @Transactional
-@Slf4j
+//@Slf4j
 @RequiredArgsConstructor
 public class LessonServiceImpl implements LessonService{
 
@@ -52,11 +52,10 @@ public class LessonServiceImpl implements LessonService{
     private final AlarmService alarmService;
 
 
-    @Trace
+    //@Trace
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
         if(username == null){
-            log.error("SecurityContextHolder에 있는 username을 가져오던 중 오류 발생");
             throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
         }
         return username;
@@ -66,10 +65,13 @@ public class LessonServiceImpl implements LessonService{
 
 
     //TODO : 개인과외라면 생성 시 MaxStudent가 1로 설정되었는지 확인해야 함, 그룹과외라면 MaxStudent가 최소 2 이상이어야 함!
-    @Trace
+    //@Trace
     @Override
     public void create(CreateLessonDto createLessonDto) throws BaseException, IOException {
         Member me = memberRepository.findByUsername(getMyUsername()).orElse(null);
+        if(me == null){
+            throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
+        }
 
         //학생은 강의 등록 불가능
         if(me instanceof Student) throw new LessonException(LessonExceptionType.NO_AUTHORITY_CREATE_LESSON);
@@ -101,17 +103,16 @@ public class LessonServiceImpl implements LessonService{
 
 
 
-    @Trace
+    //@Trace
     @Override
     @Transactional(readOnly = true)
     public SearchLessonDto search(LessonSearchCond cond, Pageable pageable) {
-        log.info("과외 게시물을 검색했습니다!!!!!!!!!!!!!!!");
         return new SearchLessonDto(lessonRepository.search(cond, pageable));
     }
 
 
 
-    @Trace
+    //@Trace
     @Override
     public LessonDetailDto getLessonInfo(Long lessonId) throws BaseException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
@@ -128,7 +129,7 @@ public class LessonServiceImpl implements LessonService{
 
 
     //TODO 이거 되는지 확인해야 함, 메소드에 Lesson을 넘겼는데 영속성 컨텍스트에서 계속 관리되려나.,.?
-    @Trace
+    //@Trace
     @Override
     public void update(Long lessonId, UpdateLessonDto updateLessonDto) throws BaseException, IOException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
@@ -188,7 +189,7 @@ public class LessonServiceImpl implements LessonService{
      *
      * AppliedLessonList를 삭제해 주어야 한다! + 신청한 학생들에게는 거절햇다는 알람 전송
      */
-    @Trace
+    //@Trace
     @Override
     public void delete(Long lessonId, String password) throws BaseException {
         Lesson findLesson = lessonRepository.findWithTeacherById(lessonId).orElse(null);
@@ -217,9 +218,8 @@ public class LessonServiceImpl implements LessonService{
 
 
 
-        log.info("업로드한 파일을 삭제합니다");
         fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
-        log.info("업로드한 파일을 삭제했습니다");
+
 
 
 
@@ -262,44 +262,38 @@ public class LessonServiceImpl implements LessonService{
     //== 내부적으로 간편하게 사용하는 메소드 ==//
 
 
-    @Trace
+    //@Trace
     private void changeUploadFile(UpdateLessonDto updateLessonDto, Lesson findLesson) throws IOException, BaseException {
 
         if(updateLessonDto.getUploadFiles() ==null){
             if(updateLessonDto.isFileRemove()){
-                log.info("업로드한 파일을 삭제합니다");
                 fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
-                log.info("업로드한 파일을 삭제했습니다");
             }
         }
         else if(updateLessonDto.getUploadFiles() != null || updateLessonDto.getUploadFiles().size()!=0 ||  !updateLessonDto.getUploadFiles().get(0).isEmpty()){
-            log.info("업로드한 파일을 삭제합니다");
             fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
-            log.info("업로드한 파일을 삭제했습니다");
             List<UploadFile> uploadedFiles = fileService.saveFiles(updateLessonDto.getUploadFiles());//새로 업데이트할 파일 서버에 저장
             findLesson.changeUploadFiles(uploadedFiles);
         }
         else{//파일을 안 보냈을 때, 파일을 지우려 한다면 다 지워라!
             if(updateLessonDto.isFileRemove()){
-                log.info("업로드한 파일을 삭제합니다");
                 fileService.deleteFiles(findLesson.getUploadFiles());//컴퓨터에서 삭제 후
-                log.info("업로드한 파일을 삭제했습니다");
             }
         }
     }
-    @Trace
+    //@Trace
     private void changeContent(UpdateLessonDto updateLessonDto, Lesson findLesson) {
         if(StringUtils.hasLength(updateLessonDto.getContent())){
             findLesson.changeContent(updateLessonDto.getContent());
         }
     }
-    @Trace
+    //@Trace
     private void changeTitle(UpdateLessonDto updateLessonDto, Lesson findLesson) {
         if(StringUtils.hasLength(updateLessonDto.getTitle())){
             findLesson.changeTitle(updateLessonDto.getTitle());
         }
     }
-    @Trace
+    //@Trace
     private void changePeriod(UpdateLessonDto updateLessonDto, GroupLesson groupLesson) throws LessonException {
         if(updateLessonDto.getStartPeriod() != null || updateLessonDto.getEndPeriod() != null){
             groupLesson.changePeriod(
@@ -309,7 +303,7 @@ public class LessonServiceImpl implements LessonService{
         }
     }
 
-    @Trace
+    //@Trace
     private void changeMaxStudentCount(UpdateLessonDto updateLessonDto, GroupLesson groupLesson) {
         if(updateLessonDto.getMaxStudentCount() != 0){
             groupLesson.changeMaxStudentCount(updateLessonDto.getMaxStudentCount());

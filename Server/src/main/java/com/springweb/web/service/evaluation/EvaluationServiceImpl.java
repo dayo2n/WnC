@@ -1,16 +1,15 @@
 package com.springweb.web.service.evaluation;
 
 
-import com.springweb.web.aop.annotation.Trace;
-import com.springweb.web.dto.evaluation.EvaluationDto;
-import com.springweb.web.dto.evaluation.EvaluationTeacherDto;
-import com.springweb.web.dto.evaluation.SearchEvaluationTeacherDto;
-import com.springweb.web.dto.member.TeacherDetailWithEvaluationDto;
 import com.springweb.web.domain.evaluation.Evaluation;
 import com.springweb.web.domain.lesson.TakingLesson;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.dto.evaluation.EvaluationDto;
+import com.springweb.web.dto.evaluation.EvaluationTeacherDto;
+import com.springweb.web.dto.evaluation.SearchEvaluationTeacherDto;
+import com.springweb.web.dto.member.TeacherDetailWithEvaluationDto;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.evaluation.EvaluationException;
 import com.springweb.web.exception.evaluation.EvaluationExceptionType;
@@ -21,7 +20,6 @@ import com.springweb.web.repository.lesson.TakingLessonRepository;
 import com.springweb.web.repository.member.MemberRepository;
 import com.springweb.web.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +28,6 @@ import java.util.List;
 
 @Service
 @Transactional
-@Slf4j
 @RequiredArgsConstructor
 public class EvaluationServiceImpl implements EvaluationService{
 
@@ -38,7 +35,7 @@ public class EvaluationServiceImpl implements EvaluationService{
     private final TakingLessonRepository takingLessonRepository;
     private final EvaluationRepository evaluationRepository;
 
-    @Trace
+    //@Trace
     private String getMyUsername() throws MemberException {
         String username = SecurityUtil.getCurrentUsername().orElse(null);
         if(username == null) throw new MemberException(MemberExceptionType.PLEASE_LOGIN_AGAIN);
@@ -84,7 +81,7 @@ public class EvaluationServiceImpl implements EvaluationService{
 
 
 
-    @Trace
+    //@Trace
     //== 평가 가능한 선생님 목록 보여주기 ==//
     @Override
     public SearchEvaluationTeacherDto getEvaluatedTeacherList() throws BaseException {

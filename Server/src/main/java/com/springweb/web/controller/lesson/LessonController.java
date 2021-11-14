@@ -35,14 +35,14 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class LessonController {
 
     private final LessonService lessonService;
     private final AppliedLessonService appliedLessonService;
 
     //== 과외 게시물 생성 ==//
-    @Trace
+    //@Trace
     @PostMapping("/lesson")
     public ResponseEntity create(@ModelAttribute CreateLessonDto createLessonDto) throws BaseException, IOException {
         lessonService.create(createLessonDto);
@@ -51,10 +51,10 @@ public class LessonController {
 
 
     //== 과외 게시물 조회 ==//
-    @Trace
+    //@Trace
     @GetMapping("/lesson/{lessonId}")
     public ResponseEntity readOne(@PathVariable("lessonId") Long lessonId) throws BaseException {
-        log.info("lessonId [{}]",lessonId);
+        //log.info("lessonId [{}]",lessonId);
         LessonDetailDto lessonInfo = lessonService.getLessonInfo(lessonId);//안되면 기본생성자 추가하기
         return new ResponseEntity(lessonInfo, HttpStatus.OK);
     }
@@ -65,7 +65,7 @@ public class LessonController {
     /**
      *     * 모든 유저에게 허용!!!!!!
      */
-    @Trace
+    //@Trace
     @GetMapping("/lesson")
     public ResponseEntity searchLesson(LessonSearchCond cond,
                                        @PageableDefault(page = 0, size = 12)//기본페이지0, 기본사이즈 12
@@ -80,7 +80,7 @@ public class LessonController {
 
 
     //== 과외 게시물 수정 ==//
-    @Trace
+    //@Trace
     @PutMapping("/lesson/{lessonId}")
     public ResponseEntity update(@PathVariable("lessonId") Long lessonId,
                                   UpdateLessonDto updateLessonDto) throws BaseException, IOException {
@@ -91,7 +91,7 @@ public class LessonController {
 
 
     //== 과외 게시물 삭제 ==//
-    @Trace
+    //@Trace
     @DeleteMapping("/lesson/{lessonId}")
     public ResponseEntity delete(@PathVariable("lessonId") Long lessonId,
                                   @Valid PasswordDto passwordDto, BindingResult bindingResult) throws BaseException, IOException {
@@ -106,7 +106,7 @@ public class LessonController {
 
 
     //== 과외 신청하기 ==//
-    @Trace
+    //@Trace
     @PostMapping("/lesson/{lessonId}/apply")
     public ResponseEntity apply(@PathVariable("lessonId") Long lessonId) throws BaseException {
         appliedLessonService.apply(lessonId);
@@ -115,7 +115,7 @@ public class LessonController {
     }
 
     //== 과외 가입 취소하기 ==//
-    @Trace
+    //@Trace
     @PostMapping("/lesson/{lessonId}/cancel")
     public ResponseEntity cancel(@PathVariable("lessonId") Long lessonId) throws BaseException {
         appliedLessonService.cancel(lessonId);
@@ -124,7 +124,7 @@ public class LessonController {
 
 
     //== 과외 가입 수락하기 ==//
-    @Trace
+    //@Trace
     @PostMapping("/lesson/{lessonId}/accept/{alarmId}")
     public ResponseEntity accept(@PathVariable("lessonId") Long lessonId,
                                  @PathVariable("alarmId") Long alarmId) throws BaseException {
@@ -134,7 +134,7 @@ public class LessonController {
 
 
     //== 과외 가입 거절하기 ==//
-    @Trace
+    //@Trace
     @PostMapping("/lesson/{lessonId}/cancel/{alarmId}")
     public ResponseEntity refuse(@PathVariable("lessonId") Long lessonId,
                                  @PathVariable("alarmId") Long alarmId) throws BaseException {
@@ -144,7 +144,7 @@ public class LessonController {
 
 
     //== 과외 모집 완료하기 ==//
-    @Trace
+    //@Trace
     @PostMapping("/lesson/{lessonId}/complete")
     public ResponseEntity completed(@PathVariable("lessonId") Long lessonId) throws BaseException {
         appliedLessonService.applyCompleted(lessonId);

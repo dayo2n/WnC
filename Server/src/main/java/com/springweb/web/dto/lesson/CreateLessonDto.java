@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Slf4j
 public class CreateLessonDto {
 
     @NotNull

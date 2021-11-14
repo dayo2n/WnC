@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "UPLOAD_FILE")
 public class UploadFile extends BaseTimeEntity {
 
     @Id

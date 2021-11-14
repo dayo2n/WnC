@@ -18,6 +18,9 @@ public class LogInMemberInfoDto {
     private boolean isBlack;
 
 
+    private boolean isKakao;
+    private boolean isLogin = true;
+
     public LogInMemberInfoDto(Long id,String token) {
         this.id = id;
         this.token = token;
@@ -32,5 +35,12 @@ public class LogInMemberInfoDto {
     public void setTeacher(Teacher teacher){
         this.memberType = MemberType.TEACHER;
         this.isBlack=teacher.isBlack();
+    }
+
+    public void setKakao() {
+        isKakao = true;
+    }
+    public void setBasic(){
+        isKakao = false;
     }
 }
