@@ -150,8 +150,7 @@ $(document).ready(function () {
                 $('#postViewTable tr:eq(1) td:eq(3)').text(data.views);
                 $('#postViewTable tr:eq(2) td:eq(3)').text(data.teacher.name+' ( '+data.teacher.teacherId+' )');
                 if(data.uploadFiles.length !== 0){
-                    $('#postViewTable tr:eq(4) td:eq(1)').text(IMG_URL + data.uploadFiles[0].filePath);
-                    $('#img').attr('src', IMG_URL+ data.uploadFiles[0].filePath);
+                    $('#imgTable').append('<img src="'+IMG_URL+ data.uploadFiles[0].filePath+'" alt="없음" id="img">');
                 }else{
                     $('#postViewTable tr:eq(4) td:eq(1)').text("-");
                 }
@@ -184,7 +183,7 @@ $(document).ready(function () {
                     }).then(response => {
                         if(response.status === 200){
                             $(location).attr('href', "home.html");
-                        }else if(response.status !== 403){
+                        }else if(response.status === 403){
                             alert("에러발생");
                         }
                         console.log(response.status);
@@ -268,6 +267,10 @@ $(document).ready(function () {
             alert("최대 200글자를 초과할 수 없습니다");
             $(this).val($(this).val().substring(0, 200));
         }
+    });
+
+    $('#btn-backToNoticeBoard').click(function(){
+        $(location).attr('href', "home.html");
     })
 
     // "글 등록" 버튼 클릭 액션
