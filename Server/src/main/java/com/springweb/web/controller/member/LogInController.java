@@ -102,8 +102,6 @@ public class LogInController {
         //이후부터는 위와 같은 로직
 
 
-
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(findMember.getUsername(), findMember.getPassword());
 
@@ -148,12 +146,9 @@ public class LogInController {
     @Trace
     private String authenticationAndGeneratingToken(UsernamePasswordAuthenticationToken authenticationToken) {
         //== 권한 부여 로직 => 이후 loadUserByUsername 실행 ==//
-        log.info("?????????????????????{}",authenticationToken);
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//TODO 이게 안돼 씨빨!!!!!!!!!!!!CustomDetailService의 loadByUsername이 실행
-        log.info("?????????????????????");
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("?????????????????????");
         //== 토큰 생성 로직 ==//
         return tokenProvider.createToken(authentication);
     }

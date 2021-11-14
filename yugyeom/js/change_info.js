@@ -95,7 +95,7 @@ function postChangeInfoPassword(event) {
 function postChangeInfoAge(event) {
   event.preventDefault();
   const formData = new FormData();
-  formData.append("age",info_age.value);
+  formData.append("age",change_age.value);
   if (JSON.parse(localStorage.getItem("memberType")) === "STUDENT") {
     fetch("http://219.255.114.140:8090/members/student", {
       //학생일때
@@ -122,6 +122,7 @@ function postChangeInfoAge(event) {
 }
 function postChangeInfoImg(event) {
   event.preventDefault();
+
   const formData = new FormData();
   formData.append("profileImg",change_img.files[0]);
 
@@ -161,14 +162,20 @@ function postChangeInfoCareer(event) {
     },
     body: formData,
   })
-    .then((response) => response.json())
+    .then((response) => {response.json()
+      if(response.status<300 && response.status>=200){
+        alert("정보가 변경되었습니다.");
+      }else{
+        alert("에러");
+      }})
+
     .then((data) => console.log(data));
 }
 
 change_name_form.addEventListener("submit", postChangeInfoName);
 change_password_form.addEventListener("submit", postChangeInfoPassword);
 change_age_form.addEventListener("submit", postChangeInfoAge);
-change_img_form.addEventListener("submit", postChangeInfoImg);
+change_img_form.addEventListener("change", postChangeInfoImg);
 change_career_form.addEventListener("submit", postChangeInfoCareer);
 
 const withdrawal = document.querySelector("#withdrawal");
@@ -201,6 +208,9 @@ withdrawal.addEventListener("click", onWithdrawal); //카카오톡회원 탈퇴
 function postWithdrawal(event) {
   event.preventDefault();
 
+  const formData = new FormData();
+  formData.append("password",current_password.value);
+
   fetch("http://219.255.114.140:8090/members", {
     //FormData로 보낼때 헤더설정 X
     method: "DELETE",
@@ -209,6 +219,14 @@ function postWithdrawal(event) {
     },
     body: formData,
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if(response.status<300 && response.status>=200){
+        alert("회원탈퇴되셨습니다");
+        location.href = "http://127.0.0.1:5500/yugyeom/home.html"
+      }else{
+        alert("비밀번호가 일치하지 않습니다.");
+        return response.json();
+      }
+    })
     .then((data) => console.log(data));
 }

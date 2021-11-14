@@ -74,7 +74,6 @@ public class EvaluationServiceImpl implements EvaluationService{
         evaluation.confirmStudent(me);//내가 작성한 평가에 추가
 
 
-
         evaluationRepository.save(evaluation);
 
     }

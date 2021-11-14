@@ -1,5 +1,6 @@
 package com.springweb.web.controller.admin;
 
+import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.dto.admin.LoginAdminDto;
 import com.springweb.web.dto.admin.LoginAdminResponse;
@@ -48,6 +49,7 @@ public class AdminController {
      */
     //@Trace
     @GetMapping("/reports")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity getReportList() throws ReportException, MemberException {
         List<ReportDto> list = reportService.getList();
 
@@ -59,6 +61,7 @@ public class AdminController {
      */
     //@Trace
     @GetMapping("/reports/{reportId}")
+    @PreAuthorize("ADMIN")
     public ResponseEntity getReport(@PathVariable("reportId")Long reportId) throws ReportException, MemberException {
         ReportDto reportDto = reportService.readReport(reportId);
 
@@ -71,6 +74,7 @@ public class AdminController {
      */
     //@Trace
     @PostMapping("/reports/{reportId}/ignore")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity ignore(@PathVariable("reportId")Long reportId) throws ReportException, MemberException {
         reportService.ignore(reportId);
         return new ResponseEntity("신고를 무시했습니다" , HttpStatus.OK);
@@ -82,6 +86,7 @@ public class AdminController {
      */
     //@Trace
     @PostMapping("/reports/{reportId}/warn")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity addWarning(@PathVariable("reportId")Long reportId ) throws ReportException, MemberException {
         reportService.addWarning(reportId);
 
@@ -93,6 +98,7 @@ public class AdminController {
      */
     //@Trace
     @PostMapping("/reports/{reportId}/black")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity makeBlack(@PathVariable("reportId")Long reportId ) throws ReportException, MemberException {
         reportService.makeBlack(reportId);
 
@@ -104,6 +110,7 @@ public class AdminController {
      */
     //@Trace
     @PostMapping("/reports/white/{teacherId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity makeWhite(@PathVariable("teacherId")Long teacherId) throws ReportException, MemberException {
         reportService.makeWhite(teacherId);
 
@@ -116,6 +123,7 @@ public class AdminController {
      */
     //@Trace
     @GetMapping("/reports/blacklist")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity showBlackList() throws ReportException, MemberException {
         List<BlackTeacher> blackTeachers = reportService.showBlackList();
 
@@ -134,10 +142,10 @@ public class AdminController {
     }
 
 
-    //@Trace
+    @Trace
     @PostMapping("/admin/login")
     @PreAuthorize("permitAll()")//이거되나?
-    public ResponseEntity logIn(@ModelAttribute LoginAdminDto loginAdminDto) throws UploadFileException, IOException, MemberException {
+    public ResponseEntity logIn(@RequestBody LoginAdminDto loginAdminDto) throws UploadFileException, IOException, MemberException {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginAdminDto.getUsername(), loginAdminDto.getPassword());
 

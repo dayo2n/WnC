@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
   $('#admin_icon').click(function(){
     $(location).attr('href', "login_admin.html");
@@ -6,11 +7,13 @@ $(document).ready(function(){
 
 Kakao.init('');
 console.log(Kakao.isInitialized());
+let message;
 
-function loginWithKakao() {//카카오톡으로 로그인
+/*
+function loginWithKakao() {//카카오톡으로 로그인 (회원가입까지만 성공..)
   Kakao.Auth.login({
-    success: function(authObj) {
-     localStorage.setItem("access_token",JSON.stringify(authObj.access_token));
+   success: function(authObj) {
+    localStorage.setItem("access_token",JSON.stringify(authObj.access_token));
       fetch("http://219.255.114.140:8090/login/kakao", {
     method: "POST",
     headers: {
@@ -23,22 +26,34 @@ function loginWithKakao() {//카카오톡으로 로그인
   }).then((response) => {
       console.log(`response.status ${response.status}`);
       if (response.status >= 300 || response.status < 200) {
-        //location.href="http://127.0.0.1:5500/yugyeom/kakao_join.html";
-        return response.json().then(err =>console.log(err.errorMessage));
+        response.json().then(err => message = err.errorMessage);
+        console.log(message);
+        if(message==="회원가입을 진행해야 합니다."){
+          location.href="http://127.0.0.1:5500/yugyeom/kakao_join.html";
+        }else{
+          //location.href="http://127.0.0.1:5500/yugyeom/home.html";
+          return response
+        }
       }
-      // location.href="http://127.0.0.1:5500/index.html";
-      return response.json();
+      // location.href="http://127.0.0.1:5500/index.html"; 
     })
-    .then((data) => {console.log(data)},
-    localStorage.setItem("isKakao","true"));
-
+    .then((data) => {console.log(data)
+      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("isKakao","true");
+      localStorage.setItem("memberType", JSON.stringify(data.memberType));
+      localStorage.setItem("isLogin",JSON.stringify(data.login));
+      localStorage.setItem("myNoReadChatCount", JSON.stringify(data.myNoReadChatCount));
+      localStorage.setItem("myNoReadAlarm", JSON.stringify(data.myNoReadAlarm));
+      localStorage.setItem("id", JSON.stringify(data.id));
+      localStorage.setItem("isBlack",JSON.stringify(data.black));
+    })
     },
     fail: function(err) {
       console.log(err);
     },
   })
 }
-
+ */
 
 
 
