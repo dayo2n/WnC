@@ -58,7 +58,7 @@ function loginWithKakao() {//카카오톡으로 로그인 (회원가입까지만
 
 
 
-const LOGIN_URL = "http://219.255.114.140:8090/login";
+const LOGIN_URL = "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/login";
 const login_username = document.querySelector("#login_username");
 const login_password = document.querySelector("#login_password");
 const login_form = document.querySelector(".login_form");
@@ -93,7 +93,7 @@ function onLoginSubmit(event) {
         localStorage.setItem("isBlack",JSON.stringify(data.black));
         console.log(localStorage.getItem("isLogin"));
         if (JSON.parse(localStorage.getItem("isLogin") === "true")) {
-          location.href="http://127.0.0.1:5500/yugyeom/home.html";
+          location.href=`${URL_ROUTE}home.html`;
         }else{
           alert(data.message);
           localStorage.clear();

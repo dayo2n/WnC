@@ -18,9 +18,10 @@ $(document).ready(function () {
       $('tbody').empty();
       $('#pages').empty();
 
-      fetch("http://219.255.114.140:8090/lesson?page="+pageIdx,{
+      fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson?page="+pageIdx,{
           method: "GET",
-          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+          //Origin: "https://rladbrua0207.github.io/WnC"
           })
           .then(response => {
             return response.json();
@@ -85,7 +86,7 @@ $(document).ready(function () {
                 alert("로그인이 필요합니다.");
                 $(location).attr("href", "login.html");
               }else{
-                var url ="http://219.255.114.140:8090/lesson/"+idx;
+                var url ="https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+idx;
                 if(rowIdx !== 0){
                       $(location).attr(
                         "href",
@@ -119,9 +120,10 @@ $(document).ready(function () {
 
 
 
-        fetch("http://219.255.114.140:8090/lesson/?lessonType="+searchOptionLessonType+"&"+searchOption+"="+searchCondition,{
+        fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/?lessonType="+searchOptionLessonType+"&"+searchOption+"="+searchCondition,{
           method: "GET",
-          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+          //Origin: "https://rladbrua0207.github.io/WnC"
           }).then(response => {
             return response.json();
           }).then(data => {
@@ -181,7 +183,7 @@ $(document).ready(function () {
               var rowIdx = e.target.closest("tr").rowIndex;
               var idx =  $(this).children().eq(0).text(); // 게시글의 id
 
-              var url ="http://219.255.114.140:8090/lesson/"+idx;
+              var url ="https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+idx;
               if(rowIdx !== 0){
                     $(location).attr(
                       "href",
@@ -221,7 +223,7 @@ $(document).ready(function () {
       var searchCondition = $('#teacher_search').val();
       var sortCondition = $('#starPointOption option:selected').val();
 
-      var url = "http://219.255.114.140:8090/members/teachers?";
+      var url = "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/members/teachers?";
 
       if(searchType === "teacherName" && searchCondition === ""){
         alert("검색어가 비었습니다");
@@ -240,7 +242,8 @@ $(document).ready(function () {
 
         fetch(url,{
           method: "GET",
-          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+          headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+          //Origin: "https://rladbrua0207.github.io/WnC"
           })
           .then(response => {
             return response.json();
@@ -301,9 +304,10 @@ $(document).ready(function () {
   })
 
   /// 여기부터는 선생님 정보 조회
-  fetch("http://219.255.114.140:8090/members/teachers",{
+  fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/members/teachers",{
     method: "GET",
-    headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+    headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+    //Origin: "https://rladbrua0207.github.io/WnC"
     })
     .then(response => {
       return response.json();
@@ -365,9 +369,10 @@ $(document).ready(function () {
               formData.append('content', $('#content').val());
 
 
-              fetch("http://219.255.114.140:8090/reports/teachers/"+id,{
+              fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/reports/teachers/"+id,{
                   method: "POST",
                   headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+                  //Origin: "https://rladbrua0207.github.io/WnC",
                   body: formData,
               }).then(response => {
                 if(response.status==200){
@@ -399,9 +404,10 @@ function getTeacherList1(event) {
 const teacher_list = document.querySelector(".teacher_list");
 function getTeacherList2(event) {
   event.preventDefault();
-  fetch("http://219.255.114.140:8090/members/teachers",{
+  fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/members/teachers",{
     method: "GET",
-    headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+    headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+    //Origin: "https://rladbrua0207.github.io/WnC"
     })
     .then(response => {
       return response.json();

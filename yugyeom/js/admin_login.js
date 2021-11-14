@@ -1,7 +1,9 @@
-const LOGIN_URL = "http://219.255.114.140:8090/admin/login";
+const LOGIN_URL = "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/admin/login";
 const login_username = document.querySelector("#login_username");
 const login_password = document.querySelector("#login_password");
 const login_form = document.querySelector(".login_form");
+
+
 
 function onLoginSubmit(event) {
   event.preventDefault();
@@ -30,7 +32,7 @@ function onLoginSubmit(event) {
     .then(
       (data) => {
         localStorage.setItem("token", JSON.stringify(data.token));
-        location.href="http://127.0.0.1:5500/yugyeom/admin.html";
+        location.href=`${URL_ROUTE}admin.html`;
 
       }
        

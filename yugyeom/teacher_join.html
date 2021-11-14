@@ -21,7 +21,7 @@
     <meta property="og:image" content="Open Graph img" />
     <meta property="og:url" content="Open Graph url" />
     <meta property="og:site_name" content="Open Graph site name" />
-
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!-- 일반적인 fabicon 설정 -->
     <link rel="icon" href="" />
     <!-- 아이폰용 fabicon 설정 -->
@@ -118,8 +118,6 @@
                 <form class="join_form">
                     <div>아이디</div>
                     <input type="text" id="join_username" placeholder="username" name="username">
-                    <button type="button" id="username_overlap_button" onclick="usernameOverlapCheck()">아이디
-                        중복확인</button>
                     <div>비밀번호</div>
                     <input type="password" id="join_password" placeholder="password" name="password">
                     <div>이름</div>
@@ -139,7 +137,7 @@
             </div>
         </div>
     </div>
+    <script src="js/init.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="js/join_teacher.js"></script>
-    <script src="js/init.js"></script>
 </body>

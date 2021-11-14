@@ -1,10 +1,11 @@
+
 $(document).ready(function () {
   const IMG_URL = "https://wnc-bucket.s3.ap-northeast-2.amazonaws.com/";
 
   var adminFetch = function () {
     $("#reportList>tbody").empty();
 
-    fetch("http://219.255.114.140:8090/reports", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/reports", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -13,7 +14,7 @@ $(document).ready(function () {
       .then((response) => {
         if (response.status < 200 || response.status >= 300) {
           response.json().then(err => alert(err.message));
-          location.href="http://127.0.0.1:5500/yugyeom/login.html";
+          location.href=`${URL_ROUTE}login.html`;
         } else {
           console.log(2, response);
           return response.json();
@@ -92,7 +93,7 @@ $(document).ready(function () {
         $("#btn-confirm").click(function () {
           if ($("#blackOption option:selected").attr("id") === "ignore") {
             fetch(
-              "http://219.255.114.140:8090/reports/" + reportID + "/ignore",
+              "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/reports/" + reportID + "/ignore",
               {
                 method: "POST",
                 headers: {
@@ -111,7 +112,7 @@ $(document).ready(function () {
               }
             });
           } else if ($("#blackOption option:selected").attr("id") === "warn") {
-            fetch("http://219.255.114.140:8090/reports/" + reportID + "/warn", {
+            fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/reports/" + reportID + "/warn", {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${JSON.parse(
@@ -129,7 +130,7 @@ $(document).ready(function () {
             });
           } else if ($("#blackOption option:selected").attr("id") === "black") {
             fetch(
-              "http://219.255.114.140:8090/reports/" + reportID + "/black",
+              "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/reports/" + reportID + "/black",
               {
                 method: "POST",
                 headers: {
@@ -156,7 +157,7 @@ $(document).ready(function () {
 
   var blackFetch = function () {
     $("#blackList>tbody").empty();
-    fetch("http://219.255.114.140:8090/reports/blacklist", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/reports/blacklist", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,

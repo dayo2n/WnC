@@ -1,3 +1,5 @@
+
+
 const kakao_join_form = document.querySelector(".kakao_join_form");
 kakao_join_form.addEventListener("submit", postKakaoJoin);
 const kakao_join_student = document.querySelector("#kakao_join_student");
@@ -24,7 +26,7 @@ function postKakaoJoin(event) {
 
   console.dir(kakao_join_student.checked);
   if(kakao_join_student.checked){
-    fetch("http://219.255.114.140:8090/join/student/kakao", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/join/student/kakao", {
         //학생 카카오
     
         method: "POST",
@@ -38,12 +40,12 @@ function postKakaoJoin(event) {
             alert("오류입니다");
           }else{
             alert("회원가입이 완료되었습니다.")
-            location.href = "http://127.0.0.1:5500/yugyeom/login.html";
+            location.href = `${URL_ROUTE}login.html`;
           }
         })
         .then((data) => console.log(data));
   }else{
-    fetch("http://219.255.114.140:8090/join/teacher/kakao", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/join/teacher/kakao", {
         //선생님 카카오
         method: "POST",
         headers: {
@@ -56,7 +58,7 @@ function postKakaoJoin(event) {
             alert("오류입니다");
           }else{
             alert("회원가입이 완료되었습니다.")
-            location.href = "http://127.0.0.1:5500/yugyeom/login.html";
+            location.href = `${URL_ROUTE}login.html`;
           }
         })
         .then((data) => console.log(data));

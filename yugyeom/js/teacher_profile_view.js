@@ -15,7 +15,7 @@ let count=0;
 function init() {
   const teacherID = JSON.parse(localStorage.getItem("teacher_profile_view_id"));
   console.log(teacherID);
-  fetch(`http://219.255.114.140:8090/members/teachers/${teacherID}`, {//teacherID는 어떻게?
+  fetch(`https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/members/teachers/${teacherID}`, {//teacherID는 어떻게?
       method: "GET",
       headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`

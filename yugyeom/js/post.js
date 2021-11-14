@@ -28,7 +28,7 @@ $(document).ready(function () {
 
         var postIdx = types[2].split("=")[1];
 
-        fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
+        fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+postIdx,{
             method: "GET",
             headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
             })
@@ -80,9 +80,10 @@ $(document).ready(function () {
 
                 $('#btn-changeComplete').click(function(){
                     if(confirm("완료상태로 확정하면 다시는 변경할 수 없습니다. 진행하시겠습니까?")){
-                        fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/complete",{
+                        fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+postIdx+"/complete",{
                         method: "POST",
                         headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
+                        //여기 다연이 물어보기 location 괜찮은지
                         }).then(response => {
                             if(response.status == 200){
                                 $(location).attr('href', "home.html");
@@ -125,7 +126,7 @@ $(document).ready(function () {
         var tr = $('#table tr');
         var td = tr.children();
         var postIdx = types[2].split("=")[1];
-        fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
+        fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+postIdx,{
             method: "GET",
             headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
             })
@@ -177,7 +178,7 @@ $(document).ready(function () {
                 });
                  // 가입 신청 시
                  $("#btn-register").click(function(){
-                    fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/apply",{
+                    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+postIdx+"/apply",{
                         method: "POST",
                         headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
                     }).then(response => {
@@ -202,7 +203,7 @@ $(document).ready(function () {
                             formData.append('password', $('#password').val());
 
 
-                            fetch("http://219.255.114.140:8090/lesson/"+postIdx,{
+                            fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/"+postIdx,{
                                 method: "DELETE",
                                 headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
                                 body: formData,
@@ -305,7 +306,7 @@ $(document).ready(function () {
                             formData.append('uploadFiles', file);
                         }
 
-                        fetch("http://219.255.114.140:8090/lesson",{
+                        fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson",{
                             method: "POST",
                             headers :{
                                 // 'Content-Type': 'multipart/form-data',
@@ -338,7 +339,7 @@ $(document).ready(function () {
                                 formData.append('uploadFiles', file);
                             }
 
-                            fetch("http://219.255.114.140:8090/lesson",{
+                            fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson",{
                             method: "POST",
                             headers :{
                                 // 'Content-Type': 'multipart/form-data',
@@ -365,7 +366,7 @@ $(document).ready(function () {
                         formData.append('lessonType', lessonType);
                         formData.append('fileRemove', false);
                         
-                        var url = "http://219.255.114.140:8090/lesson/" + postIdx;
+                        var url = "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/" + postIdx;
                         fetch(url,{
                             method: "PUT",
                             headers :{
@@ -390,7 +391,7 @@ $(document).ready(function () {
                         formData.append('endPeriod', $('#endDate').val()); // 과외 종료일자
                         formData.append('fileRemove', false);
                         
-                        var url = "http://219.255.114.140:8090/lesson/" + postIdx;
+                        var url = "https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/lesson/" + postIdx;
                         fetch(url,{
                             method: "PUT",
                             headers :{

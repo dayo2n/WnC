@@ -60,7 +60,7 @@ function init() {
   //localStorage.getItem("isTeacher");
 
   if (JSON.parse(localStorage.getItem("memberType")) === "STUDENT") {
-    fetch("http://219.255.114.140:8090/myInfo", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/myInfo", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -92,7 +92,7 @@ function init() {
         )
       );
 
-    fetch("http://219.255.114.140:8090/myInfo/evaluation/teachers", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/myInfo/evaluation/teachers", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -114,7 +114,7 @@ function init() {
         )
       );
   } else {
-    fetch("http://219.255.114.140:8090/myInfo", {
+    fetch("https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/myInfo", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`, //`Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -211,7 +211,7 @@ function teacherIdSubmit(event) {
   const id = event.target.parentNode.id;
     localStorage.setItem("teacher_profile_view_id",JSON.stringify(id));
 
-  location.href = "http://127.0.0.1:5500/yugyeom/teacher_profile_view.html";
+  location.href = `${URL_ROUTE}teacher_profile_view.html`;
 }
 
 const evaluate_table_tbody = document.querySelector(".evaluate_table_tbody");
@@ -345,7 +345,7 @@ function postTeacherEvaluate(event) {
 
   console.log(input.value);
   console.log(select.value);
-  fetch(`http://219.255.114.140:8090/myInfo/evaluation/teachers/${className}`, {
+  fetch(`https://cors-anywhere.herokuapp.com/http://219.255.114.140:8090/myInfo/evaluation/teachers/${className}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -428,8 +428,8 @@ change_info.addEventListener("click",moveChangeInfo)
 function moveChangeInfo(event) {
   event.preventDefault();
   if(JSON.parse(localStorage.getItem("memberType")) === "STUDENT"){
-    location.href = "http://127.0.0.1:5500/yugyeom/student_change_info.html";
+    location.href = `${URL_ROUTE}student_change_info.html`;
   }else{
-    location.href = "http://127.0.0.1:5500/yugyeom/teacher_change_info.html";
+    location.href = `${URL_ROUTE}teacher_change_info.html`;
   }
 }
