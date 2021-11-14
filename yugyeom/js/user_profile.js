@@ -1,3 +1,9 @@
+$(document).ready(function(){
+  $('#evaluate_select').change(function(){
+    console.log($('evaluate_select option:selected').val());
+  })
+})
+
 let name_value;
 let age_value;
 let img_value;
@@ -210,6 +216,7 @@ const evaluate_table_tbody = document.querySelector(".evaluate_table_tbody");
 let evaluate_select_value;
 let evaluate_text_value;
 
+
 function appendEvaluateTable(data) {
   console.log(data);
   const tr = document.createElement("tr");
@@ -235,7 +242,8 @@ function appendEvaluateTable(data) {
   td6_button.value = "제출";
   td6.appendChild(td6_button);
   //td2.setAttribute("id", "teacher_name_cell");
-  td6_button.setAttribute("id", data.id);
+  //td6_button.setAttribute("id", data.id);
+   td6_button.classList.add(`${data.id}`)
 
   td1.innerText = `${count++}`; //
   td2.innerText = `${data.name}`; //
@@ -316,13 +324,17 @@ function appendMyEvaluateTable(data) {
 function postTeacherEvaluate(event) {
   event.preventDefault();
   console.log(event.target);
-  const button = event.target;
-  const id = button.id;
-  const input = document.querySelector(`#evaluate_content`);
-  const select = document.querySelector(`#evaluate_select`);
+
+  const className = event.target.className;
+  //const id = button
+  const button_parent_parent = document.getElementsByClassName(`${className}`)[0].parentNode.parentNode;
+  console.log(button_parent_parent);
+  const input = button_parent_parent.querySelector(`#evaluate_content`);
+  const select = button_parent_parent.querySelector(`#evaluate_select`);
+
   console.log(input.value);
   console.log(select.value);
-  fetch(`http://219.255.114.140:8090/myInfo/evaluation/teachers/${id}`, {
+  fetch(`http://219.255.114.140:8090/myInfo/evaluation/teachers/${className}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -334,8 +346,6 @@ function postTeacherEvaluate(event) {
       //access_token: authObj.access_token,
     }),
   })
-    .then((response) => response.json())
-    .then((data) => data);
 }
 
 //여기부터 선생

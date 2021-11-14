@@ -39,9 +39,23 @@
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+</html>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 </head>
 
 <body>
+    <div id="dialog_black" title="신고사유 입력">
+        <div class="contentBox">
+            <input type="text" name="" id="content">
+            <input type="button" value="확인" id="btn-blackConfirm">
+        </div>
+    </div>
     <header>
         <div class="inner">
             <div class="head_container">
@@ -179,8 +193,8 @@
                             <option id="startDESC" value="별점">내림차순</option>
                         </select> -->
                         <input type="button" value="검색" id="btn-teacherSearch">
-                        <input id="teacher_search" type="text" placeholder="검색어 입력" required>
-                        <input type="submit" value="검색">
+                        <!-- <input id="teacher_search" type="text" placeholder="검색어 입력" required> -->
+                        <!-- <input type="submit" value="검색"> -->
                     </form>
                 </div>
                 <ul class="teacher_list">

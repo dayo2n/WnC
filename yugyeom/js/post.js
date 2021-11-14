@@ -408,14 +408,9 @@ $(document).ready(function () {
                 }
             }
 
-            // $(location).attr('href', "home.html"); response 확인하고 보내야함
-
         }else{// 작성하지않은 부분이 있으면 :: if(!flag)
             alert(alertNotice);
         }
     });
 
 });
-
-const btn_backToNoticeBoard = document.querySelector("#btn-backToNoticeBoard");
-location.href = "http://127.0.0.1:5500/yugyeom/home.html";

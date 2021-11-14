@@ -17,7 +17,7 @@ function loginWithKakao() {//카카오톡으로 로그인
   }).then((response) => {
       console.log(`response.status ${response.status}`);
       if (response.status >= 300 || response.status < 200) {
-        //location.href="http://127.0.0.1:5500/yugyeom/kakao_join.html";
+        location.href="http://127.0.0.1:5500/yugyeom/kakao_join.html";
         return response.json().then(err =>console.log(err.errorMessage));
       }
       // location.href="http://127.0.0.1:5500/index.html";
@@ -37,7 +37,7 @@ function loginWithKakao() {//카카오톡으로 로그인
 
 
 
-const LOGIN_URL = "http://219.255.114.140:8090/login";
+const LOGIN_URL = "http://219.255.114.140:8090/admin/login";
 const login_username = document.querySelector("#login_username");
 const login_password = document.querySelector("#login_password");
 const login_form = document.querySelector(".login_form");
@@ -63,21 +63,12 @@ function onLoginSubmit(event) {
       (data) => {
         console.log((data));
         localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem("isKakao",data.Kakao);
-        localStorage.setItem("memberType", JSON.stringify(data.memberType));
-        localStorage.setItem("isLogin",JSON.stringify(data.login));
-        localStorage.setItem("myNoReadChatCount", JSON.stringify(data.myNoReadChatCount));
-        localStorage.setItem("myNoReadAlarm", JSON.stringify(data.myNoReadAlarm));
-        localStorage.setItem("id", JSON.stringify(data.id));
-        localStorage.setItem("isBlack",JSON.stringify(data.black));
+
         console.log(localStorage.getItem("isLogin"));
-        if (JSON.parse(localStorage.getItem("isLogin") === "true")) {
-          location.href="http://127.0.0.1:5500/yugyeom/home.html";
-        }else{
-          alert(data.message);
-          localStorage.clear();
-        }
-      } 
+        location.href="http://127.0.0.1:5500/yugyeom/admin.html";
+
+      }
+       
     );
 }
 

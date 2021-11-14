@@ -115,35 +115,20 @@
     <section>
         <h2>신고 대상 선생님 목록</h2>
         <div>
-            <table>
+            <table id="blackList">
                 <thead>
                     <tr>
                         <th>신고번호</th>
                         <th>블랙 ID : Username</th>
                         <th>신고자 ID : Username</th>
                         <th>신고사유</th>
-                        <th>해결여부</th>
+                        <th>처리</th>
                         <!-- 기존 신고 총 건수 출력  -->
-                        <th>해결 어드민 ID : AdminName</th>
+                        <th>해결 결과</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>신동훈</td>
-                        <td>ShinDongHun</td>
-                        <td>dayo2n</td>
-                        <td>그냥</td>
-                        <td>2021-11-12</td>
-                        <td><input type="button" value="선정하기"></td>
-                    </tr>
-                    <tr>
-                        <td>신동훈</td>
-                        <td>ShinDongHun</td>
-                        <td>dayo2n</td>
-                        <td>그냥</td>
-                        <td>2021-11-12</td>
-                        <td><input type="button" value="선정하기"></td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -154,26 +139,17 @@
             <table>
                 <thead>
                     <tr>
-                        <th>이름</th>
                         <th>ID</th>
-                        <th>블랙 선정일자</th>
+                        <th>username</th>
+                        <th>이름</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>신동훈</td>
-                        <td>ShinDongHun</td>
-                        <td>2021-11-12</td>
-                    </tr>
-                    <tr>
-                        <td>신동훈</td>
-                        <td>ShinDongHun</td>
-                        <td>2021-11-12</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </section>
+    <script src="js/admin.js"></script>
     <!-- <script src="js/init.js"></script> -->
     <!-- <script src=""></script> -->
 </body>
