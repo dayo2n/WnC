@@ -1,6 +1,12 @@
 
 $(document).ready(function () {
 
+  $('#dialog_black').dialog({
+    autoOpen:false,
+    resizable:false,
+    width: '330px',
+  });
+
   // var token = JSON.parse(localStorage.getItem("token"));
     const IMG_URL = "https://wnc-bucket.s3.ap-northeast-2.amazonaws.com/";
 
@@ -75,7 +81,7 @@ $(document).ready(function () {
               var rowIdx = e.target.closest("tr").rowIndex;
               var idx =  $(this).children().eq(0).text(); // 게시글의 id
 
-              if(localStorage.length===0){
+              if(localStorage.length === 0){
                 alert("로그인이 필요합니다.");
                 $(location).attr("href", "login.html");
               }else{
@@ -197,8 +203,8 @@ $(document).ready(function () {
     });
 
   // 선생님 검색 조건 셀렉션 값 변경
-  $('#teacher_list_select_option').change(function(){;
-    console.log("?");
+  $('#teacher_list_select_option').change(function(){
+
     // console.log($(this));
     if($('#teacher_list_select_option option:selected').attr("id") === "teacherName"){
       $('#starPointOption').remove();
@@ -211,7 +217,6 @@ $(document).ready(function () {
     // 선생님 검색 버튼 클릭 시
     $('#btn-teacherSearch').click(function(){
 
-    console.log($('#teacher_list_select_option option:selected').attr('id'))
       var searchType = $('#teacher_list_select_option option:selected').attr('id');
       var searchCondition = $('#teacher_search').val();
       var sortCondition = $('#starPointOption option:selected').val();
@@ -222,7 +227,6 @@ $(document).ready(function () {
         alert("검색어가 비었습니다");
       }
       else{
-
           console.log(sortCondition);
         $('.teacher_card').remove();
 
@@ -266,7 +270,7 @@ $(document).ready(function () {
                 starToText += "⭐";
               }
       
-              $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="'+IMG_URL+profileImgPath+'"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+              $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="'+IMG_URL+profileImgPath+'"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
               }
       
               // 채팅기능
@@ -287,6 +291,8 @@ $(document).ready(function () {
                   $('.message_modal').css('display', 'none');
               });
             })
+
+
         });
       }
     });
@@ -325,7 +331,7 @@ $(document).ready(function () {
           starToText += "⭐";
         }
 
-        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
         }
 
         $('.chatting_button').click(function(e){
@@ -346,6 +352,26 @@ $(document).ready(function () {
             $('.message_modal').css('display', 'none');
         });
       })
+
+      $('.black_button').click(function(e){
+        $('#dialog_black').dialog('open');
+        $('#btn-blackConfirm').click(function(){
+              var formData = new FormData();
+              formData.append('content', $('#content').val());
+
+
+              fetch("http://219.255.114.140:8090/reports/teachers/"+id,{
+                  method: "POST",
+                  headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` },
+                  body: formData,
+              }).then(response => {
+                if(response.status==200){
+                  $(location).attr('href', "home.html");
+              }
+            });
+      });
+    })
+
   });
 });
 
@@ -358,7 +384,7 @@ const teacher_search = document.querySelector("#teacher_search");
 
 
 
-teacher_list_search_form.addEventListener("submit", getTeacherList1);
+// teacher_list_search_form.addEventListener("submit", getTeacherList1);
 
 function getTeacherList1(event) {
   event.preventDefault();

@@ -1,3 +1,9 @@
+$(document).ready(function(){
+  $('#evaluate_select').change(function(){
+    console.log($('evaluate_select option:selected').val());
+  })
+})
+
 let name_value;
 let age_value;
 let img_value;
@@ -210,6 +216,7 @@ const evaluate_table_tbody = document.querySelector(".evaluate_table_tbody");
 let evaluate_select_value;
 let evaluate_text_value;
 
+
 function appendEvaluateTable(data) {
   console.log(data);
   const tr = document.createElement("tr");
@@ -319,7 +326,8 @@ function postTeacherEvaluate(event) {
   const button = event.target;
   const id = button.id;
   const input = document.querySelector(`#evaluate_content`);
-  const select = document.querySelector(`#evaluate_select`);
+  const select = document.querySelector(`#evaluate_select option:checked`);
+  
   console.log(input.value);
   console.log(select.value);
   fetch(`http://219.255.114.140:8090/myInfo/evaluation/teachers/${id}`, {
@@ -334,8 +342,6 @@ function postTeacherEvaluate(event) {
       //access_token: authObj.access_token,
     }),
   })
-    .then((response) => response.json())
-    .then((data) => data);
 }
 
 //여기부터 선생
