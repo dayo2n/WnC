@@ -17,7 +17,7 @@ function loginWithKakao() {//카카오톡으로 로그인
   }).then((response) => {
       console.log(`response.status ${response.status}`);
       if (response.status >= 300 || response.status < 200) {
-        location.href="http://127.0.0.1:5500/yugyeom/kakao_join.html";
+        //location.href="http://127.0.0.1:5500/yugyeom/kakao_join.html";
         return response.json().then(err =>console.log(err.errorMessage));
       }
       // location.href="http://127.0.0.1:5500/index.html";
@@ -77,8 +77,7 @@ function onLoginSubmit(event) {
           alert(data.message);
           localStorage.clear();
         }
-      }
-       
+      } 
     );
 }
 
