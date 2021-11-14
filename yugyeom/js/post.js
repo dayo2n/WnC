@@ -175,16 +175,15 @@ $(document).ready(function () {
                         alert("권한이 없습니다.");
                     }
                 });
-
-                // 가입 신청 시
-                $("#btn-register").click(function(){
+                 // 가입 신청 시
+                 $("#btn-register").click(function(){
                     fetch("http://219.255.114.140:8090/lesson/"+postIdx+"/apply",{
                         method: "POST",
                         headers : {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}` }
                     }).then(response => {
-                        if(response.status !== 200){
+                        if(response.status === 200){
                             $(location).attr('href', "home.html");
-                        }else if(response.status !== 403){
+                        }else if(response.status === 403){
                             alert("에러발생");
                         }
                         console.log(response.status);
@@ -417,3 +416,6 @@ $(document).ready(function () {
     });
 
 });
+
+const btn_backToNoticeBoard = document.querySelector("#btn-backToNoticeBoard");
+location.href = "http://127.0.0.1:5500/yugyeom/home.html";

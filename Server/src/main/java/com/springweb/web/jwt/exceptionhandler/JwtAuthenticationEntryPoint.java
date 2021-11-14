@@ -23,7 +23,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     // 유효한 자격증명을 제공하지 않고 접근하려 할때 401
     @Override
-    @Trace
+    //@Trace
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
 
 

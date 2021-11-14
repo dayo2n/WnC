@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 public class AlarmController {
 
     private final AlarmService alarmService;

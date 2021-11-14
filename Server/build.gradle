@@ -58,6 +58,9 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: '4.3.1'
 
+	//s3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
 
 }
 

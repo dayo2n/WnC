@@ -5,6 +5,8 @@ import com.springweb.web.domain.member.Student;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @Data
 public class BasicSignUpStudentDto {
@@ -13,7 +15,7 @@ public class BasicSignUpStudentDto {
     private String password;
     private String name;//직접 입력
     private int age; //나이
-    private MultipartFile profileImg;//프사 URL
+    private List<MultipartFile> profileImg;//프사 URL
 
     //== 카카오 로그인이 아닐 경우 ==//
     private final boolean isKakaoMember=false;
@@ -31,7 +33,6 @@ public class BasicSignUpStudentDto {
                 .age(age)
                 .isKakaoMember(isKakaoMember)
                 .role(role)
-                //TODO .profileImgPath(profileImgPath)
                 .activated(activated)
                 .build();
     }

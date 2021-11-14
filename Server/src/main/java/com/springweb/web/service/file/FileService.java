@@ -21,10 +21,6 @@ public interface FileService {
 
 
 
-    //파일의 저장 경로 가져오기
-    String getFullPathById(Long id) throws UploadFileException;//return은 완전한 경로
-
-    String getFullPath(String filename); //확장자를 포함한 모든 경로
 
 
     /**

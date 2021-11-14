@@ -1,17 +1,13 @@
 package com.springweb.web.repository.lesson;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.springweb.web.domain.lesson.*;
-import com.springweb.web.domain.member.QTeacher;
-import com.springweb.web.service.alarm.ReadType;
+import com.springweb.web.domain.lesson.GroupLesson;
+import com.springweb.web.domain.lesson.Lesson;
+import com.springweb.web.domain.lesson.PersonalLesson;
 import com.springweb.web.service.lesson.LessonType;
 import com.springweb.web.service.lesson.search.LessonSearchCond;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -20,15 +16,11 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
-import static com.springweb.web.domain.alarm.QAlarm.alarm;
-import static com.springweb.web.domain.lesson.QGroupLesson.groupLesson;
 import static com.springweb.web.domain.lesson.QLesson.lesson;
 import static com.springweb.web.domain.member.QTeacher.teacher;
 
 @Repository
-@Slf4j
 public class LessonRepositoryCustomImpl implements LessonRepositoryCustom{
 
     private final EntityManager em;

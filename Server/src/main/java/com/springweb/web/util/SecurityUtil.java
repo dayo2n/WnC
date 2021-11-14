@@ -1,13 +1,13 @@
 package com.springweb.web.util;
+
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
-@Slf4j
+//@Slf4j
 @RequiredArgsConstructor
 public class SecurityUtil {
 
@@ -18,7 +18,6 @@ public class SecurityUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
-            log.debug("Security Context에 인증 정보가 없습니다.");
             return Optional.empty();
         }
 

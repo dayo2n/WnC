@@ -16,6 +16,8 @@ if (JSON.parse(localStorage.getItem("isLogin")) === true) {
   message_icon.classList.add("hidden");
 }
 
+
+
 user_icon.addEventListener(
   "click",
   (e) => (location.href = "http://127.0.0.1:5500/yugyeom/user_profile.html")

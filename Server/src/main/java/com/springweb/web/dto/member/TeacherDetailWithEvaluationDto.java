@@ -2,10 +2,13 @@ package com.springweb.web.dto.member;
 
 import com.springweb.web.domain.evaluation.Evaluation;
 import com.springweb.web.domain.member.Teacher;
+import com.springweb.web.myconst.EvaluationConstName;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class TeacherDetailWithEvaluationDto {
     /**
      * 총 과외 수
@@ -40,6 +43,7 @@ public class TeacherDetailWithEvaluationDto {
     private List<EvaluationDto> evaluationDtos = new ArrayList<>();
 
 
+    @Data
     private class EvaluationDto {
         private Long evaluationId;//평가id
         private String content;//평가내용
@@ -51,7 +55,7 @@ public class TeacherDetailWithEvaluationDto {
             this.content = evaluation.getContent();
             this.starPoint = evaluation.getStarPoint();
             if(evaluation.getStudent() == null){
-                this.studentName = "귀욤둥이 동훈이";
+                this.studentName = EvaluationConstName.DEFAULT_NAME;
             }else{
                 this.studentName = evaluation.getStudent().getName();
             }

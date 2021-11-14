@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(name = "TAKING_LESSON")
 public class TakingLesson extends BaseTimeEntity {
 
     @Id
