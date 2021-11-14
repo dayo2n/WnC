@@ -16,7 +16,11 @@ if (JSON.parse(localStorage.getItem("isLogin")) === true) {
   message_icon.classList.add("hidden");
 }
 
-
+if(JSON.parse(localStorage.getItem("isBlack")) ===true){
+  const body = document.body;
+  body.classList.add("isBlack");
+  alert("당신 블랙리스트입니다.");
+}
 
 user_icon.addEventListener(
   "click",

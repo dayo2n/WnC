@@ -331,7 +331,7 @@ $(document).ready(function () {
           starToText += "⭐";
         }
 
-        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
         }
 
         $('.chatting_button').click(function(e){
