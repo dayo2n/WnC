@@ -25,27 +25,40 @@ function postKakaoJoin(event) {
   console.dir(kakao_join_student.checked);
   if(kakao_join_student.checked){
     fetch("http://219.255.114.140:8090/join/student/kakao", {
-        //선생님 카카오
+        //학생 카카오
     
         method: "POST",
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          //Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
         },
         body: formData,
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if(response.status >=300  && response.status <200){
+            alert("오류입니다");
+          }else{
+            alert("회원가입이 완료되었습니다.")
+            location.href = "http://127.0.0.1:5500/yugyeom/login.html";
+          }
+        })
         .then((data) => console.log(data));
   }else{
     fetch("http://219.255.114.140:8090/join/teacher/kakao", {
         //선생님 카카오
-    
         method: "POST",
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          //Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
         },
         body: formData,
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if(response.status >=300  && response.status <200){
+            alert("오류입니다");
+          }else{
+            alert("회원가입이 완료되었습니다.")
+            location.href = "http://127.0.0.1:5500/yugyeom/login.html";
+          }
+        })
         .then((data) => console.log(data));
   }
   

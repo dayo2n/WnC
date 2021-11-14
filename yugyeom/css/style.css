@@ -221,3 +221,7 @@ overflow: auto;
 tr{
   border: 1px solid;
 }
+
+.isBlack{
+  background-color: rgba(0, 0, 0, 0.747);
+}
