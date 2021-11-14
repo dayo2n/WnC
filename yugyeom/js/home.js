@@ -269,6 +269,10 @@ $(document).ready(function () {
               for(j=0;j<starPoint;j++){
                 starToText += "⭐";
               }
+
+              if(starToText === ""){
+                starToText = "등록된 강의평가 없음";
+              }
       
               $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="'+IMG_URL+profileImgPath+'"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
               }

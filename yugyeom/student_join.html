@@ -124,7 +124,7 @@
                     <div>이름</div>
                     <input type="text" id="join_name" placeholder="name">
                     <div>나이</div>
-                    <input type="text" id="join_age" placeholder="age">
+                    <input type="text" id="join_age" placeholder="age" onKeyup="this.value=this.value.replace(/[^-0-9]/g,'');">
                     <div>프로필 사진</div>
                     <div class="join_img">
                         <label for="join_img">사진추가</label>

@@ -58,18 +58,22 @@ function onLoginSubmit(event) {
       //access_token: authObj.access_token,
     }),
   })
-    .then((response) => response.json())
+    .then(response => {
+      console.log(response);
+      if(response.status !== 401){
+        return response.json();
+      }else{
+        alert("관리자 권한이 없습니다.");
+      }
+    })
     .then(
       (data) => {
-        console.log((data));
         localStorage.setItem("token", JSON.stringify(data.token));
-
-        console.log(localStorage.getItem("isLogin"));
         location.href="http://127.0.0.1:5500/yugyeom/admin.html";
 
       }
        
-    );
+    )
 }
 
 login_form.addEventListener("submit", onLoginSubmit);
