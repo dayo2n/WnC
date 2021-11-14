@@ -1,5 +1,6 @@
 package com.springweb.web.controller.admin;
 
+import com.springweb.web.aop.annotation.Trace;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.dto.admin.LoginAdminDto;
 import com.springweb.web.dto.admin.LoginAdminResponse;
@@ -134,10 +135,10 @@ public class AdminController {
     }
 
 
-    //@Trace
+    @Trace
     @PostMapping("/admin/login")
     @PreAuthorize("permitAll()")//이거되나?
-    public ResponseEntity logIn(@ModelAttribute LoginAdminDto loginAdminDto) throws UploadFileException, IOException, MemberException {
+    public ResponseEntity logIn(@RequestBody LoginAdminDto loginAdminDto) throws UploadFileException, IOException, MemberException {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginAdminDto.getUsername(), loginAdminDto.getPassword());
 

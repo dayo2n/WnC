@@ -29,7 +29,7 @@ public class EvaluationController {
     }
 
 
-    //@Trace
+    @Trace
     @PostMapping("/myInfo/evaluation/teachers/{teacherId}")
     public ResponseEntity evaluate(@PathVariable("teacherId") Long teacherId, @RequestBody EvaluationDto evaluationDto) throws BaseException {
         evaluationService.evaluate(teacherId,evaluationDto);
