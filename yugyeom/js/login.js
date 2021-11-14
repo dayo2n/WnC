@@ -1,4 +1,10 @@
-Kakao.init('9599c940fdbe3a4732ac990120dca478');
+$(document).ready(function(){
+  $('#admin_icon').click(function(){
+    $(location).attr('href', "login_admin.html");
+  })
+})
+
+Kakao.init('');
 console.log(Kakao.isInitialized());
 
 function loginWithKakao() {//카카오톡으로 로그인
