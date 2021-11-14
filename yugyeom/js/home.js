@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
   $('#dialog_black').dialog({
@@ -263,14 +262,20 @@ $(document).ready(function () {
               var id = singleData.id;
               var name = singleData.name;
               var profileImgPath = singleData.profileImgPath;
-              var starPoint = parseInt(singleData.starPoint);
+              var starPoint = parseInt(singleData.starAvg);
       
               starToText = ""
               for(j=0;j<starPoint;j++){
                 starToText += "⭐";
               }
+
+              if(starPoint === 0){
+                starToText = "등록된 강의평가 없음";
+              }
+
+              console.log(starToText);
       
-              $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="'+IMG_URL+profileImgPath+'"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+starPoint +' '+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+              $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="'+IMG_URL+profileImgPath+'"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
               }
       
               // 채팅기능
@@ -331,7 +336,12 @@ $(document).ready(function () {
           starToText += "⭐";
         }
 
-        $('.teacher_list').prepend('<li class="teacher_card"><img class="teacher_img" src="https://i.ytimg.com/vi/rLueTjLWVCc/maxresdefault.jpg"></img><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+  starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+        if(starPoint === 0){
+          starToText = "등록된 강의평가 없음";
+        }
+
+        $('.teacher_list').prepend('<li class="teacher_card"><div class="teacher_card_div"><img class="teacher_img" src="'+IMG_URL+profileImgPath+'"style="width: 200px; float: center;"></img></div><div class="teacher_description"><div class="teacher_description_top"><div class="teacher_name">'+name+'</div></div><div class="teacher_description_mid"><div class="teacher_rating">'+ starToText+'</div><input class="chatting_button" type="button" value="채팅하기" disabled><input class="black_button" type="button" value="신고하기"></div><div class="teacher_description_bottom"><div class="teacher_career">경력: ' + career +'</div> </div></div></li>');
+
         }
 
         $('.chatting_button').click(function(e){

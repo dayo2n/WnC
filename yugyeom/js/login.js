@@ -1,4 +1,11 @@
-Kakao.init('카카오API키');
+
+$(document).ready(function(){
+  $('#admin_icon').click(function(){
+    $(location).attr('href', "login_admin.html");
+  })
+})
+
+Kakao.init('');
 console.log(Kakao.isInitialized());
 let message;
 
