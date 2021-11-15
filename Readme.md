@@ -187,7 +187,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 
 	- 메인 홈화면의 선생님 리스트나 선생님을 검색하여 신고 가능
   
-	- 신고가 3번 이상 접수된 선생님은 자동 블랙리스트에 등록
+	- 신고로 어드민이 3번 이상 경고처리한 선생님은 자동 블랙리스트에 등록
   
 	- 블랙리스트 등재 시 서비스 이용 일절 불가
   
@@ -221,3 +221,14 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 <img width="700" alt="repotAdmin2" src="https://user-images.githubusercontent.com/57654681/141722809-42eac7e7-2214-4274-b365-d2c903a92b9c.png">
 
 <img width="700" alt="reportBlack" src="https://user-images.githubusercontent.com/57654681/141726980-b33cdb9d-60f9-4d6a-992f-6b461d6cc670.png">
+
+블랙된 회원
+  
+	- 블랙된 회원은 로그인 / 모든 기능을 이용하려할때 블랙 대상임을 알리고 이용 불가
+	
+	- 블랙된 회원은 로그인 시 메인 홈 화면이 까맣게 보임
+	
+<img width="700" alt="blackAlert" src="https://user-images.githubusercontent.com/57654681/141828516-db2eb0d1-a71d-4aae-83e6-40bf7e8b5bbf.png">
+
+<img width="700" alt="blackMain" src="https://user-images.githubusercontent.com/57654681/141828541-e0e10cb5-e08a-42cd-a37b-264fb92562c9.png">
+
