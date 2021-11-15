@@ -110,7 +110,96 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 
 # 📸 Screenshot
 
-메인 홈화면 (로그인 상태-Login 버튼 X, EXIT 버튼 O)
+메인 홈화면
+
+	- 로그인 상태라면 로그인 버튼 없이 EXIT 버튼 Only
+  
   <img width="750" alt="home" src="https://user-images.githubusercontent.com/57654681/141720774-58cda932-8247-4bd0-869c-5131fe02b74b.png">
 
+회원가입 화면
 
+	- 모든 공란 입력 필수
+  
+![join](https://user-images.githubusercontent.com/57654681/141721994-8de19b5c-6265-413e-9bbe-d81031178b60.png)
+
+
+로그인 화면
+
+	- 회원가입 필수
+  
+<img width="1564" alt="login" src="https://user-images.githubusercontent.com/57654681/141721999-17cad069-9a1a-4cf2-ac7e-2a3820062850.png">
+
+이하 항목은 회원 로그인이 없으면 제대로 이용할 수 없는 기능입니다.
+
+그룹 과외 게시물 등록
+
+	- 파일 첨부 필수X
+  
+	- 나머지 공란 필수 기입
+  
+<img width="1189" alt="newEditorGroup" src="https://user-images.githubusercontent.com/57654681/141722009-e2788c3a-7494-4e07-ab47-b0ee7979ecb3.png">
+
+과외 게시물 상세조회
+
+	- 학생은 아래 신청하기 버튼으로 신청가능
+  
+	- 게시자는 글 수정버튼으로 게시글 수정 가능, 로그인 유저와 게시자 아이디가 다르면 불가
+  
+	- 게시자는 글 삭제 가능, 로그인 유저와 게시자의 아이디가 다르면 불가, 확인 비밀번호 입력시 틀리면 삭제 불가
+  
+	- 과외 가입자가 모집인원을 충족하면 자동 모집완료로 바뀌며 신청하기가 비활성화
+  
+<img width="1189" alt="viewPost" src="https://user-images.githubusercontent.com/57654681/141722022-e1e60060-c37f-4708-bf26-eb53c41b9c90.png">
+
+알람기능
+	- 학생이 과외 가입 신청시 해당 선생님에게 알람 전송
+  
+	- 선생님이 가입 수락시 가입과 동시에 학생에게 알람 전송(거절 시 거절 알람 전송)
+  
+	- 선생님의 과외의 모집인원이 충족되어 완료되면 모집 완료 알림을 해당 선생님과 수강 학생에게 모두 전송
+  
+	- 읽은 알림/안읽은 알림/전체 구분하여 확인 가능 (안읽은 알림에서 ✔️표시를 눌러 읽음표시로 구분)
+  
+<img width="1186" alt="teacherNotification" src="https://user-images.githubusercontent.com/57654681/141722100-51261703-4cd6-4b7b-89a5-a6f831163c06.png">
+<img width="1184" alt="studentNotification" src="https://user-images.githubusercontent.com/57654681/141722103-9eb4f194-90fa-4664-bdbc-a560634c7e10.png">
+<img width="418" alt="no-readNotication" src="https://user-images.githubusercontent.com/57654681/141722229-4a1905b7-a6ff-4916-a34e-8d7df3d27dcc.png">
+<img width="409" alt="readNotification" src="https://user-images.githubusercontent.com/57654681/141722232-0a890926-9e30-4e5e-83f6-8afad61707e2.png">
+
+평가 기능
+	
+
+선생님 신고
+
+	- 메인 홈화면의 선생님 리스트나 선생님을 검색하여 신고 가능
+  
+	- 신고가 3번 이상 접수된 선생님은 자동 블랙리스트에 등록
+  
+	- 블랙리스트 등재 시 서비스 이용 일절 불가
+  
+<img width="782" alt="report" src="https://user-images.githubusercontent.com/57654681/141722495-bc3ff0d6-a480-47dc-b370-b52149c4da1a.png">
+
+어드민 로그인
+
+	- 기본 로그인 화면에서 상단 배너의 관리자 버튼을 눌러 관리자 로그인 페이지로 이동
+  
+	- id: admin
+  
+	- pw: 1234
+  
+<img width="1188" alt="loginAdmin" src="https://user-images.githubusercontent.com/57654681/141722512-e947639a-a835-4897-86c9-a3d36628a71f.png">
+
+관리자 페이지 (신고접수 목록, 블랙리스트)
+
+	- 다음 조치로 처리 가능 : 
+  
+		- 무시 : 별다른 조치없이 신고가 처리됨.
+    
+		- 경고 : 경고 횟수가 누적됩니다.
+    
+		- 차단 : 해당 회원은 차단되어 서비스를 이용할 수 없습니다. 
+    
+	- 처리가 완료된 신고는 처리 완료, 아직 접수상태인 신고는 처리할 수 있도록 함
+  
+<img width="1187" alt="reportAdmin" src="https://user-images.githubusercontent.com/57654681/141722805-5726178b-bad0-4b20-ade0-fc3c17af019d.png">
+
+<img width="990" alt="repotAdmin2" src="https://user-images.githubusercontent.com/57654681/141722809-42eac7e7-2214-4274-b365-d2c903a92b9c.png">
