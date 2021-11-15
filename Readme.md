@@ -114,7 +114,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 
 	- 로그인 상태라면 로그인 버튼 없이 EXIT 버튼 Only
   
-  <img width="600" alt="home" src="https://user-images.githubusercontent.com/57654681/141720774-58cda932-8247-4bd0-869c-5131fe02b74b.png">
+  <img width="700" alt="home" src="https://user-images.githubusercontent.com/57654681/141720774-58cda932-8247-4bd0-869c-5131fe02b74b.png">
 
 회원가입 화면
 
@@ -126,7 +126,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 
 	- 회원가입 필수
   
-<img width="600" alt="login" src="https://user-images.githubusercontent.com/57654681/141721999-17cad069-9a1a-4cf2-ac7e-2a3820062850.png">
+<img width="700" alt="login" src="https://user-images.githubusercontent.com/57654681/141721999-17cad069-9a1a-4cf2-ac7e-2a3820062850.png">
 
 이하 항목은 회원 로그인이 없으면 제대로 이용할 수 없는 기능입니다.
 
@@ -148,7 +148,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
   
 	- 과외 가입자가 모집인원을 충족하면 자동 모집완료로 바뀌며 신청하기가 비활성화
   
-<img width="600" alt="viewPost" src="https://user-images.githubusercontent.com/57654681/141722022-e1e60060-c37f-4708-bf26-eb53c41b9c90.png">
+<img width="700" alt="viewPost" src="https://user-images.githubusercontent.com/57654681/141722022-e1e60060-c37f-4708-bf26-eb53c41b9c90.png">
 
 알람기능
 	- 학생이 과외 가입 신청시 해당 선생님에게 알람 전송
@@ -159,8 +159,8 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
   
 	- 읽은 알림/안읽은 알림/전체 구분하여 확인 가능 (안읽은 알림에서 ✔️표시를 눌러 읽음표시로 구분)
   
-<img width="600" alt="teacherNotification" src="https://user-images.githubusercontent.com/57654681/141722100-51261703-4cd6-4b7b-89a5-a6f831163c06.png">
-<img width="600" alt="studentNotification" src="https://user-images.githubusercontent.com/57654681/141722103-9eb4f194-90fa-4664-bdbc-a560634c7e10.png">
+<img width="700" alt="teacherNotification" src="https://user-images.githubusercontent.com/57654681/141722100-51261703-4cd6-4b7b-89a5-a6f831163c06.png">
+<img width="700" alt="studentNotification" src="https://user-images.githubusercontent.com/57654681/141722103-9eb4f194-90fa-4664-bdbc-a560634c7e10.png">
 <img width="300" alt="no-readNotication" src="https://user-images.githubusercontent.com/57654681/141722229-4a1905b7-a6ff-4916-a34e-8d7df3d27dcc.png">
 <img width="300" alt="readNotification" src="https://user-images.githubusercontent.com/57654681/141722232-0a890926-9e30-4e5e-83f6-8afad61707e2.png">
 
@@ -175,7 +175,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
   
 	- 블랙리스트 등재 시 서비스 이용 일절 불가
   
-<img width="600" alt="report" src="https://user-images.githubusercontent.com/57654681/141722495-bc3ff0d6-a480-47dc-b370-b52149c4da1a.png">
+<img width="700" alt="report" src="https://user-images.githubusercontent.com/57654681/141722495-bc3ff0d6-a480-47dc-b370-b52149c4da1a.png">
 
 어드민 로그인
 
@@ -185,7 +185,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
   
 	- pw: 1234
   
-<img width="600" alt="loginAdmin" src="https://user-images.githubusercontent.com/57654681/141722512-e947639a-a835-4897-86c9-a3d36628a71f.png">
+<img width="700" alt="loginAdmin" src="https://user-images.githubusercontent.com/57654681/141722512-e947639a-a835-4897-86c9-a3d36628a71f.png">
 
 관리자 페이지 (신고접수 목록, 블랙리스트)
 
@@ -199,6 +199,8 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
     
 	- 처리가 완료된 신고는 처리 완료, 아직 접수상태인 신고는 처리할 수 있도록 함
   
-<img width="600" alt="reportAdmin" src="https://user-images.githubusercontent.com/57654681/141722805-5726178b-bad0-4b20-ade0-fc3c17af019d.png">
+<img width="700" alt="reportAdmin" src="https://user-images.githubusercontent.com/57654681/141722805-5726178b-bad0-4b20-ade0-fc3c17af019d.png">
 
-<img width="600" alt="repotAdmin2" src="https://user-images.githubusercontent.com/57654681/141722809-42eac7e7-2214-4274-b365-d2c903a92b9c.png">
+<img width="700" alt="repotAdmin2" src="https://user-images.githubusercontent.com/57654681/141722809-42eac7e7-2214-4274-b365-d2c903a92b9c.png">
+
+<img width="700" alt="reportBlack" src="https://user-images.githubusercontent.com/57654681/141726980-b33cdb9d-60f9-4d6a-992f-6b461d6cc670.png">
