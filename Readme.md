@@ -164,7 +164,23 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 <img width="300" alt="no-readNotication" src="https://user-images.githubusercontent.com/57654681/141722229-4a1905b7-a6ff-4916-a34e-8d7df3d27dcc.png">
 <img width="300" alt="readNotification" src="https://user-images.githubusercontent.com/57654681/141722232-0a890926-9e30-4e5e-83f6-8afad61707e2.png">
 
-평가 기능
+평가 기능 & 유저페이지
+
+	- 상단의 유저 아이콘을 눌러 회원정보 창으로 이동 가능
+	
+	- 간단한 회원정보와 함께 수강 목록, 평가 창이 있어 수강 중인 과외 선생님에 대한 평가 가능
+	
+	- 학생이 평가하면 학생들의 평가의 평균으로 홈 화면에서도 선생님에 대한 별점이 업데이트됨
+	
+	- 회원 정보 수정 가능
+	
+<img width="700" alt="studentUserInfo" src="https://user-images.githubusercontent.com/57654681/141731527-35785948-e16d-44df-b3b2-99c54aa52c4b.png">
+
+<img width="700" alt="evaluate" src="https://user-images.githubusercontent.com/57654681/141731514-2a2d7add-0f83-4d18-ba34-867debb45b8f.png">
+
+<img width="700" alt="addOnEvaluateList" src="https://user-images.githubusercontent.com/57654681/141731502-f81fc9b6-05ae-4619-9d6c-17ea102d6349.png">
+
+<img width="300" alt="settingStarPoint" src="https://user-images.githubusercontent.com/57654681/141731609-a6b9a1e6-99e5-478d-b641-5cd0fae5d187.png">
 	
 
 선생님 신고
@@ -176,6 +192,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 	- 블랙리스트 등재 시 서비스 이용 일절 불가
   
 <img width="700" alt="report" src="https://user-images.githubusercontent.com/57654681/141722495-bc3ff0d6-a480-47dc-b370-b52149c4da1a.png">
+
 
 어드민 로그인
 
