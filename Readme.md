@@ -8,6 +8,7 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 [결과물 구경하러가기](https://rladbrua0207.github.io/WnC/home)
 
 
+
 # 🍯 꿀단지
 
 - Frontend
@@ -103,5 +104,13 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
  
     무시 : 별다른 조치없이 신고가 처리됨. 경고 : 경고 횟수가 누적됩니다. 차단 : 해당 회원은 차단되어 서비스를 이용할 수 없습니다. 
 
-  
+
 ```
+
+
+# 📸 Screenshot
+
+메인 홈화면 (로그인 상태-Login 버튼 X, EXIT 버튼 O)
+  <img width="750" alt="home" src="https://user-images.githubusercontent.com/57654681/141720774-58cda932-8247-4bd0-869c-5131fe02b74b.png">
+
+
