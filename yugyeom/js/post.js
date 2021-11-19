@@ -302,7 +302,6 @@ $(document).ready(function () {
                         formData.append('content', $('#content').val());
 
                         if(fileFlag){
-                            console.log(file);
                             formData.append('uploadFiles', file);
                         }
 

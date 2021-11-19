@@ -135,7 +135,7 @@ function init() {
           data.lessonList.forEach((element) => {
             appendLessonTable(element); //내가올린 강의목록, 여러개
           }),
-          console.log(data.takingLessonList),
+          console.log(1,data),
           (count = 1),
           data.evaluationList.forEach((element) => {
             appendEvaluatedTable(element); //나에대한 평가목록
@@ -148,6 +148,7 @@ init();
 
 function getUserProfile() {
   info_name.innerHTML = name_value;
+  console.log(age_value);
   info_age.innerHTML = age_value;
   info_career.innerHTML = career_value;
   info_rating.innerHTML = `별점: ${rating_value}`;
@@ -204,11 +205,12 @@ function appendApplySubjectTable(data) {
   tr.addEventListener("click", teacherIdSubmit);
 }
 
-function teacherIdSubmit() {
-  const id = document
-    .querySelector(".applied_subject_tbody")
-    .querySelector("tr").id;
-  getTeacherProfile(id);
+function teacherIdSubmit(event) {
+  //const id = document.querySelector(".applied_subject_tbody").querySelector("tr").id;
+  
+  const id = event.target.parentNode.id;
+    localStorage.setItem("teacher_profile_view_id",JSON.stringify(id));
+
   location.href = "http://127.0.0.1:5500/yugyeom/teacher_profile_view.html";
 }
 
@@ -232,8 +234,8 @@ function appendEvaluateTable(data) {
   td3_text.placeholder = "평가내용";
   td3_text.required = "true";
   td3.appendChild(td3_text);
-  let starNum = 0;
-  for(let i = 0; i < data.rating_value; i++){
+  let starNum="";
+  for(let i = 0; i < data.starPoint; i++){
     starNum += "⭐";
    }
   td4.innerText = `${starNum}`;
@@ -258,27 +260,27 @@ function appendEvaluateTable(data) {
   const option3 = document.createElement("option");
   const option2 = document.createElement("option");
   const option1 = document.createElement("option");
-  const option0 = document.createElement("option");
+
 
   option5.value = "5";
   option4.value = "4";
   option3.value = "3";
   option2.value = "2";
   option1.value = "1";
-  option0.value = "0";
+
   option5.innerText = "5";
   option4.innerText = "4";
   option3.innerText = "3";
   option2.innerText = "2";
   option1.innerText = "1";
-  option0.innerText = "0";
+
 
   select.appendChild(option5);
   select.appendChild(option4);
   select.appendChild(option3);
   select.appendChild(option2);
   select.appendChild(option1);
-  select.appendChild(option0);
+ 
 
   td5.appendChild(select);
 
@@ -309,8 +311,17 @@ function appendMyEvaluateTable(data) {
 
   td1.innerText = count++; //
   td2.innerText = data.teacherName; //
-  td3.innerText = data.title; //DB
-  td4.innerText = data.createdDate;
+  td3.innerText = data.content; //DB
+
+  let starNum = "";
+  for(let i = 0; i < data.starPoint; i++){
+    starNum += "⭐";
+   }
+  td4.innerText = `${starNum}`;
+
+
+
+  
 
   tr.setAttribute("id", data.teacherId);
   tr.appendChild(td1);
@@ -392,7 +403,14 @@ function appendEvaluatedTable(data) {
 
   td1.innerText = `${count++}`;
   td2.innerText = `${data.content}`;
-  td3.innerText = `${data.starPoint}`;
+
+  let starNum = "";
+  for(let i = 0; i < data.startPoint; i++){
+    starNum += "⭐";
+   }
+   console.log(starNum);
+  td3.innerText = `${starNum}`;
+
   td4.innerText = `${data.studentName}`;
 
   tr.appendChild(td1);
