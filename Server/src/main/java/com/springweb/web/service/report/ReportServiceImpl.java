@@ -1,5 +1,6 @@
 package com.springweb.web.service.report;
 
+import com.springweb.web.domain.member.Admin;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
@@ -78,8 +79,10 @@ public class ReportServiceImpl implements ReportService{
     }
 
     @Override
-    public void ignore(Long reportId) {
+    public void ignore(Long reportId) throws MemberException {
         Report report = reportRepository.findById(reportId).orElse(null);
+        Member member = memberRepository.findByUsername(getMyUsername()).orElse(null);
+        report.setSolver((Admin) member);
         report.solve();
     }
 
@@ -89,12 +92,14 @@ public class ReportServiceImpl implements ReportService{
 
         Report report = reportRepository.findById(reportId).orElse(null);
         Teacher teacher = (Teacher)memberRepository.findById(report.getTarget().getId()).orElse(null);
-        if(teacher != null){
+        if(teacher == null){
             throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
 
         teacher.addWarning();
 
+        Member member = memberRepository.findByUsername(getMyUsername()).orElse(null);
+        report.setSolver((Admin) member);
         report.solve();
     }
 
@@ -103,12 +108,13 @@ public class ReportServiceImpl implements ReportService{
     public void makeBlack(Long reportId ) throws MemberException {
         Report report = reportRepository.findById(reportId).orElse(null);
         Teacher teacher = (Teacher)memberRepository.findById(report.getTarget().getId()).orElse(null);
-        if(teacher != null){
+        if(teacher == null){
             throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
 
         teacher.makeBlack();
-
+        Member member = memberRepository.findByUsername(getMyUsername()).orElse(null);
+        report.setSolver((Admin) member);
         report.solve();
     }
 
@@ -119,7 +125,7 @@ public class ReportServiceImpl implements ReportService{
     @Override
     public void makeWhite(Long teacherId) throws MemberException {
         Teacher teacher = (Teacher)memberRepository.findById(teacherId).orElse(null);
-        if(teacher != null){
+        if(teacher == null){
             throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
         teacher.makeWhite();

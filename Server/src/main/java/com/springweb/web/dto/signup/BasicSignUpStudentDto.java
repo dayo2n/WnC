@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Data
-public class BasicSignUpStudentDto {
+public class BasicSignUpStudentDto implements BasicSignUpDto{
 
     private String username;
     private String password;
@@ -25,6 +25,7 @@ public class BasicSignUpStudentDto {
     private final boolean activated=true;//활성화 여부
 
 
+    @Override
     public Student toEntity(){
         return Student.builder()
                 .username(username)

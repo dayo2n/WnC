@@ -76,7 +76,7 @@ public class Teacher extends Member{
         evaluationList.add(evaluation);
 
         DecimalFormat df = new DecimalFormat("0.0");
-        starPoint = Double.parseDouble(df.format((starPoint+evaluation.getStarPoint())/evaluationList.size()));
+        starPoint = Double.parseDouble(df.format((evaluation.getStarPoint()+(starPoint*evaluationList.size()-1))/evaluationList.size()));
     }
 
 

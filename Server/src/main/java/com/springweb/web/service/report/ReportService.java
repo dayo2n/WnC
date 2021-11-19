@@ -38,7 +38,7 @@ public interface ReportService {
     /**
      * 신고 무시하기 -> 읽었으나 아무 처리 X
      */
-    void ignore(Long reportId);
+    void ignore(Long reportId) throws MemberException;
 
     /**
      * 경고 주기

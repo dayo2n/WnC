@@ -61,4 +61,8 @@ public class Report extends BaseTimeEntity {
     public void setTarget(Teacher target) {
         this.target = target;
     }
+
+    public void setSolver(Admin solver) {
+        this.solver = solver;
+    }
 }
