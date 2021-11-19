@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class KakaoSignUpTeacherDto {
+public class KakaoSignUpTeacherDto implements KakaoSignUpDto{
 
     private Long kakaoId;//카카오에서 가져옴
 
@@ -39,6 +39,7 @@ public class KakaoSignUpTeacherDto {
     }
 
 
+    @Override
     public Teacher toEntity(){
         return Teacher.builder()
                 .username(username)

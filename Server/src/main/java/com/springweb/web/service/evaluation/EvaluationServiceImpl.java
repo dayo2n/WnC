@@ -94,21 +94,23 @@ public class EvaluationServiceImpl implements EvaluationService{
 
         List<Teacher> addTeacherList = new ArrayList<>(); //이미 평가 가능한 강의에 포함시킨 선생님.
 
-         takingLessonList.forEach(takingLesson -> {
+        label1 : for (TakingLesson takingLesson : takingLessonList) {
 
             for (Evaluation evaluation : me.getEvaluationList()) {//내가 남긴 평가들
                 if(evaluation.getTeacher().getId().equals(takingLesson.getLesson().getTeacher().getId())){
                     //내가 남긴 평가의 선생님과, 내가 들은 과외의 선생님 아이디가 같은 경우, 즉 이미 평가를 한 경우
-                    continue;
+                    continue label1;
                 }
             }
+            Teacher teacher = takingLesson.getLesson().getTeacher();
+            if(!addTeacherList.contains(teacher)) {//포함하고 있지 않다면!
+                evaluationTeacherDtoList.add(new EvaluationTeacherDto(teacher));
+                addTeacherList.add(teacher);
+            }
 
-             Teacher teacher = takingLesson.getLesson().getTeacher();
-             if(!addTeacherList.contains(teacher)) {//포함하고 있지 않다면!
-                 evaluationTeacherDtoList.add(new EvaluationTeacherDto(teacher));
-                 addTeacherList.add(teacher);
-             }
-        });
+        }
+
+
 
          return new SearchEvaluationTeacherDto(evaluationTeacherDtoList);
     }

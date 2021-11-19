@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c30e4d51-aaf6-4661-829b-4178c76ced5d" name="Changes" comment="" />
+    <list default="true" id="c30e4d51-aaf6-4661-829b-4178c76ced5d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/domain/member/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/domain/member/Teacher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/domain/report/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/domain/report/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/evaluation/EvaluationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/evaluation/EvaluationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/lesson/AppliedLessonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/lesson/AppliedLessonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/report/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/report/ReportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/report/ReportServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/springweb/web/service/report/ReportServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,6 +111,7 @@
       <workItem from="1636553503227" duration="71000" />
       <workItem from="1636553591368" duration="996000" />
       <workItem from="1636555012535" duration="13000" />
+      <workItem from="1637326729492" duration="9000" />
     </task>
     <servers />
   </component>

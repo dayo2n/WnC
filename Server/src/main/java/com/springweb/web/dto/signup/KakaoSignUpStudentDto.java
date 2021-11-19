@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class KakaoSignUpStudentDto {
+public class KakaoSignUpStudentDto implements KakaoSignUpDto{
 
     private String accessToken;//인가코드는 프론트에서 알아서 하고, accessToken만 받아와서 그걸로 인증
     private String username; //카카오로 로그인 하는 경우에도 사용한다!!!!!
@@ -39,6 +39,7 @@ public class KakaoSignUpStudentDto {
     }
 
 
+    @Override
     public Student toEntity(){
         return Student.builder()
                 .username(username)

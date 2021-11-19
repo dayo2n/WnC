@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class BasicSignUpTeacherDto {
+public class BasicSignUpTeacherDto implements BasicSignUpDto{
 
     private String username;
     private String password;
@@ -28,7 +28,7 @@ public class BasicSignUpTeacherDto {
     private final Role role = Role.BASIC;
     private final boolean activated=true;//활성화 여부
 
-
+    @Override
     public Teacher toEntity(){
         return Teacher.builder()
                 .username(username)

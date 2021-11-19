@@ -12,10 +12,7 @@ import com.springweb.web.domain.lesson.TakingLesson;
 import com.springweb.web.domain.member.Member;
 import com.springweb.web.domain.member.Student;
 import com.springweb.web.domain.member.Teacher;
-import com.springweb.web.dto.signup.BasicSignUpStudentDto;
-import com.springweb.web.dto.signup.BasicSignUpTeacherDto;
-import com.springweb.web.dto.signup.KakaoSignUpStudentDto;
-import com.springweb.web.dto.signup.KakaoSignUpTeacherDto;
+import com.springweb.web.dto.signup.*;
 import com.springweb.web.exception.BaseException;
 import com.springweb.web.exception.file.UploadFileException;
 import com.springweb.web.exception.member.MemberException;
@@ -58,43 +55,69 @@ public class MemberService {
 
 
     //@Trace
-    public void save(BasicSignUpStudentDto basicSignUpStudentDto) throws MemberException, UploadFileException, IOException {
+    public void save(BasicSignUpDto basicSignUpDto) throws MemberException, UploadFileException, IOException {
 
-        Member member = basicSignUpStudentDto.toEntity();
-        //== 중복 아이디 체크 로직 ==//
-        checkDuplicateMember(member.getUsername());
+        Member member = basicSignUpDto.toEntity();
+        checkDuplicateMember(member.getUsername());// 중복 아이디 체크 로직
+        member.passwordEncode(passwordEncoder);//패스워드 인코딩 해야 함, 중요!!
 
-        //패스워드 인코딩 해야 함, 중요!!
-        member.passwordEncode(passwordEncoder);
+        if(basicSignUpDto.getProfileImg() == null) {
+            memberRepository.save(member);
+            return;
+        }
+        if(basicSignUpDto.getProfileImg().isEmpty()) {
+            memberRepository.save(member);
+            return;
+        }
 
-        if(basicSignUpStudentDto.getProfileImg() !=null) {
-            if(!basicSignUpStudentDto.getProfileImg().isEmpty()) {
-                String uploadedFilePath = fileService.saveFile(basicSignUpStudentDto.getProfileImg().get(0));//파일 서버에 저장
-                member.changeProfileImgPath(uploadedFilePath);
-            }
+        String uploadedFilePath = fileService.saveFile(basicSignUpDto.getProfileImg().get(0));//파일 서버에 저장
+        member.changeProfileImgPath(uploadedFilePath);
+        memberRepository.save(member);
+
+    }
+/*    public void save(BasicSignUpTeacherDto basicSignUpTeacherDto) throws MemberException, UploadFileException, IOException {
+
+        Member member = basicSignUpTeacherDto.toEntity();
+        checkDuplicateMember(member.getUsername());//== 중복 아이디 체크 로직 ==//
+        member.passwordEncode(passwordEncoder);//패스워드 인코딩
+
+        if(basicSignUpTeacherDto.getProfileImg() == null) {
+            memberRepository.save(member);
+            return;
+        }
+        if(basicSignUpTeacherDto.getProfileImg().isEmpty()) {
+            memberRepository.save(member);
+            return;
         }
         //== 중복 아이디 체크 로직 종료 ==//
         memberRepository.save(member);
-    }
-    public void save(KakaoSignUpStudentDto kakaoSignUpStudentDto) throws MemberException, UploadFileException, IOException {
+    }*/
 
-        Member member = kakaoSignUpStudentDto.toEntity();
+
+
+    public void save(KakaoSignUpDto kakaoSignUpDto) throws MemberException, UploadFileException, IOException {
+
+        Member member = kakaoSignUpDto.toEntity();
         //== 중복 아이디 체크 로직 ==//
         checkDuplicateMember(member.getUsername());
 
-        //패스워드 인코딩 해야 함, 중요!!, 카카오톡은 안 해!!!!!!!!!!!
-        //member.passwordEncode(passwordEncoder);
 
-        if(kakaoSignUpStudentDto.getProfileImg() !=null) {
-            if(!kakaoSignUpStudentDto.getProfileImg().isEmpty()) {
-                String uploadedFilePath = fileService.saveFile(kakaoSignUpStudentDto.getProfileImg().get(0));//파일 서버에 저장
-                member.changeProfileImgPath(uploadedFilePath);
-            }
+        if(kakaoSignUpDto.getProfileImg() == null) {
+            memberRepository.save(member);
+            return;
         }
-        //== 중복 아이디 체크 로직 종료 ==//
+        if(kakaoSignUpDto.getProfileImg().isEmpty()) {
+            memberRepository.save(member);
+            return;
+        }
+
+        String uploadedFilePath = fileService.saveFile(kakaoSignUpDto.getProfileImg().get(0));//파일 서버에 저장
+        member.changeProfileImgPath(uploadedFilePath);
         memberRepository.save(member);
+
+
     }
-    public void save(KakaoSignUpTeacherDto kakaoSignUpTeacherDto) throws MemberException, UploadFileException, IOException {
+   /* public void save(KakaoSignUpTeacherDto kakaoSignUpTeacherDto) throws MemberException, UploadFileException, IOException {
 
         Member member = kakaoSignUpTeacherDto.toEntity();
         //== 중복 아이디 체크 로직 ==//
@@ -111,25 +134,7 @@ public class MemberService {
         }
         //== 중복 아이디 체크 로직 종료 ==//
         memberRepository.save(member);
-    }
-    public void save(BasicSignUpTeacherDto basicSignUpTeacherDto) throws MemberException, UploadFileException, IOException {
-
-        Member member = basicSignUpTeacherDto.toEntity();
-        //== 중복 아이디 체크 로직 ==//
-        checkDuplicateMember(member.getUsername());
-
-        //패스워드 인코딩 해야 함, 중요!!
-        member.passwordEncode(passwordEncoder);
-
-        if(basicSignUpTeacherDto.getProfileImg() !=null) {
-            if(!basicSignUpTeacherDto.getProfileImg().isEmpty()) {
-                String uploadedFilePath = fileService.saveFile(basicSignUpTeacherDto.getProfileImg().get(0));//파일 서버에 저장
-                member.changeProfileImgPath(uploadedFilePath);
-            }
-        }
-        //== 중복 아이디 체크 로직 종료 ==//
-        memberRepository.save(member);
-    }
+    }*/
 
 
 

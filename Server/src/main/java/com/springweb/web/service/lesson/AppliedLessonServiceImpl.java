@@ -110,7 +110,7 @@ public class AppliedLessonServiceImpl implements AppliedLessonService {
 
         student.addAppliedLesson(appliedLesson);
         //TODO: appliedLessonRepository.save(appliedLesson); 코드가 없어도 영속성 전이로 인해 저장될 거 같은데 확인해보기!
-        appliedLessonRepository.save(appliedLesson);
+        //appliedLessonRepository.save(appliedLesson);
 
         alarmService.sendAlarm(AlarmType.SEND_APPLY, findLesson.getTeacher(), findLesson ,student);//내가 선생님꼐 신청한거니까
     }
