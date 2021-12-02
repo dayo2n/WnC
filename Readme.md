@@ -5,8 +5,8 @@ WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라�
 
 [요구사항 알아보기](https://roan-firewall-154.notion.site/1-x-WnC-d27d58216eb84b39b023a5dcd1bd94fb)
 
-[결과물 구경하러가기](https://rladbrua0207.github.io/WnC/home)
-
+~~_결과물 구경하러가기 ➜ closed_~~
+<!-- (https://rladbrua0207.github.io/WnC/home) -->
 
 
 # 🍯 꿀단지
