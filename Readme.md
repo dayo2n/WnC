@@ -3,6 +3,8 @@
 
 WnC : Web & Cloud 프로그래밍 대회, 웹 서비스를 개발하고 클라우드☁️에 배포해보자 !
 
+개발 기간 21.11.10. ~ 21.11.14.
+
 [요구사항 알아보기](https://roan-firewall-154.notion.site/1-x-WnC-d27d58216eb84b39b023a5dcd1bd94fb)
 
 ~~_결과물 구경하러가기 ➜ closed_~~
